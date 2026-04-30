@@ -1,0 +1,51 @@
+project:
+  type: book
+  output-dir: _book
+
+knitr:
+  opts_chunk:
+    message: false
+    warning: false
+    fig.width: 8
+    fig.height: 5
+    fig.dpi: 150
+
+execute:
+  echo: true
+  freeze: auto
+
+book:
+  title: "讓你的 Vabysmo RWE 長得像 Ophthalmology 論文"
+  subtitle: "眼科醫師研究工作坊教材"
+  author: "林協霆 / 邵時傑"
+  date: "2026/05/30"
+  reader-mode: true
+  page-footer:
+    left: |
+      © 2026 林協霆 · 教材授權 CC BY 4.0
+    right: |
+      Built with [Quarto](https://quarto.org/)
+  chapters:
+    - index.qmd
+    - primer.qmd
+    - part1.qmd
+    - part2.qmd
+    - part3.qmd
+    - part4.qmd
+    - part5.qmd
+    - part6.qmd
+    - appendix.qmd
+
+bibliography: references.bib
+csl: american-medical-association.csl
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    code-tools: true
+    code-copy: true
+    css: styles.css

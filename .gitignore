@@ -1,0 +1,20 @@
+# Quarto 中介產物（不需 commit）
+_freeze/
+.quarto/
+
+# R / RStudio session 檔
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# OS
+.DS_Store
+Thumbs.db
+
+# _book/ 是這次 deliverable；明確 unignore 蓋過 user 全域 ~/.gitignore_global 的 _book/
+!_book/
+!_book/**
+
+/.quarto/

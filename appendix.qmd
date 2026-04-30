@@ -1,0 +1,502 @@
+# 附錄：回院之後的事
+
+```{r}
+#| label: setup-appx
+#| include: false
+source("_common.R")
+```
+
+---
+
+## A. 院內 csv schema（資料字典）
+
+完整版在 [`data/data_dictionary.md`](data/data_dictionary.md)。一頁懶人包：
+
+### baseline csv（一筆病人一列）
+
+```
+patient_id, arm, study, region, age, sex,
+bcva_baseline, cst_baseline, irf_baseline, srf_baseline,
+bcva_strat, lld_strat
+```
+
+### followup csv（同一病人多列，每次回診一列）
+
+```
+patient_id, week, bcva, cst, irf, srf
+```
+
+**規則**：
+
+- Boolean 用 `0`/`1`，不要 `Yes`/`No`、不要中文
+- Missing 留空（`,,`），不要 `999`/`NULL`
+- 欄位名小寫、底線、英文
+- UTF-8 encoding
+
+跑這段 sanity check：
+
+```r
+required_baseline <- c("patient_id","arm","study","region","age","sex",
+                       "bcva_baseline","cst_baseline","irf_baseline","srf_baseline")
+stopifnot(all(required_baseline %in% names(your_baseline)))
+
+required_followup <- c("patient_id","week","bcva","cst","irf","srf")
+stopifnot(all(required_followup %in% names(your_followup)))
+```
+
+---
+
+## B. AI 對話三原則
+
+### 原則 1 — 給情境
+
+❌ 「幫我寫 mmrm」
+
+✅ 「我有 R data frame `fu_long`，欄位 patient_id、arm（faricimab/aflibercept）、visit（factor 4/8/12）、bcva_change（連續變項）、bcva_strat、lld_strat、study、region。請用 `mmrm::mmrm()` 跑 `bcva_change ~ arm * visit + bcva_strat + lld_strat + study + region + us(visit | patient_id)`，然後用 `emmeans` 取 adjusted means。」
+
+### 原則 2 — 給樣本
+
+❌ 「我的資料怪怪的，幫我看」
+
+✅ 「我的 followup 資料 head 長這樣：[貼 5 row]。執行 `mmrm()` 時跳這個錯：[貼錯誤訊息]。請告訴我可能原因。」
+
+### 原則 3 — 要 reproducible
+
+❌ 「給我畫圖」
+
+✅ 「請給我可以直接複製貼到 RStudio Console 跑的 R code，加中文註解。如果用到任何套件，請在最上面加 library() 載入。」
+
+---
+
+## C. 三個常見坑
+
+### 坑 1：AI 幻想欄位
+
+AI 不知道你的資料長什麼樣，會「假設」欄位名。例如它寫 `df$bcva_letters` 但你的欄位是 `bcva`，跑就 NULL。
+
+**解法**：每次新對話一開始貼 `glimpse(df)` 的輸出。
+
+### 坑 2：套件名拼錯 / outdated function
+
+AI 訓練資料有時 cutoff 早，會給你 5 年前的寫法（例如 `tidyr::gather()` 已被 `pivot_longer()` 取代）。
+
+**解法**：跑出 deprecation warning 時，把 warning 貼回去問「請用最新版的 tidyr / dplyr 改寫」。
+
+### 坑 3：`mmrm` 套件裝不起來
+
+```r
+# 錯誤：'mmrm' 不存在
+install.packages("mmrm")
+# Warning message: package ‘mmrm’ is not available for this version of R
+```
+
+**解法**：用 PPM binary：
+
+```r
+options(repos = c(CRAN = "https://packagemanager.posit.co/cran/latest"))
+install.packages("mmrm")
+# 或用 pak
+pak::pak("mmrm")
+```
+
+### 坑 4：`mantelhaen.test` 在 stratum 太空時報錯
+
+```
+Error in mantelhaen.test(x) :
+  'x' must contain at least one positive entry per stratum
+```
+
+**解法**：drop 掉空 stratum，或合併成更粗的分層。
+
+```r
+# 先檢查
+xtabs(~ arm + outcome + stratum, data = d) |>
+  apply(3, function(m) all(rowSums(m) > 0)) |>
+  table()
+```
+
+### 坑 5：ggplot 中文亂碼 / □□□□
+
+**解法**：每章 qmd 開頭都 `source("_common.R")`，裡面用 showtext + Noto Sans TC。
+
+### 坑 6：long vs wide 弄錯
+
+```r
+# 你以為這樣可以畫
+ggplot(baseline, aes(x = visit, y = bcva)) ...  # 錯！baseline 沒有 visit 欄位
+
+# 正確：用 followup 或 fu_long
+ggplot(followup, aes(x = week, y = bcva, colour = arm)) ...
+```
+
+---
+
+## D. 把這份教材帶回院內：兩個路線
+
+### 路線 A — Posit.Cloud（推薦）
+
+1. 在 Posit.Cloud 上 **Save a Permanent Copy** 把這個 project 存到你的帳號
+2. 把院內 csv 放進 `data/`，改 `_quarto.yml` 的 title
+3. `quarto::quarto_render()` 重 render
+4. 拿 `_book/index.html` 給共同作者 / 主任 / Shao 看
+
+### 路線 B — 本機 RStudio / Positron
+
+```bash
+git clone <this repo>
+cd roche-vabysmo-rwe-workshop
+Rscript install.r
+# 把你的 csv 放進 data/
+quarto render
+open _book/index.html
+```
+
+---
+
+## E. ELI5：統計方法（給門外漢的中文白話）
+
+> 這節用「眼科醫師的日常經驗」做比喻。比喻會犧牲精確度換可記性，請別拿來投 reviewer。
+
+### Repeated measures（重複測量）
+
+同一隻眼睛被你量很多次（OCT 第 0、4、8、12 週各量一次）。
+直覺上這 4 個數字「不是 4 個獨立病人」，因為他們本來就比較像，**統計分析要承認這件事**。
+
+### MMRM（mixed model for repeated measures）
+
+「同一隻眼的時間序列」+「兩組病人」混在一起的迴歸模型。
+**比喻**：把全部病人的 BCVA 時間曲線丟進一個漏斗，漏斗會自動扣掉「同一個人本來就比較像」這部分，最後剩下「這藥真的造成的差別」。
+
+> 為什麼不用 paired t-test？只能比 2 個時間點，浪費了 4 個。
+> 為什麼不用 ANOVA？把每個 visit 當獨立 group，沒有處理「同一個人」這事。
+
+### Unstructured covariance（非結構化共變數）
+
+問題：4 個 visit 之間「相關有多強」？
+- **structured**（如 AR(1)）：「越近越相關，越遠越不相關，照公式估」
+- **unstructured**：「不假設規則，每對 visit 都自己估」← 最 flexible，paper 都用這個
+
+**比喻**：你本來想假設「越近越相關」，但讓 model 自己估更老實。
+
+### Random effect / fixed effect / random intercept
+
+- **fixed effect**（固定效應）：你關心的差別。例如「藥」、「visit」、「baseline severity」
+- **random effect**（隨機效應）：你**不**關心、但要承認它存在的差別。例如「這個人本來就視力比較好」
+- **random intercept**：給每個病人一個「自己的起點」，model 自動估每人 individual baseline noise
+
+**比喻**：fixed = 你想討論的；random = 你想 control 掉的。
+
+### MAR / 隱式插補（implicit imputation）
+
+**MAR**（missing at random）：「missing 的原因和 missing 那個值無關」。
+舉例：病人 8/15 沒回診是因為下大雨，跟他當天視力多少**無關** → MAR 成立。
+舉例：視力惡化的病人比較容易掉追蹤 → 這是 **MNAR**（missing not at random，難處理）。
+
+**MMRM 在 MAR 假設下會自動「隱式插補」**——它不需要你補 NA，model 內部已經考慮 missing 對結果的修正。所以你**直接丟 NA 進去就好**。
+
+### Stratified analysis（分層分析）
+
+「先把人分群、群內比一比、再加權平均」。
+**比喻**：要比兩家醫院的存活率，不能直接比，因為一家收的都是嚴重病人。
+正確：先「同樣嚴重度群」內比一比，再加權合併。
+
+**為什麼比例的比較要 stratify？**
+RCT 隨機分組會配合「分層因子」做隨機（stratified randomisation），分析時要用同樣分層配合，**才會 unbiased**。
+
+### CMH-weighted proportion / Cochran-Mantel-Haenszel 加權比例
+
+把每個 stratum 算自己的「兩組差異」，再用 stratum 樣本數加權平均。
+**比喻**：班會主席選舉，先按系投票算各系候選人領先幅度，再用各系人數加權算全校總差異。
+
+權重公式 $w_k = \frac{n_{1k} \cdot n_{2k}}{n_{1k} + n_{2k}}$，是「兩 arm 樣本數的調和平均」——直觀意思是「這個 stratum 兩 arm 都夠多人才有發言權」。
+
+### 95% confidence interval（95% 信賴區間）
+
+「如果你重做這個試驗 100 次，估計值會落在這個區間 95 次」。
+**口訣**：CI 越窄越有把握、越寬越是「拍胸脯說的話打折」。
+n 變小、CI 會變寬約 $\sqrt{n_{\text{old}} / n_{\text{new}}}$ 倍。
+
+### p value（nominal P）
+
+「假設兩組真的沒差，這份資料剛好出現這麼大差異的機率」。
+< 0.05 通常被當作「顯著」。
+
+**Nominal P** 是「沒有為多重比較校正過的 p」——只看單一檢定，不能因為「整篇 paper 跑了 30 個 p、有一個 < 0.05」就大聲宣告。Paper 在 head-to-head exploratory analysis 用 nominal P 是合理的。
+
+### Power / 效能
+
+「如果真的有 X 大的差異，你的試驗有多大機率抓得到（p < 0.05）」。
+n 越大 power 越強。
+RWE 院內 cohort n 通常 100–300，**power 比 RCT 弱很多**——所以「結果不顯著」不代表「沒效」，可能只是「人數不夠抓出來」。
+
+### Kaplan–Meier 曲線
+
+橫軸時間、縱軸「直到 t 為止還沒事件的比例」（或反過來：cumulative incidence = 已發生比例）。
+階梯狀下降，每次有人發生事件就掉一階。
+
+**為什麼不用 mean / proportion？** 因為到追蹤結束都還沒事件的人，你不能說「他的事件時間是無限大」，但也不能丟掉他——KM 的精神是「他已知活到 X 週」，剩下的不知道（censored）。
+
+### Censoring（設限）
+
+到觀察結束都沒發生事件、或失聯的人，**不是事件、也不是「沒事件」**，而是「我們只知道他活到 t」。
+**比喻**：你問病人「會不會復發」，但他下個月就出國移民，你不能說他「沒復發」也不能說「復發」——他是 censored at 移民日。
+
+### Hazard ratio（HR）
+
+「兩組事件**發生的瞬間速率**的比值」。
+HR = 1 → 兩組一樣。HR > 1 → 第一組事件更快發生。HR < 1 → 反之。
+
+**注意**：HR 不是 risk ratio，也不是 odds ratio。HR 是「在還沒發生事件的人之中，今天發生事件的機率比」——所以可以隨時間變化（PH 假設就是「不變」）。
+
+### Log-rank test
+
+KM 兩條曲線「整體形狀有沒有顯著差異」的 p value。
+**比喻**：兩個爬山隊伍誰先到山頂？log-rank 在問「兩條路徑曲線是不是看起來像同一條」。
+
+### Cox regression（Cox 比例風險模型）
+
+時間序列版的迴歸。
+**比喻**：在 KM 之外加 covariate（年齡、嚴重度、用藥），讓 HR 是「校正過其他因素之後的純藥效果」。
+
+### ITT（intention-to-treat）
+
+「按隨機分組那一刻的 arm 來分析，不管後來換組、停藥、退出」。
+保守、防止「治療換組偏向有效組」造成 bias。
+
+### Post-hoc analysis
+
+「事後分析」——試驗結束之後才想到的問題。
+**注意**：post-hoc 比 pre-specified 弱，因為「事後找的洞容易好像 chance findings」。Cheung 2025 是 post-hoc，所以 paper 寫 "exploratory" 而非 "confirmatory"，且 P 都標 nominal。
+
+---
+
+## F. ELI5：R / 程式（給沒寫過 code 的醫師）
+
+### R / RStudio / Posit.Cloud / Quarto 是什麼
+
+| 名詞 | 是什麼 | 對應 |
+|---|---|---|
+| **R** | 一個程式語言，專門做統計 | 像「英文」 |
+| **RStudio** | 寫 R 的編輯器（IDE） | 像「Word」 |
+| **Posit.Cloud** | 在瀏覽器裡跑的 RStudio | 像「Google Docs」 |
+| **Positron** | 新版 IDE（VS Code 系），桌面安裝 | 像「Notion」 |
+| **Quarto** | 把 code、文字、圖、表合在一起的「會跑 code 的 Word」 | 像「Jupyter Notebook 的進化版」 |
+| **`.qmd`** | Quarto 檔的副檔名 | 像「`.docx`」 |
+| **`_book/`** | Quarto book render 之後的 HTML 輸出 | 像 PowerPoint 匯出的 PDF |
+
+### 變數（variable）
+
+「一個盒子，裝資料」。
+```r
+n <- 1329    # n 這個盒子裡裝著數字 1329
+patient_id <- "PT-001"  # 字串
+```
+
+### 函數（function）/ 引數（argument）
+
+「一台機器，吃材料、吐結果」。
+```r
+mean(c(60, 62, 58))   # mean = 機器名；c(60, 62, 58) = 引數
+# 結果：60
+```
+
+### 套件（package）/ `library()` / `pak::pak()`
+
+**套件**就是「別人寫好的函數工具箱」。
+- `install.packages("ggplot2")` 或 `pak::pak("ggplot2")`：**第一次**裝（像安裝 App）
+- `library(ggplot2)`：每次用之前**召喚**（像打開 App）
+
+### Data frame / tibble
+
+「Excel 表格進到 R 的版本」。
+- 每欄是一個變項（column = variable）
+- 每列是一筆觀察（row = patient × visit 之類）
+- `tibble` 是 tidyverse 加強版的 data frame，print 出來比較漂亮
+
+```r
+glimpse(baseline)   # 看欄位
+head(baseline)      # 看前 6 列
+```
+
+### Factor（類別變項）
+
+「有限選項」的變項。例如 `arm` 只能是 `faricimab` 或 `aflibercept`。
+**為什麼要轉 factor？** 跑 model 時，R 會把 factor 自動展開成 dummy variables，並且**第一個 level 是 reference**。
+
+```r
+factor(arm, levels = c("aflibercept", "faricimab"))
+# aflibercept 是 reference，model 跑出來的 coef 是「faricimab vs aflibercept」
+```
+
+### `NA`（缺失值）
+
+「這格沒資料」。R 對 NA 很敏感：
+```r
+mean(c(1, 2, NA))         # 結果是 NA！
+mean(c(1, 2, NA), na.rm = TRUE)   # 對：先把 NA 拿掉
+```
+MMRM / Cox 等 model 預設能處理 NA，不用你先補。
+
+### Pipe `|>`（管線符號）
+
+「把左邊的東西餵給右邊」。
+```r
+# 不用 pipe
+filter(mutate(baseline, age_group = age > 70), arm == "faricimab")
+
+# 用 pipe — 從左讀到右就是動作順序
+baseline |>
+  mutate(age_group = age > 70) |>
+  filter(arm == "faricimab")
+```
+讀法：「拿 baseline，**然後**加一欄 age_group，**然後**篩 faricimab」。
+
+### dplyr 五大動詞
+
+| 動詞 | 做什麼 | 比喻 |
+|---|---|---|
+| `filter()` | 留某些 row | 篩選病人 |
+| `select()` | 留某些 column | 選欄位 |
+| `mutate()` | 加 / 改一欄 | 算新欄 |
+| `summarise()` | 把多列收成一列 | 總結 |
+| `group_by()` | 分群（與上面四個合用） | 分組做 |
+
+### `pivot_longer()` / `pivot_wider()`
+
+格式轉換。Long format 用在 model；wide format 用在 table。
+```r
+# wide → long
+wide |>
+  pivot_longer(cols = c(bcva_w0, bcva_w4, bcva_w8, bcva_w12),
+               names_to = "visit", values_to = "bcva")
+```
+
+### ggplot2 三件套
+
+```r
+ggplot(data, aes(x = ..., y = ..., colour = ...)) +
+  geom_line() +              # 圖層：折線
+  theme_minimal()            # 風格
+```
+- **`aes()`**：「把資料的哪些欄位對應到圖的哪些位置」
+- **`geom_*`**：「畫什麼圖層」（line、bar、point、ribbon...）
+- **`theme_*`**：「整體風格」
+
+### Quarto chunk / `echo` / `eval`
+
+`.qmd` 裡的 R code 區塊：
+````
+```{{r}}
+#| label: my-chunk
+#| echo: true   # 顯示 code（給人看）
+#| eval: true   # 跑 code（產生結果）
+mean(c(1, 2, 3))
+```
+````
+`echo: false`：藏 code、只放結果。
+`eval: false`：不跑、只當文件 reference。
+
+### Render / Knit
+
+「把 `.qmd` 變成 HTML / PDF / docx」。
+```bash
+quarto render          # 命令列
+```
+或在 RStudio 按 **Render** 按鈕。
+
+---
+
+## G. 名詞速查表
+
+按主題分。對縮寫沒概念時翻這裡。
+
+### G.1 眼科 / 疾病
+
+| 縮寫 | 全名 | 中文 / 速解 |
+|---|---|---|
+| **nAMD** | neovascular age-related macular degeneration | 新生血管性年齡相關黃斑部退化 |
+| **BCVA** | best-corrected visual acuity | 最佳矯正視力（用 ETDRS letters） |
+| **ETDRS letter** | Early Treatment Diabetic Retinopathy Study chart | 視力表計分制；總分 0–100，越高越好 |
+| **CST** | central subfield thickness | 中央視網膜厚度（μm） |
+| **IRF** | intraretinal fluid | 視網膜「內」液 |
+| **SRF** | subretinal fluid | 視網膜「下」液 |
+| **OCT** | optical coherence tomography | 光學同調斷層掃描 |
+| **VEGF / VEGF-A** | vascular endothelial growth factor | 血管內皮生長因子（眼藥標的） |
+| **Ang-2** | angiopoietin-2 | 血管生成素 2（faricimab 額外標靶） |
+| **anti-VEGF** | anti-VEGF therapy | 玻璃體內注射的眼用 VEGF 抑制劑類藥 |
+| **ILM** | internal limiting membrane | 視網膜內界膜 |
+| **RPE** | retinal pigment epithelium | 視網膜色素上皮層 |
+| **LLD** | low-luminance deficit | 低光線視力差距（隨機分層因子之一） |
+| **CRC** | central reading center | 中央影像判讀中心 |
+
+### G.2 給藥 / 試驗設計
+
+| 縮寫 | 全名 | 中文 / 速解 |
+|---|---|---|
+| **Q4W / Q8W / Q12W / Q16W** | every X weeks | 每 X 週給一次（Q = each） |
+| **T&E** | treat and extend | 治療延伸式給藥（穩定就拉長間隔） |
+| **TENAYA** / **LUCERNE** | — | Roche faricimab 兩個 phase 3 RCT |
+| **head-to-head** | — | 兩藥同期同 dose 直接對打的 phase |
+| **noninferiority** | — | 非劣性（證明「不比對手差」，不需證明「贏」） |
+
+### G.3 試驗 / 研究類型
+
+| 縮寫 | 全名 | 速解 |
+|---|---|---|
+| **RCT** | randomized controlled trial | 隨機對照試驗（藥證最高證據） |
+| **RWE** | real-world evidence | 真實世界證據（院內 cohort、健保資料） |
+| **ITT** | intention-to-treat | 按隨機那刻分組分析（不管後來換組） |
+| **PP** | per-protocol | 按實際接受治療分析（補充 ITT 用） |
+| **post hoc** | — | 事後分析；保守、用 nominal P |
+| **pre-specified** | — | 事先註冊在 protocol 裡的分析 |
+| **IRB** | institutional review board | 倫理審查委員會 |
+| **cohort** | — | 一群被追蹤的病人 |
+| **propensity score** | — | RWE 校正非隨機 bias 的方法（不在本書 scope） |
+
+### G.4 統計
+
+| 縮寫 | 全名 | 速解 |
+|---|---|---|
+| **MMRM** | mixed model for repeated measures | 重複測量混合模型；本書 Part 3 |
+| **CMH** | Cochran-Mantel-Haenszel | 分層加權檢定；本書 Part 4 |
+| **KM** | Kaplan–Meier | 存活曲線；本書 Part 6 |
+| **Cox** | Cox proportional hazards | 比例風險迴歸；產出 HR |
+| **HR** | hazard ratio | 風險比（time-to-event 的「比值」） |
+| **OR** | odds ratio | 勝算比（二分類 outcome） |
+| **RR** | risk ratio / relative risk | 風險比（二分類 outcome） |
+| **SD** | standard deviation | 標準差 |
+| **SE** | standard error | 標準誤（estimate 的不確定度） |
+| **CI** | confidence interval | 信賴區間 |
+| **SMD** | standardized mean difference | 標準化均差（RWE Table 1 用） |
+| **MAR** | missing at random | 缺失值與未測值無關（MMRM 預設） |
+| **MNAR** | missing not at random | 缺失值跟數值有關；難處理 |
+| **MCAR** | missing completely at random | 完全隨機缺失；最理想但少見 |
+| **ANOVA** | analysis of variance | 變異數分析（多組均值比較） |
+| **ANCOVA** | analysis of covariance | 共變量分析（ANOVA + adjust covariate） |
+| **emmeans** | estimated marginal means | 校正過其他變項後的「邊際平均」 |
+
+### G.5 工具 / 工程
+
+| 縮寫 | 全名 | 速解 |
+|---|---|---|
+| **R** | — | 統計程式語言 |
+| **RStudio** / **Positron** | — | R 的 IDE |
+| **Posit.Cloud** | — | 雲端 RStudio（免安裝） |
+| **Quarto** | — | 整合 code + 文 + 圖的科學文件系統 |
+| **PPM** | Posit Public Package Manager | R 套件 binary 加速鏡像 |
+| **CRAN** | Comprehensive R Archive Network | R 官方套件庫 |
+| **IDE** | integrated development environment | 寫 code 的編輯器 |
+| **CSV** | comma-separated values | 純文字表格檔（Excel 也能開） |
+| **`.qmd`** | Quarto markdown | 本書每章的副檔名 |
+| **render** | — | 把 `.qmd` 變 HTML/PDF |
+| **chunk** | — | qmd 裡的 R 程式碼區塊 |
+
+---
+
+## H. 引用
+
+如果這份教材對你的 paper 有用，引用 reference paper：
+
+> Cheung CMG, Lim JI, Priglinger S, et al. Anatomic Outcomes with Faricimab vs Aflibercept in Head-to-Head Dosing Phase of the TENAYA/LUCERNE Trials in Neovascular Age-related Macular Degeneration. *Ophthalmology*. 2025;132(5):519-526.
+
+教材本身採用 CC BY 4.0，可自由修改與再散布。

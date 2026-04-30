@@ -1,0 +1,177 @@
+# Part 2：Table 1 — Baseline characteristics
+
+```{r}
+#| label: setup-part2
+#| include: false
+source("_common.R")
+library(readr)
+library(dplyr)
+library(gtsummary)
+library(gt)
+
+baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
+```
+
+預計時間：20 分鐘。
+**deliverable：一張 Table 1，看起來像投到 Ophthalmology 的版本。**
+
+::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
+> 我有一個 R data frame `baseline`，欄位包括：patient_id, arm (faricimab/aflibercept), study, region, age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat。請用 `gtsummary::tbl_summary()` 做一個 Table 1：
+>
+> 1. by `arm` 分兩欄
+> 2. 連續變項顯示 mean (SD)
+> 3. 二元變項 irf_baseline / srf_baseline 顯示 n (%)
+> 4. 加 add_overall() 多一欄總計
+> 5. 加 add_p() 顯示組間檢定 p value
+> 6. 把欄位名稱改成 paper 風格的英文 label
+>
+> 請給我可以直接貼到 RStudio Console 跑的 code，加中文註解。
+:::
+
+---
+
+::: {.callout-tip title="📖 名詞｜ETDRS letters / mean (SD) / n (%)"}
+- **ETDRS letters** = 國際標準視力表，每行 5 letter，看清楚一行 = 5 letter；總分 0–100。+5 letter ≈ 視力「進步一行」
+- **mean (SD)** = 平均 (標準差)，連續變項的 paper 標準寫法。SD 大 = 個體差異大
+- **n (%)** = 人數 (百分比)，類別變項標準寫法
+:::
+
+## 任務 6：第一張 Table 1
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用 R 套件 `gtsummary` 的 `tbl_summary()` 做一張 Table 1，by `arm` 分組，包含這些變項：age, sex, region, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, study, bcva_strat, lld_strat。連續變項顯示 mean (SD)，二元 irf_baseline 和 srf_baseline 顯示 n (%)。
+
+### 參考程式碼
+
+```{r}
+#| label: tbl1-basic
+t1_basic <- baseline |>
+  select(arm, age, sex, region, bcva_baseline, cst_baseline,
+         irf_baseline, srf_baseline, study, bcva_strat, lld_strat) |>
+  tbl_summary(
+    by = arm,
+    type = list(
+      age ~ "continuous",
+      bcva_baseline ~ "continuous",
+      cst_baseline ~ "continuous",
+      irf_baseline ~ "dichotomous",
+      srf_baseline ~ "dichotomous"
+    ),
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = list(
+      all_continuous() ~ 1,
+      all_categorical() ~ c(0, 1)
+    ),
+    label = list(
+      age ~ "Age, years",
+      sex ~ "Sex",
+      region ~ "Region",
+      bcva_baseline ~ "BCVA at baseline, ETDRS letters",
+      cst_baseline ~ "CST at baseline, μm",
+      irf_baseline ~ "IRF present at baseline",
+      srf_baseline ~ "SRF present at baseline",
+      study ~ "Study",
+      bcva_strat ~ "BCVA stratum",
+      lld_strat ~ "LLD stratum"
+    )
+  )
+
+t1_basic
+```
+
+::: {.callout-tip title="🎯 對得起 paper 嗎？"}
+看 BCVA 那一列：兩臂應該都接近 60.0 (SD ~13)；
+CST 兩臂都接近 357 (SD ~120)。
+如果差很多，回去檢查模擬資料 — 但你應該不會差。
+:::
+
+---
+
+## 任務 7：加 overall 與 p value
+
+📋 **複製這段話，貼給 AI**：
+
+> 在剛剛那張 Table 1 上加：
+> 1. `add_overall()` 多一欄「Total」
+> 2. `add_p()` 顯示兩臂之間的差異檢定 p value
+> 3. 把 footer 改成繁體中文「連續變項：mean (SD)；類別變項：n (%)；組間檢定為 t-test 或 χ²」
+
+### 參考程式碼
+
+```{r}
+#| label: tbl1-with-p
+t1 <- t1_basic |>
+  add_overall() |>
+  add_p() |>
+  modify_footnote(
+    update = all_stat_cols() ~ "連續變項：mean (SD)；類別變項：n (%)"
+  ) |>
+  modify_caption("**Table 1.** Baseline characteristics by treatment arm")
+
+t1
+```
+
+::: {.callout-note title="如何讀 p value"}
+這是 RCT，**所有 baseline 變項的 p 都應該不顯著**（p > 0.05）—— 因為隨機分派應該讓兩組平衡。
+如果你以後做 RWE 看到某些 baseline 變項 p < 0.05，那是「兩組基線不平衡」，要在 model 裡 adjust。
+:::
+
+---
+
+## 任務 8：存成檔案
+
+📋 **複製這段話，貼給 AI**：
+
+> 請告訴我怎麼把這張 `gtsummary` table 存成 (a) html (b) docx，給共同作者看。
+
+### 參考程式碼
+
+```{r}
+#| label: tbl1-save
+#| eval: false
+# 存 HTML（瀏覽器打開）
+t1 |>
+  as_gt() |>
+  gt::gtsave(filename = "table1.html")
+
+# 存 Word docx（要先裝 gt 的最新版）
+t1 |>
+  as_flex_table() |>
+  flextable::save_as_docx(path = "table1.docx")
+```
+
+---
+
+## 任務 9：怎麼讀 Table 1 判斷「兩組是否平衡」
+
+📋 **複製這段話，貼給 AI**：
+
+> 在 RCT paper 裡，Table 1 通常用來說明兩組基線特性平衡。請用繁體中文告訴我：
+> 1. 看哪些 row？
+> 2. 為什麼大部分 RCT 的 Table 1 不會放 p value（or 放但不強調）？
+> 3. 如果是 RWE，Table 1 該放什麼？標準化差異（SMD）是什麼？
+
+::: {.callout-tip title="速記"}
+- **RCT**：Table 1 是 descriptive，p value 是 ritual（隨機分派理論上組間差異是 chance）
+- **RWE / observational**：Table 1 用來找需要 adjust 的 confounder，看 **SMD > 0.1** 的變項
+- 用 `gtsummary::add_difference()` 或 `tableone::CreateTableOne()` 可以加 SMD
+:::
+
+::: {.callout-tip title="📖 名詞｜SMD（standardized mean difference）"}
+標準化均差。RCT 用 p value 看 baseline 平衡夠不夠，但 RWE 沒有隨機分派，**SMD 是 paper reviewer 比較買單的指標**：
+SMD 把「兩組差距」除以「合併標準差」，這樣不同單位（年齡 vs 視力 letters）也能比較。
+**SMD > 0.1 通常被認為「值得 adjust」**。
+:::
+
+---
+
+::: {.callout-note title="本章重點"}
+1. `gtsummary::tbl_summary()` 一行寫完論文等級的 Table 1
+2. by = arm 自動分欄
+3. RCT 的 Table 1 看「兩組差不多」就好；RWE 看 SMD
+4. `as_gt()` 之後可存 html/docx，丟給共同作者
+:::

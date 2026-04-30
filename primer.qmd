@@ -1,0 +1,475 @@
+# Primer：給非眼科醫師的背景補充 {.unnumbered}
+
+```{r}
+#| label: setup-primer
+#| include: false
+source("_common.R")
+```
+
+::: {.callout-tip}
+**眼科醫師可以跳過這章。** 這是給跨科背景（內科、血液腫瘤、家醫、研究員）或非醫師助教的補習。
+:::
+
+這份 primer 不是教科書節錄，是「**進這堂課前 30 分鐘該知道的所有東西**」。
+讀完你應該能跟眼科醫師同桌討論 paper、看 OCT 不會迷路、知道 faricimab 為什麼是大事。
+
+---
+
+## 1. 我們今天的舞台：nAMD（neovascular age-related macular degeneration）
+
+| 屬性 | nAMD |
+|---|---|
+| 中文 | 新生血管性年齡相關黃斑部退化 |
+| 患者 | 50 歲以上，全球 ~2,000 萬人、台灣 ~30 萬 |
+| 病理 | 黃斑部底下長異常新血管 → 漏液 / 出血 → 視網膜結構破壞 → 視力急速喪失 |
+| 失明速度 | 不治療：3 個月失中央視力；治療：可穩定甚至改善 |
+| 治療年代 | 2006 anti-VEGF 出現後完全改寫 |
+
+**為什麼是大事？**
+- nAMD 是西方國家**老年失明 #1 原因**
+- 沒治療 → 失明、無法駕車、生活自主性崩盤
+- anti-VEGF 是現代藥物史最成功的眼科例子（救回的視力數量級可比 statin 救回的心血管事件）
+
+---
+
+## 2. 眼底 30 秒解剖（你需要的部分）
+
+```{r}
+#| label: fig-eye-anatomy
+#| echo: false
+#| fig-cap: "視網膜層狀解剖（橫切示意，上 = 眼球內側 / 下 = 鞏膜側；層厚不等比例）"
+#| fig-width: 8
+#| fig-height: 4
+
+layers <- data.frame(
+  ymin = c(70, 40, 35, 0),
+  ymax = c(100, 70, 40, 35),
+  fill = c("#DCE9F2", "#FFE9C5", "#332014", "#B65A57"),
+  label = c("玻璃體 (vitreous)",
+            "視網膜 (retina, ~10 層神經組織)",
+            "RPE 色素上皮",
+            "脈絡膜 (choroid, 血管層)"),
+  text_y = c(85, 55, 37.5, 17.5),
+  text_col = c("black", "black", "white", "white")
+)
+
+ggplot() +
+  geom_rect(data = layers,
+            aes(xmin = 0, xmax = 100, ymin = ymin, ymax = ymax, fill = fill)) +
+  geom_text(data = layers,
+            aes(x = 50, y = text_y, label = label, colour = text_col),
+            size = 4) +
+  scale_fill_identity() + scale_colour_identity() +
+  annotate("point", x = 50, y = 55, size = 2.5, colour = "#7B5CA8") +
+  annotate("curve", x = 50, y = 55, xend = 80, yend = 82,
+           curvature = -0.25, linewidth = 0.4,
+           arrow = arrow(length = unit(2, "mm"), ends = "first")) +
+  annotate("label", x = 80, y = 82, hjust = 0, size = 3.2,
+           label = "黃斑部中央凹 fovea (~1 mm)\n→ CST 量這裡",
+           label.size = 0, fill = "white") +
+  coord_cartesian(xlim = c(0, 100), ylim = c(0, 100), expand = FALSE) +
+  theme_void(base_size = 11)
+```
+
+**關鍵詞**：
+- **macula（黃斑部）**：視網膜中央 ~5 mm 區，負責中央銳利視力（讀字、看臉）
+- **fovea（中央凹）**：黃斑部正中央 1 mm，這裡的視覺細胞密度最高
+- **RPE（retinal pigment epithelium，色素上皮）**：視網膜底下一層黑色色素細胞，**nAMD 的新生血管是從這層底下竄上來的**
+- **choroid（脈絡膜）**：RPE 後面的血管層，是新生血管的源頭
+
+**心臟科類比**：黃斑部之於視網膜，像左前降支 LAD 之於冠狀動脈——出問題後果最嚴重。
+
+---
+
+## 3. nAMD 的 pathophysiology（30 秒版）
+
+```{r}
+#| label: fig-namd-pathophys
+#| echo: false
+#| fig-cap: "nAMD 病理生理 6 步流程"
+#| fig-width: 7
+#| fig-height: 5
+
+nodes <- data.frame(
+  y = 6:1,
+  label = c("老化 + 基因 + 環境",
+            "RPE 與脈絡膜功能下降",
+            "缺氧 → VEGF-A、Ang-2 上升",
+            "脈絡膜長出異常新血管 (CNV)",
+            "新血管漏液 / 出血 → 視網膜層 fluid",
+            "視網膜結構紊亂 → 視覺細胞凋亡 → BCVA ↓")
+)
+edges <- data.frame(
+  y_from = (6:2) - 0.30,
+  y_to   = (5:1) + 0.30
+)
+
+ggplot() +
+  geom_segment(data = edges,
+               aes(x = 0, xend = 0, y = y_from, yend = y_to),
+               arrow = arrow(length = unit(2.5, "mm"), type = "closed"),
+               linewidth = 0.4) +
+  geom_label(data = nodes, aes(x = 0, y = y, label = label),
+             fill = "#F4F0FA", colour = "black",
+             label.padding = unit(0.45, "lines"), size = 3.6) +
+  coord_cartesian(xlim = c(-3, 3), ylim = c(0.4, 6.4), expand = FALSE) +
+  theme_void(base_size = 11)
+```
+
+**治療目標**：把 VEGF（及 Ang-2）關掉 → 新血管萎縮 → 漏液停止 → 視網膜恢復。
+
+---
+
+## 4. anti-VEGF：眼科最大的藥物突破
+
+VEGF-A（vascular endothelial growth factor A）= 血管生成的核心訊號。
+anti-VEGF 藥 = 直接綁住 VEGF-A 不讓它作用。
+
+**怎麼給藥**：
+- **玻璃體內注射（intravitreal injection, IVI）**——細針從眼白旁邊插進玻璃體，直接把藥推到眼球內
+- 局部痛感、無系統毒性
+- 每 4–16 週一次，依藥 / 病情而異
+
+| 藥 | 廠商 | 機制 | 上市 |
+|---|---|---|---|
+| **ranibizumab** (Lucentis) | Genentech/Roche/Novartis | anti-VEGF-A | 2006 |
+| **aflibercept 2 mg** (Eylea) | Regeneron/Bayer | anti-VEGF-A + VEGF-B + PlGF | 2011 |
+| **bevacizumab** (Avastin, off-label) | Roche | anti-VEGF-A（原為腫瘤藥） | 仿單外 |
+| **brolucizumab** (Beovu) | Novartis | anti-VEGF-A 小分子 | 2019（後因 vasculitis 副作用受限） |
+| **aflibercept 8 mg** (Eylea HD) | Regeneron/Bayer | 高劑量版 | 2023 |
+| **faricimab** (Vabysmo) | Roche/Genentech | **anti-VEGF-A + anti-Ang-2 雙標靶** | 2022 |
+
+---
+
+## 5. faricimab 為什麼特別
+
+faricimab 是**全球第一個眼科雙特異性抗體**（bispecific antibody），同時綁：
+
+1. **VEGF-A**——標準 anti-VEGF 路徑
+2. **Ang-2**（angiopoietin-2）——血管不穩定的訊號
+
+```{r}
+#| label: fig-faricimab-mechanism
+#| echo: false
+#| fig-cap: "VEGF-A 與 Ang-2 雙路徑：aflibercept 只擋一邊、faricimab 同擋兩邊"
+#| fig-width: 8
+#| fig-height: 5.5
+
+nodes <- data.frame(
+  x  = c(2, 8, 5, 5, 2, 8),
+  y  = c(8.5, 8.5, 6.5, 4.5, 2, 2),
+  label = c("VEGF-A↑", "Ang-2↑",
+            "血管增生 + 血管不穩 + 漏液",
+            "nAMD 病灶",
+            "ranibizumab /\naflibercept\n(只擋 VEGF)",
+            "faricimab\n(雙標靶 VEGF + Ang-2)"),
+  fill = c("#FFEFD9", "#FFEFD9", "#F4F0FA", "#F0E2EE",
+           "#7E9CB7", "#7B5CA8"),
+  text_col = c("black", "black", "black", "black", "white", "white"),
+  size_lbl = c(4, 4, 3.6, 4, 3.4, 3.4)
+)
+edges <- data.frame(
+  x_from = c(2, 8, 5, 5, 5),
+  y_from = c(8, 8, 6, 4, 4),
+  x_to   = c(4.6, 5.4, 5, 2.5, 7.5),
+  y_to   = c(7, 7, 5, 2.6, 2.6)
+)
+
+ggplot() +
+  geom_segment(data = edges,
+               aes(x = x_from, xend = x_to, y = y_from, yend = y_to),
+               arrow = arrow(length = unit(2.5, "mm"), type = "closed"),
+               linewidth = 0.5) +
+  geom_label(data = nodes,
+             aes(x = x, y = y, label = label,
+                 fill = fill, colour = text_col, size = size_lbl),
+             label.size = 0, label.padding = unit(0.4, "lines")) +
+  scale_fill_identity() + scale_colour_identity() + scale_size_identity() +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0.5, 9.5), expand = FALSE) +
+  theme_void(base_size = 11)
+```
+
+**藥理意義**：
+- aflibercept 把 VEGF 擋住但 Ang-2 還在，血管「不穩」這一塊沒解
+- faricimab 同時擋兩條路徑 → 血管更穩 → 漏液更快好 → 可以**拉長注射間隔**（最長 Q16W vs aflibercept 的 Q8W）
+
+**對 paper 的意義**：今天讀的 Cheung 2025 就是在比較「faricimab 的 anatomic outcome（CST、SRF）是不是比 aflibercept 好」——這直接驗證雙標靶 hypothesis。
+
+---
+
+## 6. OCT 一張圖看懂
+
+**OCT（optical coherence tomography）**：用紅外光做的「視網膜超音波」。**非侵入性**、20 秒內掃完一隻眼睛、空間解析度 ~5 μm。
+
+OCT 切片看起來像這樣（橫切視網膜）：
+
+```{r}
+#| label: fig-oct-cst
+#| echo: false
+#| fig-cap: "OCT 橫切視網膜：CST 的量法（ILM 到 RPE 的垂直距離）"
+#| fig-width: 8
+#| fig-height: 4
+
+ggplot() +
+  annotate("rect", xmin = 0, xmax = 100, ymin = 75, ymax = 92, fill = "#DCE9F2") +
+  annotate("rect", xmin = 0, xmax = 100, ymin = 30, ymax = 75, fill = "#FFE9C5") +
+  annotate("rect", xmin = 0, xmax = 100, ymin = 27, ymax = 30, fill = "#332014") +
+  annotate("rect", xmin = 0, xmax = 100, ymin = 0,  ymax = 27, fill = "#B65A57") +
+  annotate("segment", x = 0, xend = 100, y = 75, yend = 75,
+           colour = "black", linewidth = 0.5) +
+  annotate("segment", x = 50, xend = 50, y = 30, yend = 75,
+           arrow = arrow(length = unit(2.5, "mm"), ends = "both"),
+           colour = "#7B5CA8", linewidth = 0.7) +
+  annotate("label", x = 60, y = 52.5, hjust = 0, size = 3.4,
+           label.size = 0, fill = "white",
+           label = "CST\n(中央視網膜厚度,\n正常 ~250 μm)") +
+  annotate("label", x = 5, y = 75, hjust = 0, vjust = 0.5, size = 3,
+           label = "ILM (內界膜)", label.size = 0, fill = "white") +
+  annotate("text", x = 30, y = 52, label = "視網膜（神經層 ~10 層）", size = 3.3) +
+  annotate("text", x = 30, y = 28.5, label = "RPE 色素上皮", colour = "white", size = 3) +
+  annotate("text", x = 30, y = 13.5, label = "脈絡膜", colour = "white", size = 3.3) +
+  annotate("text", x = 50, y = 87, label = "玻璃體", colour = "grey30", size = 3) +
+  coord_cartesian(xlim = c(0, 100), ylim = c(0, 95), expand = FALSE) +
+  theme_void(base_size = 11)
+```
+
+**正常 CST** ≈ 250–280 μm。**nAMD 患者** ≈ 300–500+ μm（變厚是因為水腫）。
+
+### OCT 上看 fluid 兩種
+
+```{r}
+#| label: fig-oct-fluid
+#| echo: false
+#| fig-cap: "OCT 三種樣態：(A) 正常、(B) IRF 在視網膜內、(C) SRF 在視網膜下方 RPE 上方"
+#| fig-width: 11
+#| fig-height: 3.5
+
+library(patchwork)
+
+panel <- function(title, fluids = NULL) {
+  p <- ggplot() +
+    annotate("rect", xmin = 0, xmax = 100, ymin = 30, ymax = 75, fill = "#FFE9C5") +
+    annotate("rect", xmin = 0, xmax = 100, ymin = 27, ymax = 30, fill = "#332014") +
+    annotate("rect", xmin = 0, xmax = 100, ymin = 0,  ymax = 27, fill = "#B65A57") +
+    annotate("segment", x = 0, xend = 100, y = 75, yend = 75,
+             colour = "black", linewidth = 0.4) +
+    coord_cartesian(xlim = c(0, 100), ylim = c(0, 80), expand = FALSE) +
+    labs(title = title) +
+    theme_void(base_size = 10) +
+    theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 11,
+                                    margin = margin(b = 4)))
+  if (!is.null(fluids)) {
+    p <- p + geom_point(data = fluids, aes(x = x, y = y, size = sz),
+                        shape = 21, fill = "#7FB3DA",
+                        colour = "#1F5C8B", stroke = 0.7) +
+      scale_size_identity()
+  }
+  p
+}
+
+p_norm <- panel("(A) 正常")
+p_irf  <- panel("(B) IRF（視網膜內液）",
+                fluids = data.frame(x = c(35, 60), y = c(55, 50), sz = c(8, 6)))
+p_srf  <- panel("(C) SRF（視網膜下液）",
+                fluids = data.frame(x = c(45, 60), y = c(31, 32), sz = c(11, 6)))
+
+p_norm | p_irf | p_srf
+```
+
+| 類別 | 位置 | 意義 | 治療 priority |
+|---|---|---|---|
+| **IRF** (intraretinal fluid) | 視網膜各層**內**的水泡 | 比較不好，提示主動 disease | 高，必須積極治療 |
+| **SRF** (subretinal fluid) | 視網膜**下方** vs RPE 之間 | 比較不確定，少量 SRF 可能保護視網膜 | 中 |
+| **PED** (pigment epithelial detachment) | RPE 跟 Bruch 膜分離 | nAMD 標誌之一 | 看大小 |
+
+**治療目標**：把 IRF + SRF 都消掉（"fluid-free retina"）。
+**Cheung 2025 的核心 outcome**：「faricimab 比 aflibercept 多少病人在 week 12 fluid 全消？」
+
+---
+
+## 7. 視力怎麼量
+
+### Snellen vs decimal vs ETDRS letters
+
+| 系統 | 例子 | 用在哪 |
+|---|---|---|
+| **Snellen** | 6/6, 20/20, 6/12, 20/40 | 臨床日常 |
+| **decimal** | 1.0, 0.5, 0.1 | 台灣 / 日本臨床 |
+| **ETDRS letters** | 0–100 letters | **眼科 trial 唯一標準** |
+
+**換算速記**：
+
+| ETDRS letters | Snellen | decimal |
+|---|---|---|
+| 100 | 20/10 | 2.0 |
+| 85 | 20/20 (6/6) | 1.0 |
+| 70 | 20/40 (6/12) | 0.5 |
+| 55 | 20/100 (6/30) | 0.2 |
+| 35 | 20/200 (6/60) | 0.1（**法定低視能**）|
+| 0 | 20/2000 | 0.01 |
+
+**為什麼用 letters？**
+- 連續變項（適合 t-test、MMRM）
+- 每行 5 letter，**1 行 = 5 letter**（讀懂這條就夠用）
+- 「進步 15 letters」≈ 「視力進步 3 行」≈ 從 20/40 到 20/20，是臨床顯著的一級事件
+
+**ETDRS chart**：
+
+```{r}
+#| label: fig-etdrs-chart
+#| echo: false
+#| fig-cap: "ETDRS 視力表（每行 5 letters，視角越下越小）"
+#| fig-width: 7
+#| fig-height: 5
+
+chart <- data.frame(
+  row     = 1:5,
+  letters = c("E F P", "T O Z", "L P E D", "P E C F D", "E D F C Z P"),
+  size    = c(14, 11, 9, 7, 5.5)
+)
+
+ggplot(chart, aes(x = 0, y = -row)) +
+  geom_text(aes(label = letters, size = size), family = "mono") +
+  scale_size_identity() +
+  annotate("label", x = 4, y = -1, hjust = 0, size = 3,
+           fill = "white", label.size = 0,
+           label = "85 letters ≈ 20/20") +
+  annotate("label", x = 4, y = -3, hjust = 0, size = 3,
+           fill = "white", label.size = 0,
+           label = "70 letters ≈ 20/40") +
+  annotate("label", x = 4, y = -5, hjust = 0, size = 3,
+           fill = "white", label.size = 0,
+           label = "55 letters ≈ 20/100") +
+  coord_cartesian(xlim = c(-3, 8), ylim = c(-5.5, -0.4), expand = FALSE) +
+  theme_void(base_size = 11)
+```
+
+---
+
+## 8. 給藥節奏：Q4W / Q8W / T&E
+
+「Q」 = **每**，後面數字 = 週。
+- **Q4W** = 每 4 週一針（loading dose 期通常這樣）
+- **Q8W** = 每 8 週一針（aflibercept 標準）
+- **Q12W / Q16W** = 每 12 / 16 週一針（faricimab 可拉到的）
+
+### Treatment-and-extend (T&E)
+
+「依病情拉長間隔」的策略：
+1. 先 Q4W × 3 針（loading）
+2. 病情穩定 → Q8W
+3. 再穩 → Q12W
+4. 再穩 → Q16W
+5. 一旦復發 → 縮回去
+
+**為什麼重要？**
+打針是病人的痛點：每次都要請假、家屬接送、心理壓力。**減少打針次數 = 大幅改善生活品質與健保成本**。
+faricimab 的 ~80% 患者 1 年後可以 Q12W 以上 → 比 aflibercept 顯著減少打針負擔。
+
+---
+
+## 9. anatomic 與 functional outcome 的「不平行」
+
+很多眼科 trial 會看到：
+
+> 兩個藥的 **CST / fluid（anatomic）**有顯著差異，但 **BCVA（functional）**差不多。
+
+Cheung 2025 也是這樣。為什麼？
+
+- **CST / fluid 是 disease activity 的客觀 readout** → 對藥很敏感
+- **BCVA 是 final functional output**，受很多因素影響：
+  - Photoreceptor（感光細胞）已死的不會回來
+  - Outer retina structure 已破壞的恢復有限
+  - 視神經狀況、白內障、其他眼疾
+- 短期（12 週）：解 fluid 快不一定立刻反映在 BCVA
+- 長期（48 週+）：anatomic control 好的人比較不容易視力惡化
+
+**對你讀 paper 的意義**：
+看到「anatomic 改善但 vision 沒改善」**不要急著說藥沒用**——這是 nAMD 領域常態。
+
+---
+
+## 10. 進階：Ang-Tie2 路徑
+
+如果你想了解為什麼 faricimab 加 Ang-2 是有道理的：
+
+```{r}
+#| label: fig-ang-tie2
+#| echo: false
+#| fig-cap: "Ang-Tie2 路徑：正常血管 vs nAMD 兩種狀態"
+#| fig-width: 9
+#| fig-height: 4
+
+nodes <- data.frame(
+  scenario = factor(rep(c("正常血管", "nAMD"), c(3, 4)),
+                    levels = c("正常血管", "nAMD")),
+  x  = c(1, 3, 5,  1, 1, 3, 5),
+  y  = c(2, 2, 2,  3, 1, 2, 2),
+  label = c("Ang-1", "Tie2 ON", "血管穩定 / 不漏",
+            "Ang-2 ↑", "VEGF-A ↑", "Tie2 OFF", "血管不穩 + 新生 + 漏液"),
+  fill = c("#DCE9F2", "#DCE9F2", "#A7D3A7",
+           "#FFEFD9", "#FFEFD9", "#FFEFD9", "#E89797")
+)
+edges <- data.frame(
+  scenario = factor(c("正常血管","正常血管","nAMD","nAMD","nAMD"),
+                    levels = c("正常血管","nAMD")),
+  x_from = c(1.5, 3.5, 1.5, 1.5, 3.5),
+  y_from = c(2,   2,   3,   1,   2),
+  x_to   = c(2.5, 4.5, 2.5, 2.5, 4.5),
+  y_to   = c(2,   2,   2,   2,   2)
+)
+
+ggplot() +
+  geom_segment(data = edges,
+               aes(x = x_from, xend = x_to, y = y_from, yend = y_to),
+               arrow = arrow(length = unit(2.5, "mm"), type = "closed"),
+               linewidth = 0.5) +
+  geom_label(data = nodes,
+             aes(x = x, y = y, label = label, fill = fill),
+             colour = "black", size = 3.5,
+             label.size = 0, label.padding = unit(0.4, "lines")) +
+  scale_fill_identity() +
+  facet_wrap(~scenario, ncol = 1) +
+  coord_cartesian(xlim = c(0.2, 6), ylim = c(0.5, 3.5), expand = FALSE) +
+  theme_void(base_size = 11) +
+  theme(strip.text = element_text(face = "bold", size = 12,
+                                  hjust = 0, margin = margin(b = 4, t = 4)),
+        panel.spacing = unit(0.6, "lines"))
+```
+
+faricimab 同時：
+- 擋 VEGF-A（不讓新血管長出來）
+- 綁 Ang-2（讓 Tie2 能恢復、血管穩定）
+
+→ 解 disease 的兩個面向，一次處理。
+
+---
+
+## 11. 還想再深一點？
+
+| 主題 | 推薦 |
+|---|---|
+| nAMD 病理生理學 | *Eye* (Lond) 2021;35:1305–1316 (Joussen et al., Ang-2 review) |
+| OCT 解讀 | *American Academy of Ophthalmology* OCT Atlas 線上課 |
+| anti-VEGF 全景 | Khanani 2024 *Eye* — anti-VEGF treatment paradigms |
+| faricimab 機轉 | Regula 2016 *EMBO Mol Med* — original faricimab paper |
+
+---
+
+## 12. 一頁 cheat sheet（印一份帶在身上）
+
+| 縮寫 | 想到什麼 |
+|---|---|
+| **nAMD** | 老人黃斑部底下長壞血管漏水；anti-VEGF 救它 |
+| **VEGF-A** | 血管增生訊號，anti-VEGF 主標靶 |
+| **Ang-2** | 血管不穩訊號，faricimab 第二標靶 |
+| **OCT** | 視網膜超音波（光學版） |
+| **CST** | 中央視網膜厚度（μm），越厚通常越糟 |
+| **IRF / SRF** | 視網膜內 / 下水泡，anti-VEGF 要消的東西 |
+| **BCVA** | 視力（ETDRS letters，0–100），越高越好 |
+| **ETDRS letters** | 國際標準視力分；85 ≈ 20/20、55 ≈ 20/100 |
+| **Q4W / Q8W / Q12W / Q16W** | 每幾週一針 |
+| **T&E** | 治療延伸（病情穩拉長間隔） |
+| **faricimab (Vabysmo)** | Roche 雙標靶，2022 上市，最長 Q16W |
+| **aflibercept (Eylea)** | Regeneron 標準 VEGF blocker，Q8W |
+| **TENAYA / LUCERNE** | Roche faricimab 兩個 phase 3 RCT，今天 paper 的源 |

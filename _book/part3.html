@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Part 3：Figure 1 — MMRM 跑 BCVA + CST – 讓你的 Vabysmo RWE 長得像 Ophthalmology 論文</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part4.html" rel="next">
+<link href="./part2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9b98f18118eee809be1c051eb5cc78e4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">讓你的 Vabysmo RWE 長得像 Ophthalmology 論文</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Primer：給非眼科醫師的背景補充</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Part 1：認識 paper + 認識資料</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 2：Table 1 — Baseline characteristics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Part 5：換你院內資料</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Part 6（Bonus）：Figure 3 — Time to first absence of fluid</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">附錄：回院之後的事</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#任務-10什麼是-mmrm" id="toc-任務-10什麼是-mmrm" class="nav-link active" data-scroll-target="#任務-10什麼是-mmrm"><span class="header-section-number">3.1</span> 任務 10：什麼是 MMRM？</a></li>
+  <li><a href="#任務-11把-baseline-與-followup-接起來" id="toc-任務-11把-baseline-與-followup-接起來" class="nav-link" data-scroll-target="#任務-11把-baseline-與-followup-接起來"><span class="header-section-number">3.2</span> 任務 11：把 baseline 與 followup 接起來</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼" id="toc-參考程式碼" class="nav-link" data-scroll-target="#參考程式碼"><span class="header-section-number">3.2.1</span> 參考程式碼</a></li>
+  </ul></li>
+  <li><a href="#任務-12跑-mmrm-bcva" id="toc-任務-12跑-mmrm-bcva" class="nav-link" data-scroll-target="#任務-12跑-mmrm-bcva"><span class="header-section-number">3.3</span> 任務 12：跑 MMRM — BCVA</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼-1" id="toc-參考程式碼-1" class="nav-link" data-scroll-target="#參考程式碼-1"><span class="header-section-number">3.3.1</span> 參考程式碼</a></li>
+  </ul></li>
+  <li><a href="#任務-13取-adjusted-means" id="toc-任務-13取-adjusted-means" class="nav-link" data-scroll-target="#任務-13取-adjusted-means"><span class="header-section-number">3.4</span> 任務 13：取 adjusted means</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼-2" id="toc-參考程式碼-2" class="nav-link" data-scroll-target="#參考程式碼-2"><span class="header-section-number">3.4.1</span> 參考程式碼</a></li>
+  </ul></li>
+  <li><a href="#任務-14畫-figure-1a-bcva" id="toc-任務-14畫-figure-1a-bcva" class="nav-link" data-scroll-target="#任務-14畫-figure-1a-bcva"><span class="header-section-number">3.5</span> 任務 14：畫 Figure 1A — BCVA</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼-3" id="toc-參考程式碼-3" class="nav-link" data-scroll-target="#參考程式碼-3"><span class="header-section-number">3.5.1</span> 參考程式碼</a></li>
+  </ul></li>
+  <li><a href="#任務-15複製整段跑-cst-figure-1b" id="toc-任務-15複製整段跑-cst-figure-1b" class="nav-link" data-scroll-target="#任務-15複製整段跑-cst-figure-1b"><span class="header-section-number">3.6</span> 任務 15：複製整段，跑 CST → Figure 1B</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼-4" id="toc-參考程式碼-4" class="nav-link" data-scroll-target="#參考程式碼-4"><span class="header-section-number">3.6.1</span> 參考程式碼</a></li>
+  <li><a href="#兩張合成-paper-fig-1" id="toc-兩張合成-paper-fig-1" class="nav-link" data-scroll-target="#兩張合成-paper-fig-1"><span class="header-section-number">3.6.2</span> 兩張合成 paper Fig 1</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>預計時間：40 分鐘（最長的一章）。 <strong>deliverable：兩張 paper 等級的曲線圖（BCVA、CST 隨時間變化）。</strong></p>
+<div class="callout callout-style-default callout-note callout-titled" title="🚀 一鍵 Prompt：整章一次跑完">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🚀 一鍵 Prompt：整章一次跑完
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>我有兩個 R data frame：<code>baseline</code>（patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat…）和 <code>followup</code>（patient_id, week, bcva, cst, irf, srf）。請給我 R code：</p>
+<ol type="1">
+<li>把兩份資料 merge：在 <code>followup</code> 加上 <code>arm</code>、<code>bcva_baseline</code>、<code>cst_baseline</code>、<code>study</code>、<code>bcva_strat</code>、<code>lld_strat</code>、<code>region</code> 欄位</li>
+<li>算 <code>bcva_change = bcva - bcva_baseline</code>、<code>cst_change = cst - cst_baseline</code></li>
+<li>把 <code>week</code> 變成 factor（levels = c(“4”,“8”,“12”)，當 visit 用）</li>
+<li>用 <code>mmrm::mmrm()</code> 跑兩個模型：
+<ol type="a">
+<li><code>bcva_change ~ arm + visit + arm:visit + study + bcva_strat + lld_strat + region + us(visit | patient_id)</code></li>
+<li>同模型但 outcome 換成 <code>cst_change</code></li>
+</ol></li>
+<li>用 <code>emmeans::emmeans(model, ~ arm | visit)</code> 取 adjusted means + 95% CI</li>
+<li>用 ggplot 畫成 line plot：x = visit、y = adjusted mean change、color by arm、加 error bar</li>
+<li>用 patchwork 把兩張圖合在一起，標題分別 (A) BCVA、(B) CST</li>
+</ol>
+<p>請加中文註解。我用 Posit.Cloud。</p>
+</blockquote>
+</div>
+</div>
+</div>
+<hr>
+<section id="任務-10什麼是-mmrm" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="任務-10什麼是-mmrm"><span class="header-section-number">3.1</span> 任務 10：什麼是 MMRM？</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>請用 100 字以下、不用數學公式，跟一個沒學過統計的眼科醫師解釋：什麼是 mixed model for repeated measures (MMRM)？為什麼眼科 longitudinal trial 都用 MMRM 而不是 paired t-test 或 ANOVA？「unstructured covariance」是什麼意思？</p>
+</blockquote>
+<div class="callout callout-style-default callout-tip callout-titled" title="速記">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+速記
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>paired t-test</strong>：只能比 2 個時間點</li>
+<li><strong>ANOVA</strong>：把每個時間點當獨立 group，沒利用「同一隻眼睛」的 within-subject correlation</li>
+<li><strong>MMRM</strong>：明確 model 「同一隻眼睛在不同 visit 之間相關」，並且<strong>自動處理 missing</strong>（implicit imputation, MAR assumption）</li>
+<li><strong>unstructured covariance</strong>：不假設「兩 visit 距離越遠相關越低」，每對 visit 各有自己的 covariance；最 flexible，paper 都用這個</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="任務-11把-baseline-與-followup-接起來" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="任務-11把-baseline-與-followup-接起來"><span class="header-section-number">3.2</span> 任務 11：把 baseline 與 followup 接起來</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>我有兩個 R data frame：<code>baseline</code>（一筆病人一列，欄位 patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat 等）和 <code>followup</code>（long format，欄位 patient_id, week, bcva, cst, irf, srf）。請給我 R code：用 <code>dplyr::left_join()</code> 把 baseline 的 arm、bcva_baseline、cst_baseline、study、bcva_strat、lld_strat、region 加到 followup 上，並算 bcva_change = bcva - bcva_baseline、cst_change = cst - cst_baseline。</p>
+</blockquote>
+<section id="參考程式碼" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="參考程式碼"><span class="header-section-number">3.2.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fu_long <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    baseline <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(patient_id, arm, study, region,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>             bcva_baseline, cst_baseline,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>             bcva_strat, lld_strat),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"patient_id"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_change =</span> bcva <span class="sc">-</span> bcva_baseline,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cst_change  =</span> cst <span class="sc">-</span> cst_baseline,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">visit       =</span> <span class="fu">factor</span>(week, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">arm         =</span> <span class="fu">factor</span>(arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>)),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">study       =</span> <span class="fu">factor</span>(study),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_strat  =</span> <span class="fu">factor</span>(bcva_strat),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">lld_strat   =</span> <span class="fu">factor</span>(lld_strat),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">region      =</span> <span class="fu">factor</span>(region)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fu_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,853
+Columns: 16
+$ patient_id    &lt;chr&gt; "P0001", "P0001", "P0001", "P0002", "P0002", "P0002", "P…
+$ week          &lt;dbl&gt; 4, 8, 12, 4, 8, 12, 4, 8, 12, 4, 8, 12, 4, 8, 12, 4, 8, …
+$ bcva          &lt;dbl&gt; 69, 74, 71, 86, 78, 83, 80, 73, 78, 79, 85, 85, 83, 85, …
+$ cst           &lt;dbl&gt; 142, 110, 148, 368, 306, 286, 166, 143, 128, 187, 250, 2…
+$ irf           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,…
+$ srf           &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,…
+$ arm           &lt;fct&gt; faricimab, faricimab, faricimab, aflibercept, aflibercep…
+$ study         &lt;fct&gt; LUCERNE, LUCERNE, LUCERNE, LUCERNE, LUCERNE, LUCERNE, TE…
+$ region        &lt;fct&gt; US-Canada, US-Canada, US-Canada, US-Canada, US-Canada, U…
+$ bcva_baseline &lt;dbl&gt; 64, 64, 64, 79, 79, 79, 76, 76, 76, 73, 73, 73, 74, 74, …
+$ cst_baseline  &lt;dbl&gt; 300, 300, 300, 381, 381, 381, 290, 290, 290, 382, 382, 3…
+$ bcva_strat    &lt;fct&gt; 55-73, 55-73, 55-73, &gt;=74, &gt;=74, &gt;=74, &gt;=74, &gt;=74, &gt;=74,…
+$ lld_strat     &lt;fct&gt; &gt;=33, &gt;=33, &gt;=33, &lt;33, &lt;33, &lt;33, &lt;33, &lt;33, &lt;33, &gt;=33, &gt;=…
+$ bcva_change   &lt;dbl&gt; 5, 10, 7, 7, -1, 4, 4, -3, 2, 6, 12, 12, 9, 11, 18, 6, 9…
+$ cst_change    &lt;dbl&gt; -158, -190, -152, -13, -75, -95, -124, -147, -162, -195,…
+$ visit         &lt;fct&gt; 4, 8, 12, 4, 8, 12, 4, 8, 12, 4, 8, 12, 4, 8, 12, 4, 8, …</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>為什麼把 <code>aflibercept</code> 設為 reference level？</strong> 這樣 model 跑出來的 coefficient 是「faricimab 比 aflibercept 多 X letters」，方向直觀。</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="📖 名詞｜factor / level / reference">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📖 名詞｜factor / level / reference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>factor</strong> = R 對「類別變項」的型別（例如 arm 只能是 faricimab 或 aflibercept）</li>
+<li><strong>level</strong> = 類別變項的「可能選項」</li>
+<li><strong>reference level</strong> = 第一個 level，model 把它當基準。其他 level 的 coefficient 是「跟 reference 比」</li>
+<li>想換基準：<code>factor(arm, levels = c("aflibercept", "faricimab"))</code> 把 aflibercept 排第一</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="任務-12跑-mmrm-bcva" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="任務-12跑-mmrm-bcva"><span class="header-section-number">3.3</span> 任務 12：跑 MMRM — BCVA</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>請用 R 套件 <code>mmrm</code> 跑這個模型：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mmrm</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> bcva_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span> study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span> <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>跑完印 summary。然後告訴我：（1）<code>arm:visit</code> interaction term 在說什麼？（2）<code>us(visit | patient_id)</code> 是什麼意思？</p>
+</blockquote>
+<section id="參考程式碼-1" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="參考程式碼-1"><span class="header-section-number">3.3.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m_bcva <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> bcva_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_bcva)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mmrm fit
+
+Formula:     bcva_change ~ arm + visit + arm:visit + study + bcva_strat +  
+    lld_strat + region + us(visit | patient_id)
+Data:        filter(fu_long, !is.na(bcva_change)) (used 3853 observations from 
+1329 subjects with maximum 3 timepoints)
+Covariance:  unstructured (6 variance parameters)
+Method:      Satterthwaite
+Vcov Method: Asymptotic
+Inference:   REML
+
+Model selection criteria:
+     AIC      BIC   logLik deviance 
+ 24310.1  24341.3 -12149.1  24298.1 
+
+Coefficients: 
+                        Estimate  Std. Error          df t value   Pr(&gt;|t|)    
+(Intercept)             4.631072    0.487097 1436.500000   9.508    &lt; 2e-16 ***
+armfaricimab            0.685026    0.397473 1318.600000   1.723      0.085 .  
+visit8                  1.020469    0.226288 1286.300000   4.510 0.00000709 ***
+visit12                 2.158918    0.223983 1275.700000   9.639    &lt; 2e-16 ***
+studyTENAYA            -0.261624    0.358869 1320.300000  -0.729      0.466    
+bcva_strat&gt;=74         -0.539657    0.577128 1319.500000  -0.935      0.350    
+bcva_strat55-73        -0.107905    0.390995 1319.900000  -0.276      0.783    
+lld_strat&gt;=33          -0.010517    0.381036 1320.700000  -0.028      0.978    
+regionUS-Canada        -0.257734    0.360747 1319.500000  -0.714      0.475    
+armfaricimab:visit8    -0.001483    0.320132 1288.000000  -0.005      0.996    
+armfaricimab:visit12    0.092417    0.316173 1272.400000   0.292      0.770    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Covariance estimate:
+         4       8      12
+4  51.8242 36.5658 36.5880
+8  36.5658 54.1432 38.2153
+12 36.5880 38.2153 53.0027</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="模型 syntax 拆解">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+模型 syntax 拆解
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>arm + visit + arm:visit</code> — main effects 與 interaction（讓兩 arm 的時間趨勢可以不一樣）</li>
+<li><code>study + bcva_strat + lld_strat + region</code> — 分層因子（paper 也是這樣）</li>
+<li><code>us(visit | patient_id)</code> — 「同一個 patient 跨 visit 的 covariance 是 unstructured」</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="📖 名詞｜interaction / unstructured covariance / emmeans">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📖 名詞｜interaction / unstructured covariance / emmeans
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>interaction (<code>arm:visit</code>)</strong> — 「兩 arm 的時間趨勢可以不一樣」。沒有 interaction 的話 model 強制兩條線平行，那就抓不到「藥效隨時間變化」</li>
+<li><strong><code>us(visit | patient_id)</code></strong> — 念作「visit given patient_id is unstructured」。意思是「<strong>同一個病人</strong>的 4 個 visit 之間互相相關，但相關有多強讓 model 自己估，不假設規則」</li>
+<li><strong><code>emmeans()</code></strong> — estimated marginal means，「校正過其他變項後的邊際平均」。比直接 <code>mean()</code> 更接近 paper 寫的「adjusted mean」</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="任務-13取-adjusted-means" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="任務-13取-adjusted-means"><span class="header-section-number">3.4</span> 任務 13：取 adjusted means</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>用 <code>emmeans::emmeans()</code> 從上面的 mmrm model 取出每個 arm 在每個 visit 的 adjusted mean change from baseline，加上 95% CI。然後算每個 visit 兩 arm 的差異（faricimab − aflibercept）。</p>
+</blockquote>
+<section id="參考程式碼-2" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="參考程式碼-2"><span class="header-section-number">3.4.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>emm_bcva <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_bcva, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>emm_bcva</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>visit = 4:
+ arm         emmean    SE   df lower.CL upper.CL
+ aflibercept   4.15 0.305 1385     3.55     4.75
+ faricimab     4.84 0.312 1396     4.22     5.45
+
+visit = 8:
+ arm         emmean    SE   df lower.CL upper.CL
+ aflibercept   5.17 0.312 1398     4.56     5.78
+ faricimab     5.85 0.318 1406     5.23     6.48
+
+visit = 12:
+ arm         emmean    SE   df lower.CL upper.CL
+ aflibercept   6.31 0.310 1382     5.70     6.92
+ faricimab     7.09 0.317 1401     6.47     7.71
+
+Results are averaged over the levels of: study, bcva_strat, lld_strat, region 
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(emm_bcva, <span class="at">method =</span> <span class="st">"revpairwise"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">infer =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>visit = 4:
+ contrast                estimate    SE   df lower.CL upper.CL t.ratio p.value
+ faricimab - aflibercept    0.685 0.397 1319  -0.0947     1.46   1.723  0.0850
+
+visit = 8:
+ contrast                estimate    SE   df lower.CL upper.CL t.ratio p.value
+ faricimab - aflibercept    0.684 0.407 1315  -0.1157     1.48   1.678  0.0936
+
+visit = 12:
+ contrast                estimate    SE   df lower.CL upper.CL t.ratio p.value
+ faricimab - aflibercept    0.777 0.405 1308  -0.0161     1.57   1.922  0.0548
+
+Results are averaged over the levels of: study, bcva_strat, lld_strat, region 
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<p>對照 paper Fig 1A：week 12 faricimab 應該 ~+6.7 letters、aflibercept ~+5.9，差 ~+0.8。</p>
+<hr>
+</section>
+</section>
+<section id="任務-14畫-figure-1a-bcva" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="任務-14畫-figure-1a-bcva"><span class="header-section-number">3.5</span> 任務 14：畫 Figure 1A — BCVA</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 紫 #7B5CA8、aflibercept 灰藍 #7E9CB7）、加 error bar (95% CI)、加 point。標題 “(A) BCVA change from baseline”，y 軸 label “Adjusted Mean BCVA Change (Letters)”。</p>
+</blockquote>
+<section id="參考程式碼-3" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="參考程式碼-3"><span class="header-section-number">3.5.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_bcva) <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit)))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 加一筆 week=0 的 baseline reference (change = 0)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  emm_bcva_df</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_bcva_df,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(A) BCVA change from baseline"</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean BCVA Change</span><span class="sc">\n</span><span class="st">(ETDRS Letters)"</span>) <span class="sc">+</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>p_bcva</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="part3_files/figure-html/fig1a-bcva-1.png" class="img-fluid figure-img" width="1200"></p>
+<figcaption>Figure 1A. Adjusted mean change from baseline in BCVA over 12-week head-to-head dosing phase.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="任務-15複製整段跑-cst-figure-1b" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="任務-15複製整段跑-cst-figure-1b"><span class="header-section-number">3.6</span> 任務 15：複製整段，跑 CST → Figure 1B</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>把上面 BCVA 那段 mmrm + emmeans + ggplot 完整 code 複製一份，但 outcome 換成 <code>cst_change</code>。最後用 <code>patchwork</code> 套件把 Figure 1A (BCVA) 與 Figure 1B (CST) 並排成 2 panel，模仿 paper Fig 1。</p>
+</blockquote>
+<section id="參考程式碼-4" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="參考程式碼-4"><span class="header-section-number">3.6.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m_cst <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> cst_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>emm_cst <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_cst, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>emm_cst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>visit = 4:
+ arm         emmean   SE   df lower.CL upper.CL
+ aflibercept   -116 1.63 1417     -119     -113
+ faricimab     -127 1.66 1434     -130     -124
+
+visit = 8:
+ arm         emmean   SE   df lower.CL upper.CL
+ aflibercept   -128 1.61 1406     -131     -125
+ faricimab     -138 1.64 1416     -141     -135
+
+visit = 12:
+ arm         emmean   SE   df lower.CL upper.CL
+ aflibercept   -134 1.63 1407     -137     -130
+ faricimab     -145 1.66 1434     -148     -141
+
+Results are averaged over the levels of: study, bcva_strat, lld_strat, region 
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>emm_cst_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_cst) <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit))) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> _</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(arm, week)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>p_cst <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_cst_df,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(B) CST change from baseline"</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean CST Change</span><span class="sc">\n</span><span class="st">(μm)"</span>) <span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>p_cst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="part3_files/figure-html/fig1b-cst-1.png" class="img-fluid figure-img" width="1200"></p>
+<figcaption>Figure 1B. Adjusted mean change from baseline in CST over 12-week head-to-head dosing phase.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="兩張合成-paper-fig-1" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="兩張合成-paper-fig-1"><span class="header-section-number">3.6.2</span> 兩張合成 paper Fig 1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="sc">+</span> p_cst <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="part3_files/figure-html/fig1-combined-1.png" class="img-fluid figure-img" width="1650"></p>
+<figcaption>Figure 1. Reproduced from Cheung et al.&nbsp;2025 — Adjusted mean change from baseline in (A) BCVA and (B) CST.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🎯 你做出 paper 圖了">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 你做出 paper 圖了
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>回去看一下 paper Figure 1（refs/tenaya-lucerne-paper.pdf 第 4 頁），你的圖跟 paper 走勢應該一致： - BCVA：兩 arm 一路上升，幾乎重疊，week 12 達 ~+6 letters - CST：兩 arm 都急速下降，<strong>faricimab 比 aflibercept 多降 ~12–14 μm</strong></p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled" title="本章重點">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+本章重點
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>MMRM = 「同一隻眼被測多次」的標配模型</li>
+<li><code>unstructured covariance + MAR implicit imputation</code> = paper 標準寫法</li>
+<li><code>mmrm::mmrm()</code> 一行就能跑、<code>emmeans</code> 取 adjusted mean、ggplot 出圖</li>
+<li><strong>這個 pipeline 跟你後面換院內資料時是一模一樣的 code</strong></li>
+</ol>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part2.html" class="pagination-link" aria-label="Part 2：Table 1 — Baseline characteristics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 2：Table 1 — Baseline characteristics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part4.html" class="pagination-link" aria-label="Part 4：Figure 2 — CMH-weighted absence proportions">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-part3</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"_common.R"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/vabysmo_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/vabysmo_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>預計時間：40 分鐘（最長的一章）。</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>**deliverable：兩張 paper 等級的曲線圖（BCVA、CST 隨時間變化）。**</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 我有兩個 R data frame：</span><span class="in">`baseline`</span><span class="at">（patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat...）和 </span><span class="in">`followup`</span><span class="at">（patient_id, week, bcva, cst, irf, srf）。請給我 R code：</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 1. 把兩份資料 merge：在 </span><span class="in">`followup`</span><span class="at"> 加上 </span><span class="in">`arm`</span><span class="at">、</span><span class="in">`bcva_baseline`</span><span class="at">、</span><span class="in">`cst_baseline`</span><span class="at">、</span><span class="in">`study`</span><span class="at">、</span><span class="in">`bcva_strat`</span><span class="at">、</span><span class="in">`lld_strat`</span><span class="at">、</span><span class="in">`region`</span><span class="at"> 欄位</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 2. 算 </span><span class="in">`bcva_change = bcva - bcva_baseline`</span><span class="at">、</span><span class="in">`cst_change = cst - cst_baseline`</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3. 把 </span><span class="in">`week`</span><span class="at"> 變成 factor（levels = c("4","8","12")，當 visit 用）</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 4. 用 </span><span class="in">`mmrm::mmrm()`</span><span class="at"> 跑兩個模型：</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;    a. </span><span class="in">`bcva_change ~ arm + visit + arm:visit + study + bcva_strat + lld_strat + region + us(visit | patient_id)`</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;    b. 同模型但 outcome 換成 </span><span class="in">`cst_change`</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 5. 用 </span><span class="in">`emmeans::emmeans(model, ~ arm | visit)`</span><span class="at"> 取 adjusted means + 95% CI</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 6. 用 ggplot 畫成 line plot：x = visit、y = adjusted mean change、color by arm、加 error bar</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 7. 用 patchwork 把兩張圖合在一起，標題分別 (A) BCVA、(B) CST</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請加中文註解。我用 Posit.Cloud。</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 10：什麼是 MMRM？</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 100 字以下、不用數學公式，跟一個沒學過統計的眼科醫師解釋：什麼是 mixed model for repeated measures (MMRM)？為什麼眼科 longitudinal trial 都用 MMRM 而不是 paired t-test 或 ANOVA？「unstructured covariance」是什麼意思？</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="速記"}</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**paired t-test**：只能比 2 個時間點</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ANOVA**：把每個時間點當獨立 group，沒利用「同一隻眼睛」的 within-subject correlation</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**MMRM**：明確 model 「同一隻眼睛在不同 visit 之間相關」，並且**自動處理 missing**（implicit imputation, MAR assumption）</span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**unstructured covariance**：不假設「兩 visit 距離越遠相關越低」，每對 visit 各有自己的 covariance；最 flexible，paper 都用這個</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 11：把 baseline 與 followup 接起來</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 我有兩個 R data frame：</span><span class="in">`baseline`</span><span class="at">（一筆病人一列，欄位 patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat 等）和 </span><span class="in">`followup`</span><span class="at">（long format，欄位 patient_id, week, bcva, cst, irf, srf）。請給我 R code：用 </span><span class="in">`dplyr::left_join()`</span><span class="at"> 把 baseline 的 arm、bcva_baseline、cst_baseline、study、bcva_strat、lld_strat、region 加到 followup 上，並算 bcva_change = bcva - bcva_baseline、cst_change = cst - cst_baseline。</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: merge-data</span></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>fu_long <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>    baseline <span class="sc">|&gt;</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(patient_id, arm, study, region,</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>             bcva_baseline, cst_baseline,</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>             bcva_strat, lld_strat),</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"patient_id"</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_change =</span> bcva <span class="sc">-</span> bcva_baseline,</span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">cst_change  =</span> cst <span class="sc">-</span> cst_baseline,</span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">visit       =</span> <span class="fu">factor</span>(week, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)),</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">arm         =</span> <span class="fu">factor</span>(arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>)),</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">study       =</span> <span class="fu">factor</span>(study),</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_strat  =</span> <span class="fu">factor</span>(bcva_strat),</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">lld_strat   =</span> <span class="fu">factor</span>(lld_strat),</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">region      =</span> <span class="fu">factor</span>(region)</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fu_long)</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>**為什麼把 `aflibercept` 設為 reference level？**</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>這樣 model 跑出來的 coefficient 是「faricimab 比 aflibercept 多 X letters」，方向直觀。</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜factor / level / reference"}</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**factor** = R 對「類別變項」的型別（例如 arm 只能是 faricimab 或 aflibercept）</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**level** = 類別變項的「可能選項」</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**reference level** = 第一個 level，model 把它當基準。其他 level 的 coefficient 是「跟 reference 比」</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>想換基準：<span class="in">`factor(arm, levels = c("aflibercept", "faricimab"))`</span> 把 aflibercept 排第一</span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 12：跑 MMRM — BCVA</span></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 R 套件 </span><span class="in">`mmrm`</span><span class="at"> 跑這個模型：</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ```r</span></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; mmrm(</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;   formula = bcva_change ~ arm + visit + arm:visit + study + bcva_strat + lld_strat + region + us(visit </span><span class="pp">|</span><span class="at"> patient_id),</span></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;   data = fu_long</span></span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; )</span></span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ```</span></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 跑完印 summary。然後告訴我：（1）</span><span class="in">`arm:visit`</span><span class="at"> interaction term 在說什麼？（2）</span><span class="in">`us(visit | patient_id)`</span><span class="at"> 是什麼意思？</span></span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: mmrm-bcva</span></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a>m_bcva <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> bcva_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change))</span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_bcva)</span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="模型 syntax 拆解"}</span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`arm + visit + arm:visit`</span> — main effects 與 interaction（讓兩 arm 的時間趨勢可以不一樣）</span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`study + bcva_strat + lld_strat + region`</span> — 分層因子（paper 也是這樣）</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`us(visit | patient_id)`</span> — 「同一個 patient 跨 visit 的 covariance 是 unstructured」</span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜interaction / unstructured covariance / emmeans"}</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**interaction (`arm:visit`)** — 「兩 arm 的時間趨勢可以不一樣」。沒有 interaction 的話 model 強制兩條線平行，那就抓不到「藥效隨時間變化」</span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`us(visit | patient_id)`** — 念作「visit given patient_id is unstructured」。意思是「**同一個病人**的 4 個 visit 之間互相相關，但相關有多強讓 model 自己估，不假設規則」</span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`emmeans()`** — estimated marginal means，「校正過其他變項後的邊際平均」。比直接 <span class="in">`mean()`</span> 更接近 paper 寫的「adjusted mean」</span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 13：取 adjusted means</span></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 用 </span><span class="in">`emmeans::emmeans()`</span><span class="at"> 從上面的 mmrm model 取出每個 arm 在每個 visit 的 adjusted mean change from baseline，加上 95% CI。然後算每個 visit 兩 arm 的差異（faricimab − aflibercept）。</span></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: emmeans-bcva</span></span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a>emm_bcva <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_bcva, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>emm_bcva</span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: contrast-bcva</span></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(emm_bcva, <span class="at">method =</span> <span class="st">"revpairwise"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">infer =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>對照 paper Fig 1A：week 12 faricimab 應該 ~+6.7 letters、aflibercept ~+5.9，差 ~+0.8。</span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 14：畫 Figure 1A — BCVA</span></span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 紫 #7B5CA8、aflibercept 灰藍 #7E9CB7）、加 error bar (95% CI)、加 point。標題 "(A) BCVA change from baseline"，y 軸 label "Adjusted Mean BCVA Change (Letters)"。</span></span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1a-bcva</span></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1A. Adjusted mean change from baseline in BCVA over 12-week head-to-head dosing phase."</span></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_bcva) <span class="sc">|&gt;</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit)))</span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a><span class="co"># 加一筆 week=0 的 baseline reference (change = 0)</span></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a>             <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>             <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a>             <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a>  emm_bcva_df</span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_bcva_df,</span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(A) BCVA change from baseline"</span>,</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean BCVA Change</span><span class="sc">\n</span><span class="st">(ETDRS Letters)"</span>) <span class="sc">+</span></span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>p_bcva</span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 15：複製整段，跑 CST → Figure 1B</span></span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 把上面 BCVA 那段 mmrm + emmeans + ggplot 完整 code 複製一份，但 outcome 換成 </span><span class="in">`cst_change`</span><span class="at">。最後用 </span><span class="in">`patchwork`</span><span class="at"> 套件把 Figure 1A (BCVA) 與 Figure 1B (CST) 並排成 2 panel，模仿 paper Fig 1。</span></span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: mmrm-cst</span></span>
+<span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a>m_cst <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> cst_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a>emm_cst <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_cst, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a>emm_cst</span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1b-cst</span></span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1B. Adjusted mean change from baseline in CST over 12-week head-to-head dosing phase."</span></span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a>emm_cst_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_cst) <span class="sc">|&gt;</span></span>
+<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit))) <span class="sc">|&gt;</span></span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a>               <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
+<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a>               <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
+<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a>               <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> _</span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(arm, week)</span>
+<span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a>p_cst <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_cst_df,</span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(B) CST change from baseline"</span>,</span>
+<span id="cb15-276"><a href="#cb15-276" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
+<span id="cb15-277"><a href="#cb15-277" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean CST Change</span><span class="sc">\n</span><span class="st">(μm)"</span>) <span class="sc">+</span></span>
+<span id="cb15-278"><a href="#cb15-278" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a>p_cst</span>
+<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### 兩張合成 paper Fig 1</span></span>
+<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-287"><a href="#cb15-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1-combined</span></span>
+<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1. Reproduced from Cheung et al. 2025 — Adjusted mean change from baseline in (A) BCVA and (B) CST."</span></span>
+<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 11</span></span>
+<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-293"><a href="#cb15-293" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="sc">+</span> p_cst <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span></span>
+<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-296"><a href="#cb15-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-297"><a href="#cb15-297" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="🎯 你做出 paper 圖了"}</span>
+<span id="cb15-298"><a href="#cb15-298" aria-hidden="true" tabindex="-1"></a>回去看一下 paper Figure 1（refs/tenaya-lucerne-paper.pdf 第 4 頁），你的圖跟 paper 走勢應該一致：</span>
+<span id="cb15-299"><a href="#cb15-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BCVA：兩 arm 一路上升，幾乎重疊，week 12 達 ~+6 letters</span>
+<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CST：兩 arm 都急速下降，**faricimab 比 aflibercept 多降 ~12–14 μm**</span>
+<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-302"><a href="#cb15-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-303"><a href="#cb15-303" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="本章重點"}</span>
+<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>MMRM = 「同一隻眼被測多次」的標配模型</span>
+<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`unstructured covariance + MAR implicit imputation`</span> = paper 標準寫法</span>
+<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="in">`mmrm::mmrm()`</span> 一行就能跑、<span class="in">`emmeans`</span> 取 adjusted mean、ggplot 出圖</span>
+<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**這個 pipeline 跟你後面換院內資料時是一模一樣的 code**</span>
+<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 林協霆 · 教材授權 CC BY 4.0</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

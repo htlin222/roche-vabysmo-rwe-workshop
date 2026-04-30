@@ -1,0 +1,292 @@
+# Part 3：Figure 1 — MMRM 跑 BCVA + CST
+
+```{r}
+#| label: setup-part3
+#| include: false
+source("_common.R")
+library(readr)
+library(dplyr)
+library(tidyr)
+library(mmrm)
+library(emmeans)
+library(ggplot2)
+library(patchwork)
+
+baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+```
+
+預計時間：40 分鐘（最長的一章）。
+**deliverable：兩張 paper 等級的曲線圖（BCVA、CST 隨時間變化）。**
+
+::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
+> 我有兩個 R data frame：`baseline`（patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat...）和 `followup`（patient_id, week, bcva, cst, irf, srf）。請給我 R code：
+>
+> 1. 把兩份資料 merge：在 `followup` 加上 `arm`、`bcva_baseline`、`cst_baseline`、`study`、`bcva_strat`、`lld_strat`、`region` 欄位
+> 2. 算 `bcva_change = bcva - bcva_baseline`、`cst_change = cst - cst_baseline`
+> 3. 把 `week` 變成 factor（levels = c("4","8","12")，當 visit 用）
+> 4. 用 `mmrm::mmrm()` 跑兩個模型：
+>    a. `bcva_change ~ arm + visit + arm:visit + study + bcva_strat + lld_strat + region + us(visit | patient_id)`
+>    b. 同模型但 outcome 換成 `cst_change`
+> 5. 用 `emmeans::emmeans(model, ~ arm | visit)` 取 adjusted means + 95% CI
+> 6. 用 ggplot 畫成 line plot：x = visit、y = adjusted mean change、color by arm、加 error bar
+> 7. 用 patchwork 把兩張圖合在一起，標題分別 (A) BCVA、(B) CST
+>
+> 請加中文註解。我用 Posit.Cloud。
+:::
+
+---
+
+## 任務 10：什麼是 MMRM？
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用 100 字以下、不用數學公式，跟一個沒學過統計的眼科醫師解釋：什麼是 mixed model for repeated measures (MMRM)？為什麼眼科 longitudinal trial 都用 MMRM 而不是 paired t-test 或 ANOVA？「unstructured covariance」是什麼意思？
+
+::: {.callout-tip title="速記"}
+- **paired t-test**：只能比 2 個時間點
+- **ANOVA**：把每個時間點當獨立 group，沒利用「同一隻眼睛」的 within-subject correlation
+- **MMRM**：明確 model 「同一隻眼睛在不同 visit 之間相關」，並且**自動處理 missing**（implicit imputation, MAR assumption）
+- **unstructured covariance**：不假設「兩 visit 距離越遠相關越低」，每對 visit 各有自己的 covariance；最 flexible，paper 都用這個
+:::
+
+---
+
+## 任務 11：把 baseline 與 followup 接起來
+
+📋 **複製這段話，貼給 AI**：
+
+> 我有兩個 R data frame：`baseline`（一筆病人一列，欄位 patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat 等）和 `followup`（long format，欄位 patient_id, week, bcva, cst, irf, srf）。請給我 R code：用 `dplyr::left_join()` 把 baseline 的 arm、bcva_baseline、cst_baseline、study、bcva_strat、lld_strat、region 加到 followup 上，並算 bcva_change = bcva - bcva_baseline、cst_change = cst - cst_baseline。
+
+### 參考程式碼
+
+```{r}
+#| label: merge-data
+fu_long <- followup |>
+  left_join(
+    baseline |>
+      select(patient_id, arm, study, region,
+             bcva_baseline, cst_baseline,
+             bcva_strat, lld_strat),
+    by = "patient_id"
+  ) |>
+  mutate(
+    bcva_change = bcva - bcva_baseline,
+    cst_change  = cst - cst_baseline,
+    visit       = factor(week, levels = c(4, 8, 12)),
+    arm         = factor(arm, levels = c("aflibercept", "faricimab")),
+    study       = factor(study),
+    bcva_strat  = factor(bcva_strat),
+    lld_strat   = factor(lld_strat),
+    region      = factor(region)
+  ) |>
+  filter(!is.na(bcva_change) | !is.na(cst_change))
+
+glimpse(fu_long)
+```
+
+::: {.callout-tip}
+**為什麼把 `aflibercept` 設為 reference level？**
+這樣 model 跑出來的 coefficient 是「faricimab 比 aflibercept 多 X letters」，方向直觀。
+:::
+
+::: {.callout-tip title="📖 名詞｜factor / level / reference"}
+- **factor** = R 對「類別變項」的型別（例如 arm 只能是 faricimab 或 aflibercept）
+- **level** = 類別變項的「可能選項」
+- **reference level** = 第一個 level，model 把它當基準。其他 level 的 coefficient 是「跟 reference 比」
+- 想換基準：`factor(arm, levels = c("aflibercept", "faricimab"))` 把 aflibercept 排第一
+:::
+
+---
+
+## 任務 12：跑 MMRM — BCVA
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用 R 套件 `mmrm` 跑這個模型：
+>
+> ```r
+> mmrm(
+>   formula = bcva_change ~ arm + visit + arm:visit + study + bcva_strat + lld_strat + region + us(visit | patient_id),
+>   data = fu_long
+> )
+> ```
+>
+> 跑完印 summary。然後告訴我：（1）`arm:visit` interaction term 在說什麼？（2）`us(visit | patient_id)` 是什麼意思？
+
+### 參考程式碼
+
+```{r}
+#| label: mmrm-bcva
+m_bcva <- mmrm(
+  formula = bcva_change ~ arm + visit + arm:visit +
+    study + bcva_strat + lld_strat + region +
+    us(visit | patient_id),
+  data = fu_long |> filter(!is.na(bcva_change))
+)
+
+summary(m_bcva)
+```
+
+::: {.callout-note title="模型 syntax 拆解"}
+- `arm + visit + arm:visit` — main effects 與 interaction（讓兩 arm 的時間趨勢可以不一樣）
+- `study + bcva_strat + lld_strat + region` — 分層因子（paper 也是這樣）
+- `us(visit | patient_id)` — 「同一個 patient 跨 visit 的 covariance 是 unstructured」
+:::
+
+::: {.callout-tip title="📖 名詞｜interaction / unstructured covariance / emmeans"}
+- **interaction (`arm:visit`)** — 「兩 arm 的時間趨勢可以不一樣」。沒有 interaction 的話 model 強制兩條線平行，那就抓不到「藥效隨時間變化」
+- **`us(visit | patient_id)`** — 念作「visit given patient_id is unstructured」。意思是「**同一個病人**的 4 個 visit 之間互相相關，但相關有多強讓 model 自己估，不假設規則」
+- **`emmeans()`** — estimated marginal means，「校正過其他變項後的邊際平均」。比直接 `mean()` 更接近 paper 寫的「adjusted mean」
+:::
+
+---
+
+## 任務 13：取 adjusted means
+
+📋 **複製這段話，貼給 AI**：
+
+> 用 `emmeans::emmeans()` 從上面的 mmrm model 取出每個 arm 在每個 visit 的 adjusted mean change from baseline，加上 95% CI。然後算每個 visit 兩 arm 的差異（faricimab − aflibercept）。
+
+### 參考程式碼
+
+```{r}
+#| label: emmeans-bcva
+emm_bcva <- emmeans(m_bcva, ~ arm | visit)
+emm_bcva
+```
+
+```{r}
+#| label: contrast-bcva
+contrast(emm_bcva, method = "revpairwise") |>
+  summary(infer = TRUE)
+```
+
+對照 paper Fig 1A：week 12 faricimab 應該 ~+6.7 letters、aflibercept ~+5.9，差 ~+0.8。
+
+---
+
+## 任務 14：畫 Figure 1A — BCVA
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 紫 #7B5CA8、aflibercept 灰藍 #7E9CB7）、加 error bar (95% CI)、加 point。標題 "(A) BCVA change from baseline"，y 軸 label "Adjusted Mean BCVA Change (Letters)"。
+
+### 參考程式碼
+
+```{r}
+#| label: fig1a-bcva
+#| fig-cap: "Figure 1A. Adjusted mean change from baseline in BCVA over 12-week head-to-head dosing phase."
+
+emm_bcva_df <- as.data.frame(emm_bcva) |>
+  mutate(week = as.numeric(as.character(visit)))
+
+# 加一筆 week=0 的 baseline reference (change = 0)
+emm_bcva_df <- bind_rows(
+  data.frame(arm = c("aflibercept","faricimab"),
+             week = 0, emmean = 0, SE = 0,
+             df = NA, lower.CL = 0, upper.CL = 0,
+             visit = factor("0", levels = c("0","4","8","12"))),
+  emm_bcva_df
+)
+
+p_bcva <- ggplot(emm_bcva_df,
+       aes(x = week, y = emmean, colour = arm, group = arm)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                width = 0.4, linewidth = 0.8) +
+  scale_colour_manual(values = arm_colours, name = NULL,
+                      labels = c("aflibercept" = "Aflibercept Q8W",
+                                 "faricimab"   = "Faricimab up to Q16W")) +
+  scale_x_continuous(breaks = c(0, 4, 8, 12)) +
+  labs(title = "(A) BCVA change from baseline",
+       x = "Time (Weeks)",
+       y = "Adjusted Mean BCVA Change\n(ETDRS Letters)") +
+  theme(legend.position = "bottom")
+
+p_bcva
+```
+
+---
+
+## 任務 15：複製整段，跑 CST → Figure 1B
+
+📋 **複製這段話，貼給 AI**：
+
+> 把上面 BCVA 那段 mmrm + emmeans + ggplot 完整 code 複製一份，但 outcome 換成 `cst_change`。最後用 `patchwork` 套件把 Figure 1A (BCVA) 與 Figure 1B (CST) 並排成 2 panel，模仿 paper Fig 1。
+
+### 參考程式碼
+
+```{r}
+#| label: mmrm-cst
+m_cst <- mmrm(
+  formula = cst_change ~ arm + visit + arm:visit +
+    study + bcva_strat + lld_strat + region +
+    us(visit | patient_id),
+  data = fu_long |> filter(!is.na(cst_change))
+)
+
+emm_cst <- emmeans(m_cst, ~ arm | visit)
+emm_cst
+```
+
+```{r}
+#| label: fig1b-cst
+#| fig-cap: "Figure 1B. Adjusted mean change from baseline in CST over 12-week head-to-head dosing phase."
+
+emm_cst_df <- as.data.frame(emm_cst) |>
+  mutate(week = as.numeric(as.character(visit))) |>
+  bind_rows(
+    data.frame(arm = c("aflibercept","faricimab"),
+               week = 0, emmean = 0, SE = 0,
+               df = NA, lower.CL = 0, upper.CL = 0,
+               visit = factor("0", levels = c("0","4","8","12"))),
+    x = _
+  ) |>
+  arrange(arm, week)
+
+p_cst <- ggplot(emm_cst_df,
+       aes(x = week, y = emmean, colour = arm, group = arm)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL),
+                width = 0.4, linewidth = 0.8) +
+  scale_colour_manual(values = arm_colours, name = NULL,
+                      labels = c("aflibercept" = "Aflibercept Q8W",
+                                 "faricimab"   = "Faricimab up to Q16W")) +
+  scale_x_continuous(breaks = c(0, 4, 8, 12)) +
+  labs(title = "(B) CST change from baseline",
+       x = "Time (Weeks)",
+       y = "Adjusted Mean CST Change\n(μm)") +
+  theme(legend.position = "bottom")
+
+p_cst
+```
+
+### 兩張合成 paper Fig 1
+
+```{r}
+#| label: fig1-combined
+#| fig-cap: "Figure 1. Reproduced from Cheung et al. 2025 — Adjusted mean change from baseline in (A) BCVA and (B) CST."
+#| fig-width: 11
+#| fig-height: 5
+
+p_bcva + p_cst + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+```
+
+::: {.callout-tip title="🎯 你做出 paper 圖了"}
+回去看一下 paper Figure 1（refs/tenaya-lucerne-paper.pdf 第 4 頁），你的圖跟 paper 走勢應該一致：
+- BCVA：兩 arm 一路上升，幾乎重疊，week 12 達 ~+6 letters
+- CST：兩 arm 都急速下降，**faricimab 比 aflibercept 多降 ~12–14 μm**
+:::
+
+---
+
+::: {.callout-note title="本章重點"}
+1. MMRM = 「同一隻眼被測多次」的標配模型
+2. `unstructured covariance + MAR implicit imputation` = paper 標準寫法
+3. `mmrm::mmrm()` 一行就能跑、`emmeans` 取 adjusted mean、ggplot 出圖
+4. **這個 pipeline 跟你後面換院內資料時是一模一樣的 code**
+:::

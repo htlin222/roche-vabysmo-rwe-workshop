@@ -1,0 +1,57 @@
+name: Deploy pre-built book on release
+
+# 設計：本機 quarto render + commit _book/ → tag release → 這個 workflow
+# 30 秒內把 _book/ 推到 gh-pages branch。不在 CI 裡 render，不裝 R 套件。
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify pre-built _book/ exists
+        run: |
+          if [ ! -f _book/index.html ]; then
+            echo "::error::_book/index.html 不存在 —"
+            echo "::error::請在 push tag 之前本機跑 'quarto render' 並 commit _book/"
+            exit 1
+          fi
+          echo "✓ _book/ contains $(find _book -type f | wc -l) files, $(du -sh _book | cut -f1) total"
+
+      - name: Push _book/ to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_book
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: "deploy ${{ github.event.release.tag_name || github.sha }} → gh-pages"
+
+      - name: Summary
+        run: |
+          {
+            echo "## ✅ Deployed"
+            echo ""
+            echo "Live: <https://htlin222.github.io/roche-vabysmo-rwe-workshop/>"
+            echo "Triggered: \`${{ github.event_name }}\`"
+            if [ "${{ github.event_name }}" = "release" ]; then
+              echo "Tag: \`${{ github.event.release.tag_name }}\`"
+            fi
+            echo "Build time: \`${SECONDS}s\`"
+          } >> "$GITHUB_STEP_SUMMARY"

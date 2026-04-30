@@ -1,0 +1,36 @@
+/* 工作坊教材微調 */
+
+/* 任務 callout 加強對比 */
+.callout-note {
+  border-left-color: #7B5CA8 !important;
+}
+.callout-tip {
+  border-left-color: #7E9CB7 !important;
+}
+
+/* 程式碼區塊 */
+pre code {
+  font-size: 0.92em;
+  line-height: 1.5;
+}
+
+/* 📋 prompt 區塊：用 blockquote 加底色 */
+blockquote {
+  background: #f6f1fb;
+  border-left: 4px solid #7B5CA8;
+  padding: 0.8em 1em;
+  margin: 1em 0;
+  font-style: normal;
+}
+
+/* 表格垂直 spacing */
+table {
+  margin: 1em 0;
+}
+
+/* H2 章節更明顯 */
+h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3em;
+  margin-top: 2em;
+}

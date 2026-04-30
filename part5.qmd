@@ -1,0 +1,350 @@
+# Part 5：換你院內資料
+
+```{r}
+#| label: setup-part5
+#| include: false
+source("_common.R")
+library(readr)
+library(dplyr)
+library(tidyr)
+library(gtsummary)
+library(mmrm)
+library(emmeans)
+library(ggplot2)
+library(patchwork)
+```
+
+預計時間：30 分鐘。
+**這一章是工作坊的真正重頭戲。**
+
+> 上半場你看到了：1329 個病人、24 個 stratum、漂亮的 paper 圖。
+>
+> 下半場你會看到：**同樣的 code、換成 180 個病人的院內資料、跑出你自己的 paper draft**。
+
+---
+
+## 任務 21：載入「假裝是你院內」的資料
+
+我們準備了一份 `vabysmo_my_hospital.csv`，n = 180（faricimab 100 / aflibercept 80），region 全部 = `Asia-Pacific`。
+**schema 跟 trial 資料一模一樣。**
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用 `readr::read_csv()` 讀 `data/vabysmo_my_hospital_baseline.csv` 和 `data/vabysmo_my_hospital_followup.csv`，看欄位是否跟 trial 資料一致。
+
+```{r}
+#| label: load-mh
+mh_baseline <- read_csv("data/vabysmo_my_hospital_baseline.csv",
+                        show_col_types = FALSE)
+mh_followup <- read_csv("data/vabysmo_my_hospital_followup.csv",
+                        show_col_types = FALSE)
+
+glimpse(mh_baseline)
+```
+
+```{r}
+#| label: glimpse-mh-fu
+glimpse(mh_followup)
+```
+
+```{r}
+#| label: mh-counts
+mh_baseline |> count(arm)
+```
+
+> 詳細欄位定義在 [`data/data_dictionary.md`](data/data_dictionary.md)。
+> **想做你自己的院內 cohort？把資料整成這個 schema、放進 `data/`、改下面的檔名就好。**
+
+---
+
+## 任務 22：把 Part 2/3/4 的 code 直接套上去（code 一行不改）
+
+這是工作坊的關鍵 demo：
+**證明你今天學的不是「跑那個 paper」，是「跑這類 paper」。**
+
+### Table 1（同 part2 的 code）
+
+```{r}
+#| label: mh-table1
+mh_baseline |>
+  select(arm, age, sex, region, bcva_baseline, cst_baseline,
+         irf_baseline, srf_baseline, study, bcva_strat, lld_strat) |>
+  tbl_summary(
+    by = arm,
+    statistic = list(all_continuous() ~ "{mean} ({sd})",
+                     all_categorical() ~ "{n} ({p}%)"),
+    digits = list(all_continuous() ~ 1)
+  ) |>
+  add_overall() |>
+  modify_caption("**Table 1 (My Hospital).** Baseline characteristics, n=180")
+```
+
+::: {.callout-tip}
+你會看到院內 BCVA 偏低（~55 letters）、CST 偏高（~395 μm）。這是 RWE 比 trial 嚴重的「常見方向」——trial 通常 enrol 比較好的個案。
+:::
+
+### Figure 1（MMRM）— 同 part3 的 code
+
+```{r}
+#| label: mh-fig1
+#| fig-cap: "Figure 1 (My Hospital) — Same MMRM pipeline applied to n=180 cohort"
+#| fig-width: 11
+#| fig-height: 5
+
+mh_fu_long <- mh_followup |>
+  left_join(
+    mh_baseline |> select(patient_id, arm, study, region,
+                          bcva_baseline, cst_baseline,
+                          bcva_strat, lld_strat),
+    by = "patient_id"
+  ) |>
+  mutate(
+    bcva_change = bcva - bcva_baseline,
+    cst_change  = cst - cst_baseline,
+    visit       = factor(week, levels = c(4, 8, 12)),
+    arm         = factor(arm, levels = c("aflibercept","faricimab")),
+    bcva_strat  = factor(bcva_strat),
+    lld_strat   = factor(lld_strat)
+    # study 和 region 在院內常常單一值，會被 mmrm 自動 drop
+  )
+
+# 注意：region 全部 Asia-Pacific、study 全部一樣，所以 model 拿掉這兩個分層
+m_bcva_mh <- tryCatch(
+  mmrm(
+    formula = bcva_change ~ arm + visit + arm:visit +
+      bcva_strat + lld_strat + us(visit | patient_id),
+    data = mh_fu_long |> filter(!is.na(bcva_change))
+  ),
+  error = function(e) {
+    message("MMRM 在小樣本下可能收斂困難，改 covariance 為 cs：", e$message)
+    mmrm(
+      formula = bcva_change ~ arm + visit + arm:visit +
+        bcva_strat + lld_strat + cs(visit | patient_id),
+      data = mh_fu_long |> filter(!is.na(bcva_change))
+    )
+  }
+)
+
+m_cst_mh <- tryCatch(
+  mmrm(
+    formula = cst_change ~ arm + visit + arm:visit +
+      bcva_strat + lld_strat + us(visit | patient_id),
+    data = mh_fu_long |> filter(!is.na(cst_change))
+  ),
+  error = function(e) {
+    mmrm(
+      formula = cst_change ~ arm + visit + arm:visit +
+        bcva_strat + lld_strat + cs(visit | patient_id),
+      data = mh_fu_long |> filter(!is.na(cst_change))
+    )
+  }
+)
+
+emm_b <- as.data.frame(emmeans(m_bcva_mh, ~ arm | visit)) |>
+  mutate(week = as.numeric(as.character(visit)))
+emm_c <- as.data.frame(emmeans(m_cst_mh, ~ arm | visit)) |>
+  mutate(week = as.numeric(as.character(visit)))
+
+baseline_zero <- function(df) {
+  bind_rows(
+    data.frame(arm = c("aflibercept","faricimab"),
+               week = 0, emmean = 0, lower.CL = 0, upper.CL = 0),
+    df |> select(arm, week, emmean, lower.CL, upper.CL)
+  ) |> arrange(arm, week)
+}
+
+p_b <- ggplot(baseline_zero(emm_b),
+       aes(x = week, y = emmean, colour = arm, group = arm)) +
+  geom_line(linewidth = 1) + geom_point(size = 3) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.4) +
+  scale_colour_manual(values = arm_colours, name = NULL) +
+  scale_x_continuous(breaks = c(0,4,8,12)) +
+  labs(title = "(A) BCVA — My Hospital",
+       x = "Time (Weeks)", y = "Adjusted Mean BCVA Change\n(Letters)")
+
+p_c <- ggplot(baseline_zero(emm_c),
+       aes(x = week, y = emmean, colour = arm, group = arm)) +
+  geom_line(linewidth = 1) + geom_point(size = 3) +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.4) +
+  scale_colour_manual(values = arm_colours, name = NULL) +
+  scale_x_continuous(breaks = c(0,4,8,12)) +
+  labs(title = "(B) CST — My Hospital",
+       x = "Time (Weeks)", y = "Adjusted Mean CST Change\n(μm)")
+
+p_b + p_c + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+```
+
+::: {.callout-tip title="🎯 看出差別了嗎？"}
+- 整體**走勢**和 paper 一致：CST 兩 arm 都急速下降，faricimab 略多
+- 但**信賴區間變寬很多**——n=180 vs n=1329，CI 大約寬 √(1329/180) ≈ 2.7 倍
+- 這就是你回院後第一個會被 reviewer 抓的點：「power 不夠」。可能的解法：拉長收案、聯院 / 多中心
+:::
+
+### Figure 2（CMH）— 同 part4 的 code
+
+```{r}
+#| label: mh-fig2
+#| fig-cap: "Figure 2 (My Hospital) — CMH-weighted absence proportions, n=180"
+#| fig-width: 12
+#| fig-height: 5
+
+# 重複 part4 的 cmh_weighted_proportion 函數
+cmh_weighted_proportion <- function(data, outcome_col,
+                                    arm_col = "arm",
+                                    strata_cols = c("bcva_strat","lld_strat")) {
+  d <- data |>
+    filter(!is.na(.data[[outcome_col]])) |>
+    mutate(stratum = do.call(paste, c(across(all_of(strata_cols)), sep = "|")))
+
+  per_stratum <- d |>
+    group_by(stratum, !!sym(arm_col)) |>
+    summarise(n = n(), x = sum(.data[[outcome_col]]), p = x / n,
+              .groups = "drop")
+
+  arms <- levels(factor(per_stratum[[arm_col]]))
+  ws <- per_stratum |>
+    select(stratum, !!sym(arm_col), n) |>
+    pivot_wider(names_from = !!sym(arm_col), values_from = n,
+                values_fill = 0) |>
+    mutate(w = (.data[[arms[1]]] * .data[[arms[2]]]) /
+                pmax(.data[[arms[1]]] + .data[[arms[2]]], 1)) |>
+    filter(.data[[arms[1]]] > 0 & .data[[arms[2]]] > 0) |>
+    select(stratum, w)
+
+  per_stratum |>
+    inner_join(ws, by = "stratum") |>
+    group_by(!!sym(arm_col)) |>
+    summarise(
+      p_hat = sum(w * p) / sum(w),
+      se    = sqrt(sum(w^2 * p * (1 - p) / pmax(n, 1))) / sum(w),
+      .groups = "drop"
+    ) |>
+    mutate(lower = pmax(p_hat - 1.96 * se, 0),
+           upper = pmin(p_hat + 1.96 * se, 1))
+}
+
+mh_fu_strata <- mh_followup |>
+  left_join(
+    mh_baseline |> select(patient_id, arm, bcva_strat, lld_strat,
+                          irf_baseline, srf_baseline),
+    by = "patient_id"
+  ) |>
+  mutate(
+    abs_irf  = if_else(is.na(irf), NA, as.integer(irf == 0)),
+    abs_srf  = if_else(is.na(srf), NA, as.integer(srf == 0)),
+    abs_both = if_else(is.na(irf) | is.na(srf), NA,
+                       as.integer(irf == 0 & srf == 0)),
+    arm = factor(arm, levels = c("aflibercept","faricimab"))
+  )
+
+mh_baseline_abs <- mh_baseline |>
+  mutate(
+    week = 0L,
+    abs_irf  = as.integer(irf_baseline == 0),
+    abs_srf  = as.integer(srf_baseline == 0),
+    abs_both = as.integer(irf_baseline == 0 & srf_baseline == 0),
+    arm = factor(arm, levels = c("aflibercept","faricimab"))
+  ) |>
+  select(patient_id, arm, bcva_strat, lld_strat,
+         week, abs_irf, abs_srf, abs_both)
+
+mh_fu_strata <- bind_rows(
+  mh_baseline_abs,
+  mh_fu_strata |> select(patient_id, arm, bcva_strat, lld_strat,
+                         week, abs_irf, abs_srf, abs_both)
+)
+
+mh_results <- expand.grid(
+  outcome = c("abs_irf","abs_srf","abs_both"),
+  wk      = c(0, 4, 8, 12),
+  stringsAsFactors = FALSE
+) |>
+  rowwise() |>
+  mutate(res = list(
+    cmh_weighted_proportion(
+      mh_fu_strata |> filter(week == wk),
+      outcome_col = outcome
+    )
+  )) |>
+  ungroup() |>
+  tidyr::unnest(res) |>
+  rename(week = wk)
+
+make_mh_panel <- function(out_col, ttl) {
+  dat <- mh_results |> filter(outcome == out_col)
+  ggplot(dat, aes(x = factor(week), y = p_hat * 100, fill = arm)) +
+    geom_col(position = position_dodge(width = 0.8),
+             width = 0.7, colour = "white") +
+    geom_errorbar(aes(ymin = lower * 100, ymax = upper * 100),
+                  position = position_dodge(width = 0.8), width = 0.25) +
+    scale_fill_manual(values = arm_colours, name = NULL) +
+    scale_y_continuous(limits = c(0, 100),
+                       expand = expansion(mult = c(0, 0.08))) +
+    labs(title = ttl, x = "Visit (Week)", y = "Proportion (%)") +
+    theme(legend.position = "bottom")
+}
+
+(make_mh_panel("abs_both","(A) IRF and SRF") |
+   make_mh_panel("abs_irf","(B) IRF") |
+   make_mh_panel("abs_srf","(C) SRF")) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+```
+
+---
+
+## 任務 23：討論 — 你院內資料的 paper 該怎麼寫？
+
+📋 **複製這段話，貼給 AI**：
+
+> 我用 n=180 的院內 cohort 跑出和 TENAYA/LUCERNE 同方向的結果，但 95% CI 寬很多。如果我要把這個結果投 Ophthalmology 這類期刊，我應該：（1）強調什麼？（2）reviewer 會質疑什麼？（3）下一步該怎麼處理 limitation？請給我 3 段建議文字。
+
+::: {.callout-tip title="期刊 reviewer 常見質疑"}
+1. **Power 不足** → 解法：聯院 / 多中心、或定位成 hypothesis-generating
+2. **單一族群（Asia-Pacific）** → 解法：明確說 generalizability 限於該族群
+3. **沒有隨機分派** → 解法：propensity score matching、IPTW（這超出今天 scope，下次工作坊再講）
+4. **觀察期短（12 週）** → 解法：拉長到 48 / 60 / 108 週，引用 paper 的 long-term data 對比
+:::
+
+---
+
+## 任務 24：你回院後的 checklist
+
+當你決定真的要做的時候：
+
+### Step 1：找院內 IT 撈 cohort
+
+「我要找從 2024-01-01 起、診斷有 H35.32（nAMD）、且至少打過一次 faricimab (院內代碼 = ??) 或 aflibercept (院內代碼 = ??) 的病人。每個病人需要：
+
+- 年齡、性別、區域（如果跨院）
+- index 日期（首次注射日）
+- index 日後 4/8/12 週的 BCVA、OCT CST
+- index 日後 4/8/12 週的 OCT 報告（IRF/SRF presence，可以從 keyword search 或結構化欄位）」
+
+### Step 2：IRB 申請
+
+- 一般院內 retrospective chart review，預期可走 expedited review
+- 把這份 csv schema 與本書 Quarto 連結貼進 protocol，reviewer 看就懂
+
+### Step 3：把 csv 放進 `data/`、改本書 `_quarto.yml` 的 title → render
+
+```r
+# 在 RStudio Console
+quarto::quarto_render()
+# 或 terminal
+# quarto render
+```
+
+完成後 `_book/` 裡就是「**用你院內資料做出的論文 draft**」。
+
+### Step 4：拿給 Shao 看（眨眼）
+
+---
+
+::: {.callout-note title="本章重點"}
+1. **同一份 code、換 csv 路徑**就能 reproduce 整個 pipeline
+2. 院內 n 通常小很多，**95% CI 會寬**——不可避免，但 paper 寫得好還是能投
+3. `data/data_dictionary.md` 是你跟院內 IT 溝通的「規格書」
+4. MMRM 在 small n + single region 上有時收斂不順，function 已準備好 fallback (`cs()`)
+:::

@@ -1,0 +1,172 @@
+# Part 1：認識 paper + 認識資料
+
+```{r}
+#| label: setup-part1
+#| include: false
+source("_common.R")
+```
+
+預計時間：30–40 分鐘。
+這一章你會：把工作環境弄好、用 AI 摘要 paper、用 R 讀進模擬資料。
+
+::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
+如果你已經在 RStudio / Posit.Cloud 開好了，可以直接複製下面這段給 AI，一次跑完本章：
+
+> 我手上有兩個 csv：`data/vabysmo_baseline.csv`（一筆病人一列，欄位有 patient_id, arm, study, region, age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat）和 `data/vabysmo_followup.csv`（long format，每筆病人 × 回診一列，欄位有 patient_id, week, bcva, cst, irf, srf）。請給我一段 R code：
+>
+> 1. 用 `readr::read_csv()` 讀入這兩個檔案
+> 2. 用 `dplyr::glimpse()` 印出欄位結構
+> 3. 算出 baseline 中兩臂的人數（`arm` 是 `faricimab` vs `aflibercept`）
+> 4. 算出 followup 中每個 week (4/8/12) 的 row 數量
+>
+> 請加上中文註解，每段都可以直接貼到 RStudio 跑。
+:::
+
+---
+
+## 任務 1：開好 Posit.Cloud
+
+老師會在現場給你**一個 Posit.Cloud 連結**——那是「預烤好的 project」，套件都已經幫你裝好了。
+
+📋 **拿到那個連結後**：
+
+1. 打開瀏覽器、貼上連結
+2. 用 Google 帳號登入 [Posit.Cloud](https://posit.cloud/)（免費）
+3. 右上角點 **Save a Permanent Copy**（把這份 project 存成你自己的）
+4. RStudio 會開起來，套件已裝好
+5. 右下角 Files 視窗 → 雙擊 `part1.qmd`
+
+整個過程 < 30 秒。
+
+::: {.callout-tip title="🎯 如果你拿不到那個預烤連結（fallback）"}
+**Plan B（自己 fork）**：
+1. Posit.Cloud → **New Project** → **New Project from Git Repository**
+2. 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop`
+3. RStudio 開起來，Console 跑 `source("install.r")`，等 5–10 分鐘
+4. 之後跟 Plan A 一樣
+
+**Plan C（完全沒 R 環境）**：
+直接讀 <https://htlin222.github.io/roche-vabysmo-rwe-workshop/>。
+你看不到自己改 csv 的效果，但內容都讀得到。可以跟旁邊的同學共用螢幕做 hands-on。
+:::
+
+::: {.callout-tip title="🎯 其他常見坑"}
+- 「中文亂碼」→ Tools → Global Options → Code → Saving → Default text encoding 改 `UTF-8`
+- 「畫面卡住」→ 重整頁面，Posit.Cloud 偶爾會 idle disconnect
+- 「`Save a Permanent Copy` 是灰的按不下去」→ 你還沒登入，右上角點人頭 → Sign In
+:::
+
+---
+
+## 任務 2：第一次安裝套件
+
+📋 **複製這段話，貼給 AI**：
+
+> 我在 Posit.Cloud 上的 RStudio，請給我一段 R code 安裝這些套件：tidyverse, gtsummary, mmrm, emmeans, broom, broom.mixed, survival, survminer, gt, patchwork, ggsci。請用 pak 套件，repo 設成 Posit Public Package Manager 來加快下載。
+
+### 參考程式碼
+
+```{r}
+#| label: install-pkgs
+#| eval: false
+
+source("install.r")
+# 或者直接：
+# options(repos = c(CRAN = "https://packagemanager.posit.co/cran/latest"))
+# install.packages("pak")
+# pak::pak(c("tidyverse","gtsummary","mmrm","emmeans","broom","broom.mixed",
+#            "survival","survminer","gt","patchwork","ggsci"))
+```
+
+第一次跑大約 3–5 分鐘。之後不用再裝。
+
+---
+
+## 任務 3：讓 AI 用 100 字摘要這篇 paper
+
+📋 **複製這段話，貼給 AI**：
+
+> 下面是一篇 Ophthalmology 期刊的 abstract，請用繁體中文 100 字內告訴我：（1）它在比較哪兩個藥；（2）為什麼比較；（3）主要結論；（4）用了什麼統計方法。
+>
+> 【貼上 abstract — 在 `refs/tenaya-lucerne-paper.pdf` 第 1 頁】
+
+::: {.callout-tip}
+你會發現 AI 摘出來的「統計方法」一定會提到 **MMRM** 與 **CMH-weighted**——這就是今天 Part 3 / Part 4 要做的事。
+:::
+
+---
+
+## 任務 4：讀進模擬資料，看欄位
+
+我們已經幫你準備好兩個 csv（在 `data/` 資料夾下）。
+這份資料**不是真的病人資料**，是用 R 模擬出來的，但統計特性接近 TENAYA/LUCERNE paper。
+
+📋 **複製這段話，貼給 AI**：
+
+> 請給我 R code，用 `readr::read_csv()` 讀入 `data/vabysmo_baseline.csv` 和 `data/vabysmo_followup.csv`，然後用 `dplyr::glimpse()` 看欄位。請加中文註解。
+
+### 參考程式碼
+
+```{r}
+#| label: load-data
+library(readr)
+library(dplyr)
+
+baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+
+glimpse(baseline)
+```
+
+```{r}
+#| label: glimpse-followup
+glimpse(followup)
+```
+
+### 看一下兩臂人數對不對
+
+```{r}
+#| label: check-n
+baseline |>
+  count(arm)
+```
+
+(對照 paper：faricimab 665、aflibercept 664)
+
+### 每個 week 有多少筆？
+
+```{r}
+#| label: check-weeks
+followup |>
+  count(week)
+```
+
+每個 visit 應該都接近 1329 筆（會少一點點，因為有 missing）。
+
+---
+
+## 任務 5：long format vs wide format
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用「給小學生聽得懂」的方式，告訴我什麼是 long format（長表格）跟 wide format（寬表格）。為什麼 longitudinal data（同一個病人測多次）通常存成 long format？
+
+### 參考解釋
+
+| 格式 | 一筆 row 是什麼 | 例子 |
+|---|---|---|
+| **wide** | 一個病人 | `patient_id, bcva_w0, bcva_w4, bcva_w8, bcva_w12` |
+| **long** | 一個病人 × 一次測量 | `patient_id, week, bcva` |
+
+**MMRM 需要 long format**——因為它把「同一隻眼睛被量很多次」當成 random effect 來建模，需要每次測量都是獨立一筆。
+
+我們的 `followup` 已經是 long format。Part 3 馬上會用到。
+
+---
+
+::: {.callout-note title="本章重點"}
+1. Posit.Cloud 是「在瀏覽器裡跑 RStudio」，零安裝
+2. AI 是你的 R 助手，但**你**要看懂結果
+3. `data/vabysmo_baseline.csv` 是病人層級、`data/vabysmo_followup.csv` 是回診層級
+4. MMRM 吃 long format，等下會看到
+:::

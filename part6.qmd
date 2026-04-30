@@ -1,0 +1,211 @@
+# Part 6（Bonus）：Figure 3 — Time to first absence of fluid
+
+```{r}
+#| label: setup-part6
+#| include: false
+source("_common.R")
+library(readr)
+library(dplyr)
+library(tidyr)
+library(survival)
+library(survminer)
+library(broom)
+
+baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+```
+
+預計時間：20 分鐘。**時間吃緊可整段跳過。**
+**deliverable：一張 Kaplan–Meier curve（time to first absence of IRF and SRF）+ Cox hazard ratio。**
+
+::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
+> 我有 R data frame `baseline` 與 `followup`。請給我 R code：
+>
+> 1. 從 baseline 篩出「有 IRF 或 SRF」的病人（樣本量 ≈ 1170）
+> 2. 把 followup 加上 baseline 的 arm 與 baseline IRF/SRF
+> 3. 對每個病人找出第一個 IRF=0 且 SRF=0 的 visit (week 4/8/12)，作為 time-to-event；沒事件則 censored at last visit
+> 4. 用 `survival::survfit(Surv(time, event) ~ arm)` 跑 KM
+> 5. 用 `survminer::ggsurvplot()` 畫圖（cumulative incidence，亦即 1-KM）
+> 6. 用 `survival::coxph()` 拿 hazard ratio + 95% CI + log-rank p
+:::
+
+---
+
+## 任務 25：什麼是 time-to-event analysis？
+
+📋 **複製這段話，貼給 AI**：
+
+> 用「給沒學過統計的眼科醫師聽得懂」的方式 100 字內解釋：
+> 1. 什麼是 time-to-event？
+> 2. 什麼是 censoring？
+> 3. 為什麼不能用 mean / proportion 比較「事件發生時間」？
+> 4. 什麼是 hazard ratio？
+
+::: {.callout-tip title="速記"}
+- **事件**：第一次 IRF + SRF 都消失（在 OCT 上看不到 fluid）
+- **censoring**：到追蹤結束都沒事件的病人；不能直接刪、會偏 bias
+- **Kaplan–Meier**：把「直到 t 時間還沒事件」的比例畫出來，會階梯狀下降
+- **Hazard ratio = 1.47**：faricimab 比 aflibercept 的「事件發生 instantaneous rate」高 47%
+:::
+
+::: {.callout-tip title="📖 名詞｜survival vs cumulative incidence"}
+**KM 預設畫的是 `S(t)` survival function**：「t 時還沒發生事件的比例」，從 100% 開始往下掉。
+**`fun = "event"`** 把它翻過來變 **cumulative incidence = 1 − S(t)**：「t 時已發生事件的比例」，從 0% 開始往上爬。
+
+我們的 outcome 是「fluid 消失」（好事），所以畫 cumulative incidence 比較直觀——曲線越高代表「越多人達標」。Paper Fig 3 也是這樣畫。
+:::
+
+::: {.callout-tip title="📖 名詞｜PH 假設（proportional hazards assumption）"}
+Cox model 假設：「兩 arm 的 hazard 比值在整段時間都一樣」。
+**白話**：兩條 KM 曲線不會交叉、也不會在某個時點突然反轉。
+12 週 head-to-head phase 通常 OK；如果你拉長到 2 年看，就要查 PH 是否還成立（用 `cox.zph()`）。
+:::
+
+---
+
+## 任務 26：建立 time-to-event dataset
+
+```{r}
+#| label: build-tte
+# Cohort：baseline 有 IRF 或 SRF 的病人（per paper：n_fari=581, n_afli=591）
+elig <- baseline |>
+  filter(irf_baseline == 1 | srf_baseline == 1) |>
+  select(patient_id, arm)
+
+cat("Eligible n:", nrow(elig), "\n")
+cat("  faricimab :", sum(elig$arm == "faricimab"), "\n")
+cat("  aflibercept:", sum(elig$arm == "aflibercept"), "\n")
+
+# 對每個病人找第一個 IRF=0 & SRF=0 的 visit
+tte <- followup |>
+  filter(patient_id %in% elig$patient_id) |>
+  mutate(both_absent = (irf == 0 & srf == 0)) |>
+  group_by(patient_id) |>
+  arrange(week) |>
+  summarise(
+    first_event_week = suppressWarnings(
+      min(week[!is.na(both_absent) & both_absent])
+    ),
+    last_visit_week  = suppressWarnings(
+      max(week[!is.na(both_absent)])
+    ),
+    .groups = "drop"
+  ) |>
+  mutate(
+    event = is.finite(first_event_week),
+    time  = if_else(event, first_event_week, last_visit_week),
+    time  = if_else(is.infinite(time), 12, time)  # default censor at end
+  ) |>
+  left_join(elig, by = "patient_id") |>
+  mutate(arm = factor(arm, levels = c("aflibercept","faricimab")))
+
+head(tte)
+```
+
+---
+
+## 任務 27：畫 KM curve（cumulative incidence 形式）
+
+📋 **複製這段話，貼給 AI**：
+
+> 用 `survminer::ggsurvplot()` 畫 cumulative incidence（fun="event"），by arm。x 從 0 到 12 週。
+> faricimab 紫色 #7B5CA8、aflibercept 灰藍 #7E9CB7。
+
+### 參考程式碼
+
+```{r}
+#| label: km-fit
+fit_km <- survfit(Surv(time, event) ~ arm, data = tte)
+fit_km
+```
+
+```{r}
+#| label: fig3-km
+#| fig-cap: "Figure 3. Reproduced — Time to first absence of IRF and SRF in patients with IRF or SRF at baseline."
+#| fig-width: 8
+#| fig-height: 5.5
+
+plot_km <- ggsurvplot(
+  fit_km,
+  data = tte,
+  fun = "event",  # cumulative incidence (1 - S(t))
+  conf.int = TRUE,
+  risk.table = TRUE,
+  risk.table.height = 0.25,
+  palette = c("#7E9CB7", "#7B5CA8"),
+  legend.labs = c("Aflibercept Q8W", "Faricimab up to Q16W"),
+  xlab = "Time (Weeks)",
+  ylab = "Cumulative Incidence (%) of First Absence of IRF and SRF",
+  break.time.by = 4,
+  ggtheme = theme_minimal(base_size = 12) +
+    theme(legend.position = "bottom")
+)
+plot_km
+```
+
+---
+
+## 任務 28：Cox 回歸 — Hazard ratio
+
+📋 **複製這段話，貼給 AI**：
+
+> 用 `survival::coxph(Surv(time, event) ~ arm + study + bcva_strat + lld_strat + region, data = tte)` 算 stratified Cox model。回傳 hazard ratio + 95% CI + log-rank p。
+
+### 參考程式碼
+
+```{r}
+#| label: cox-model
+tte_full <- tte |>
+  left_join(
+    baseline |> select(patient_id, study, bcva_strat, lld_strat, region),
+    by = "patient_id"
+  ) |>
+  mutate(
+    study      = factor(study),
+    bcva_strat = factor(bcva_strat),
+    lld_strat  = factor(lld_strat),
+    region     = factor(region)
+  )
+
+m_cox <- coxph(
+  Surv(time, event) ~ arm + study + bcva_strat + lld_strat + region,
+  data = tte_full
+)
+summary(m_cox)
+```
+
+```{r}
+#| label: cox-tidy
+tidy(m_cox, exponentiate = TRUE, conf.int = TRUE) |>
+  filter(grepl("^arm", term)) |>
+  select(term, hazard_ratio = estimate, lower = conf.low,
+         upper = conf.high, p.value)
+```
+
+對照 paper：HR = 1.47 (1.24–1.73)、log-rank p < 0.0001。
+
+---
+
+## 整合：你下課帶回家的東西
+
+工作坊結束時，你的 Posit.Cloud project 裡應該有：
+
+| 檔案 | 內容 |
+|---|---|
+| `_book/` | 渲染好的整本 HTML 教材，可瀏覽 |
+| `data/vabysmo_baseline.csv` 等 | 模擬資料 |
+| `scripts/01_table1.R` 等 | 5 支獨立可跑的 R 腳本 |
+| 你自己跑出的圖 | Table 1、Fig 1A/B、Fig 2 三 panel、Fig 3 KM |
+| `data/data_dictionary.md` | 院內 csv schema |
+| `appendix.qmd` | 院內換資料時的常見錯誤 |
+
+**下一步：把這個 project 用 Posit.Cloud 「Save a Permanent Copy」存起來，去找院內 IT。**
+
+---
+
+::: {.callout-note title="本章重點"}
+1. Time-to-event 多了一個維度：**「事件發生有多快」**
+2. KM 是 non-parametric、Cox 是 semi-parametric；前者畫圖、後者算 HR
+3. Cumulative incidence (1-KM) 是 paper 慣用的展示方式
+4. 三個 method（MMRM、CMH、Cox）放一起就是一篇 phase 3 nAMD paper 的骨架
+:::
