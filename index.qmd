@@ -15,6 +15,57 @@ source("_common.R")
 
 ---
 
+## 🔗 重要連結（書籤起來）
+
+::: {.callout-important title="📌 跑這本書 / 跑這課"}
+
+| 用途 | 連結 |
+|---|---|
+| 📖 **線上書**（這本，可分享） | <https://htlin222.github.io/roche-vabysmo-rwe-workshop/> |
+| 📦 **程式碼 repo**（給 Posit.Cloud fork） | <https://github.com/htlin222/roche-vabysmo-rwe-workshop> |
+| 🧪 **Posit.Cloud**（瀏覽器跑 RStudio） | <https://posit.cloud/> |
+| 🎁 **老師預烤 Posit.Cloud project**（建議路線） | **🎤 現場由老師發放** |
+
+:::
+
+::: {.callout-tip title="🤖 AI 助手（free-tier 都可以）"}
+
+| 工具 | 連結 |
+|---|---|
+| ChatGPT | <https://chat.openai.com/> |
+| Google Gemini | <https://gemini.google.com/> |
+| Claude | <https://claude.ai/> |
+
+3 選 1 即可，本書的 📋 prompt 在哪一個都跑得出 R code。
+
+:::
+
+::: {.callout-tip title="📑 參考材料 / 速查"}
+
+| 用途 | 連結 |
+|---|---|
+| 原始論文（**CC BY 全文**） | [Cheung 2025 *Ophthalmology* — DOI](https://doi.org/10.1016/j.ophtha.2024.11.023) |
+| 院內 csv schema | [`data/data_dictionary.md`](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/data/data_dictionary.md) |
+| 模擬資料下載 | [`data/` 全部 csv](https://github.com/htlin222/roche-vabysmo-rwe-workshop/tree/main/data) |
+| 課堂 FAQ（29 Q&A） | [`docs/faq.md`](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/faq.md) |
+| 名詞 / 縮寫速查 | [Appendix G](appendix.html) |
+| 統計 / 程式 ELI5 | [Appendix E、F](appendix.html) |
+
+:::
+
+::: {.callout-note collapse="true" title="🎓 給老師、助教（學員可略過）"}
+
+| 用途 | 連結 |
+|---|---|
+| TA 工作手冊 | [`docs/ta-handbook.md`](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/ta-handbook.md) |
+| 老師課前預烤 SOP | [`docs/posit-cloud-setup.md`](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/posit-cloud-setup.md) |
+| 對口 / 內部行事曆 | [`docs/internal-notes.md`](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/internal-notes.md) |
+| Issues / 教材 bug 回報 | <https://github.com/htlin222/roche-vabysmo-rwe-workshop/issues> |
+
+:::
+
+---
+
 ## 課程目標
 
 今天結束時，你應該可以：

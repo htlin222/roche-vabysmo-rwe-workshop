@@ -638,5 +638,15 @@
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>附錄：回院之後的事</span>"
     ]
+  },
+  {
+    "objectID": "index.html#重要連結書籤起來",
+    "href": "index.html#重要連結書籤起來",
+    "title": "讓你的 Vabysmo RWE 長得像 Ophthalmology 論文",
+    "section": "🔗 重要連結（書籤起來）",
+    "text": "🔗 重要連結（書籤起來）\n\n\n\n\n\n\n📌 跑這本書 / 跑這課\n\n\n\n\n\n\n用途\n連結\n\n\n\n\n📖 線上書（這本，可分享）\nhttps://htlin222.github.io/roche-vabysmo-rwe-workshop/\n\n\n📦 程式碼 repo（給 Posit.Cloud fork）\nhttps://github.com/htlin222/roche-vabysmo-rwe-workshop\n\n\n🧪 Posit.Cloud（瀏覽器跑 RStudio）\nhttps://posit.cloud/\n\n\n🎁 老師預烤 Posit.Cloud project（建議路線）\n🎤 現場由老師發放\n\n\n\n\n\n\n\n\n\n\n\n🤖 AI 助手（free-tier 都可以）\n\n\n\n\n\n\n工具\n連結\n\n\n\n\nChatGPT\nhttps://chat.openai.com/\n\n\nGoogle Gemini\nhttps://gemini.google.com/\n\n\nClaude\nhttps://claude.ai/\n\n\n\n3 選 1 即可，本書的 📋 prompt 在哪一個都跑得出 R code。\n\n\n\n\n\n\n\n\n📑 參考材料 / 速查\n\n\n\n\n\n\n用途\n連結\n\n\n\n\n原始論文（CC BY 全文）\nCheung 2025 Ophthalmology — DOI\n\n\n院內 csv schema\ndata/data_dictionary.md\n\n\n模擬資料下載\ndata/ 全部 csv\n\n\n課堂 FAQ（29 Q&A）\ndocs/faq.md\n\n\n名詞 / 縮寫速查\nAppendix G\n\n\n統計 / 程式 ELI5\nAppendix E、F\n\n\n\n\n\n\n\n\n\n\n\n🎓 給老師、助教（學員可略過）\n\n\n\n\n\n\n\n\n用途\n連結\n\n\n\n\nTA 工作手冊\ndocs/ta-handbook.md\n\n\n老師課前預烤 SOP\ndocs/posit-cloud-setup.md\n\n\n對口 / 內部行事曆\ndocs/internal-notes.md\n\n\nIssues / 教材 bug 回報\nhttps://github.com/htlin222/roche-vabysmo-rwe-workshop/issues",
+    "crumbs": [
+      "前言"
+    ]
   }
 ]
