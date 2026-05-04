@@ -1,11 +1,14 @@
-# 讓你的 Vabysmo RWE 長得像 Ophthalmology 論文
+# 讓你的 Faricimab RWE 長得像 Ophthalmology 論文
 
-> 5/30 眼科醫師研究工作坊教材
-> Roche / Shao Shih-Chieh × 林協霆
+> 羅氏眼科研究賦能工作坊教材（5/30）
+> 主辦單位：羅氏大藥廠（Roche Products Ltd. Taiwan）
+> 作者：和信治癌中心醫院 林協霆醫師 × 羅氏大藥廠 邵時傑博士
 
-這是一本 Quarto book，教眼科醫師用 AI + R 把院內 Vabysmo (faricimab) 資料做成可投 *Ophthalmology* 的圖表，
-reproduce TENAYA/LUCERNE paper 的 Figure 1（MMRM）與 Figure 2（CMH-weighted）。
+這是一本 Quarto book，教眼科醫師用 AI + R 把院內 faricimab cohort 資料做成可投 *Ophthalmology* 的圖表，
+reproduce TENAYA/LUCERNE paper 的 Figure 1（MMRM）與 Figure 2（CMH-weighted），並示範院內 RWE 必備的 PSM + ASMD 工作流。
 **學員不需要會 R**，照著「📋 複製這段話貼給 AI」操作即可。
+
+> ⚠️ **利益揭露**：本工作坊由羅氏大藥廠贊助舉辦。教材內容以方法學教學為主，藥物一律以學名（faricimab、aflibercept）呈現、不使用商品名；圖表配色為教材中性色。詳見書內前言宣告。
 
 ---
 
@@ -21,7 +24,7 @@ reproduce TENAYA/LUCERNE paper 的 Figure 1（MMRM）與 Figure 2（CMH-weighted
   - [`docs/ta-handbook.md`](docs/ta-handbook.md) — 助教工作手冊
   - [`docs/faq.md`](docs/faq.md) — 常見問題（學員 / 助教共用）
   - [`docs/internal-notes.md`](docs/internal-notes.md) — 對口 / 信件 / 行事曆
-- **非眼科背景請先讀**：書內 [Primer 章節](https://htlin222.github.io/roche-vabysmo-rwe-workshop/primer.html)（眼科解剖 / nAMD / OCT / faricimab 機轉 30 分鐘速懂）
+- **非眼科背景請先讀**：書內 Primer 章節（眼科解剖 / nAMD / OCT / faricimab 機轉 30 分鐘速懂）
 
 ### 更新流程：本機 render，release 觸發部署
 
@@ -73,7 +76,7 @@ cd roche-vabysmo-rwe-workshop
 Rscript install.r
 
 # 重生模擬資料（可選，repo 已含 csv）
-Rscript R/simulate_vabysmo.R
+Rscript R/simulate_faricimab.R
 
 # 渲染整本書
 quarto render
@@ -105,7 +108,7 @@ open _book/index.html
 │
 ├── data/                      # 三份模擬 csv + data dictionary
 ├── scripts/                   # 5 支 standalone R script
-├── R/simulate_vabysmo.R       # 可重現的模擬資料生成腳本
+├── R/simulate_faricimab.R    # 可重現的模擬資料生成腳本
 ├── refs/                      # 參考論文（TENAYA/LUCERNE PDF）
 ├── emails/                    # Shao 對課的原文
 ├── docs/                      # 內部筆記
@@ -122,7 +125,7 @@ open _book/index.html
 | Part 2 | Table 1 baseline | 20 min | gtsummary 跑出論文等級 Table 1 |
 | Part 3 | Figure 1（MMRM） | 40 min | BCVA + CST 兩張曲線 |
 | Part 4 | Figure 2（CMH） | 30 min | IRF/SRF/both 三張 absence bar |
-| Part 5 | 換你院內資料 | 30 min | 同 code、跑出 n=180 院內版 |
+| Part 5 | 換你院內資料（含 PSM + ASMD） | 30 min | PSM 配對 + matched cohort 上跑出 n≈100 院內版 |
 | Part 6 | Bonus：KM + Cox | 20 min | Time-to-event 曲線 + HR |
 | Appendix | 回院 checklist | — | 院內 csv schema |
 
@@ -139,7 +142,7 @@ RWE / regulatory 圈的 lingua franca 是 R + Quarto；`mmrm` 套件本來就是
 
 **為什麼用模擬資料而不是 paper 原始 data？**
 TENAYA/LUCERNE raw data 不公開（Roche 內部）。我們從 paper 的 summary statistics 反推、
-重生統計特性接近的 1329 筆資料，用 `R/simulate_vabysmo.R` 完全 reproducible（fixed seed）。
+重生統計特性接近的 1329 筆資料，用 `R/simulate_faricimab.R` 完全 reproducible（fixed seed）。
 
 詳細設計討論看 [`plan.md`](plan.md)。
 

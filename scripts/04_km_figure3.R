@@ -7,8 +7,8 @@ suppressPackageStartupMessages({
   library(survival); library(survminer); library(broom)
 })
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
-followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 elig <- baseline |>
   filter(irf_baseline == 1 | srf_baseline == 1) |>
@@ -55,7 +55,7 @@ dir.create("_book", showWarnings = FALSE)
 plt <- ggsurvplot(
   fit_km, data = tte, fun = "event",
   conf.int = TRUE, risk.table = TRUE, risk.table.height = 0.25,
-  palette = c("#7E9CB7","#7B5CA8"),
+  palette = c("#C75D38","#1F5C8B"),
   legend.labs = c("Aflibercept","Faricimab"),
   xlab = "Time (Weeks)", ylab = "Cumulative Incidence",
   break.time.by = 4

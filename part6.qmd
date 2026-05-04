@@ -11,12 +11,21 @@ library(survival)
 library(survminer)
 library(broom)
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
-followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 ```
 
 預計時間：20 分鐘。**時間吃緊可整段跳過。**
 **deliverable：一張 Kaplan–Meier curve（time to first absence of IRF and SRF）+ Cox hazard ratio。**
+
+::: {.callout-note title="📚 Survival 方法學引用"}
+- **Kaplan–Meier 教學**：Jager 2008 *Kidney Int*[@jager2008km]、Rich 2010 practical guide[@rich2010km]
+- **Survival in clinical trials**：Fleming & Lin 2000 *Biometrics*[@fleming2000survival]
+- **Proportional hazards 假設檢定（Schoenfeld residuals 等）**：Hess 1995 *Stat Med*[@hess1995phgraphic]
+- **非比例 hazards（NPH）的處理**：Gregson 2019 *JACC*[@gregson2019nph]
+
+> AI 對 Cox 模型的 PH 假設、log-rank 與 weighted log-rank 的差別、以及 cumulative incidence 與 KM survival 的視覺翻轉**常常給錯**。本章把 Cheung 2025 paper 的 KM cumulative incidence 風格 reproduce，PH assumption 用 `cox.zph()` 檢查（範例見 `appendix.qmd`）。
+:::
 
 ::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
 > 我有 R data frame `baseline` 與 `followup`。請給我 R code：
@@ -43,8 +52,8 @@ followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
 
 ::: {.callout-tip title="速記"}
 - **事件**：第一次 IRF + SRF 都消失（在 OCT 上看不到 fluid）
-- **censoring**：到追蹤結束都沒事件的病人；不能直接刪、會偏 bias
-- **Kaplan–Meier**：把「直到 t 時間還沒事件」的比例畫出來，會階梯狀下降
+- **censoring**：到追蹤結束都沒事件的病人；不能直接刪、會偏 bias[@jager2008km]
+- **Kaplan–Meier**：把「直到 t 時間還沒事件」的比例畫出來，會階梯狀下降[@rich2010km; @fleming2000survival]
 - **Hazard ratio = 1.47**：faricimab 比 aflibercept 的「事件發生 instantaneous rate」高 47%
 :::
 
@@ -56,9 +65,10 @@ followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
 :::
 
 ::: {.callout-tip title="📖 名詞｜PH 假設（proportional hazards assumption）"}
-Cox model 假設：「兩 arm 的 hazard 比值在整段時間都一樣」。
+Cox model 假設：「兩 arm 的 hazard 比值在整段時間都一樣」[@hess1995phgraphic]。
 **白話**：兩條 KM 曲線不會交叉、也不會在某個時點突然反轉。
 12 週 head-to-head phase 通常 OK；如果你拉長到 2 年看，就要查 PH 是否還成立（用 `cox.zph()`）。
+碰到 NPH（曲線交叉、後段拉開）→ 改用 RMST、weighted log-rank、time-varying coefficient 等[@gregson2019nph]。
 :::
 
 ---
@@ -109,7 +119,7 @@ head(tte)
 📋 **複製這段話，貼給 AI**：
 
 > 用 `survminer::ggsurvplot()` 畫 cumulative incidence（fun="event"），by arm。x 從 0 到 12 週。
-> faricimab 紫色 #7B5CA8、aflibercept 灰藍 #7E9CB7。
+> faricimab 深藍 #1F5C8B、aflibercept 赭橙 #C75D38。
 
 ### 參考程式碼
 
@@ -132,7 +142,7 @@ plot_km <- ggsurvplot(
   conf.int = TRUE,
   risk.table = TRUE,
   risk.table.height = 0.25,
-  palette = c("#7E9CB7", "#7B5CA8"),
+  palette = c("#C75D38", "#1F5C8B"),
   legend.labs = c("Aflibercept Q8W", "Faricimab up to Q16W"),
   xlab = "Time (Weeks)",
   ylab = "Cumulative Incidence (%) of First Absence of IRF and SRF",
@@ -193,7 +203,7 @@ tidy(m_cox, exponentiate = TRUE, conf.int = TRUE) |>
 | 檔案 | 內容 |
 |---|---|
 | `_book/` | 渲染好的整本 HTML 教材，可瀏覽 |
-| `data/vabysmo_baseline.csv` 等 | 模擬資料 |
+| `data/faricimab_baseline.csv` 等 | 模擬資料 |
 | `scripts/01_table1.R` 等 | 5 支獨立可跑的 R 腳本 |
 | 你自己跑出的圖 | Table 1、Fig 1A/B、Fig 2 三 panel、Fig 3 KM |
 | `data/data_dictionary.md` | 院內 csv schema |

@@ -6,12 +6,20 @@
 source("_common.R")
 ```
 
-歡迎來到「**讓你的 Vabysmo RWE 長得像 Ophthalmology 論文**」工作坊。
+歡迎來到「**讓你的 Faricimab RWE 長得像 Ophthalmology 論文**」工作坊。
 
 這份教材的目標**不是**讓你學會 R，也不是讓你學會 MMRM 或 CMH 的數學原理。
 是讓你下課後做得到這件事：
 
-> **拿你院內的 Vabysmo cohort，產出可以投 Ophthalmology 的圖表。**
+> **拿你院內的 faricimab cohort，產出可以投 Ophthalmology 的圖表。**
+
+::: {.callout-important title="📣 主辦單位與利益揭露"}
+- **主辦單位**：羅氏大藥廠（Roche Products Ltd. Taiwan）
+- **作者**：和信治癌中心醫院 林協霆醫師、羅氏大藥廠 邵時傑博士
+- **資金**：本工作坊由羅氏大藥廠贊助舉辦。教材內容以方法學教學為主，所有藥物以**學名**（faricimab、aflibercept）呈現，不使用商品名；圖表配色為教材中性色，與任何商品識別色無關。
+- **教材授權**：CC BY 4.0，可自由修改、再散布、引用。
+- **AI 工具**：本書建議搭配 free-tier ChatGPT / Gemini / Claude 使用；AI 生成的內容**仍可能有錯誤**，請對照教材中提供的參考程式碼與引用文獻，自行驗證。
+:::
 
 ---
 
@@ -88,10 +96,30 @@ source("_common.R")
 
 **你的工作是「問對問題」、「看懂結果」，不是「寫對程式」。**
 
+::: {.callout-warning title="⚠️ AI 給的 code 跟教材不同？以教材為準"}
+為了讓全班跑出**一致的結果**，每個任務後面都附「**參考程式碼**」一欄。
+- 學員與 AI 對話**只是在練「拆需求 / 看懂程式」**，AI 的版本可能用不同套件、不同命名、不同預設參數。
+- 真正下指令跑的時候，**請統一複製教材的「參考程式碼」**——這樣老師、助教、同學的圖才會對得上。
+- AI 對於「眼科專業內容」與「統計細節」**仍有可能出錯**：碰到 reviewer 才會在意的細節（例如 random effect 結構、CMH 權重公式、PSM caliper 設定），請以教材中標註 ref 的內容為準，並自行驗證。
+:::
+
+::: {.callout-tip title="🚀 完全不想看 code？6 支腳本一行跑完"}
+打開 Terminal，確認 CWD 在專案根目錄，依序：
+```bash
+Rscript install.r                       # 第一次裝套件
+Rscript scripts/01_table1.R             # Part 2
+Rscript scripts/02_mmrm_figure1.R       # Part 3
+Rscript scripts/03_cmh_figure2.R        # Part 4
+Rscript scripts/04_km_figure3.R         # Part 6
+Rscript scripts/06_psm_my_hospital.R    # Part 5（PSM + matched MMRM/CMH）
+```
+完整對應表與前提條件見附錄頂端「🚀 完全不會寫程式：6 支腳本一行跑完」。
+:::
+
 ::: {.callout-tip title="🔖 看到陌生縮寫不要慌"}
 本書最後的 **Appendix G「名詞速查表」** 整理了眼科、試驗、統計、工具的所有縮寫。
-看到 `BCVA` / `CST` / `MMRM` / `CMH` / `Q4W` 等不認得 → 翻 appendix G.1–G.5。
-看到方法概念不懂（什麼是 random intercept、censoring）→ 翻 appendix E、F 的 ELI5。
+看到 `BCVA` / `CST` / `MMRM` / `CMH` / `PSM` / `ASMD` / `Q4W` 等不認得 → 翻 appendix G.1–G.5。
+看到方法概念不懂（什麼是 random intercept、censoring、propensity score）→ 翻 appendix E、F 的 ELI5。
 :::
 
 ---
@@ -163,7 +191,7 @@ df <- data.frame(
 ggplot(df, aes(x = type, y = size, fill = type)) +
   geom_col(width = 0.5, show.legend = FALSE) +
   geom_text(aes(label = paste0("n=", size)), vjust = -0.4, size = 4) +
-  scale_fill_manual(values = c("#7B5CA8", "#7E9CB7")) +
+  scale_fill_manual(values = c("#1F5C8B", "#C75D38")) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
   labs(x = NULL, y = NULL,
        title = "資料規模差距：方法學是一樣的，數字不一樣")

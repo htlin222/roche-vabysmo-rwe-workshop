@@ -19,6 +19,8 @@ required_pkgs <- c(
   "mmrm", "emmeans", "broom", "broom.mixed",
   # CMH / proportions
   "DescTools",
+  # PSM / ASMD（Part 5 院內 RWE）
+  "MatchIt", "cobalt",
   # survival
   "survival", "survminer",
   # plotting

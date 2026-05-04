@@ -12,12 +12,22 @@ library(emmeans)
 library(ggplot2)
 library(patchwork)
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
-followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 ```
 
 預計時間：40 分鐘（最長的一章）。
 **deliverable：兩張 paper 等級的曲線圖（BCVA、CST 隨時間變化）。**
+
+::: {.callout-note title="📚 MMRM 方法學的 robust citations"}
+本章 MMRM pipeline 對齊以下 RCT 縱向資料分析的 methodological consensus：
+- **MMRM > LOCF / ANOVA**：Mallinckrodt 2008[@mallinckrodt2008mmrm]、Mallinckrodt 2004 covariance structure[@mallinckrodt2004correlation]、Gueorguieva & Krystal 2004 *Move Over ANOVA*[@gueorguieva2004moveover]
+- **MMRM bias / type I error**：Bell & Rabe 2020 *Trials*[@bell2020mmrm]
+- **Missing data 處理 / MAR 假設 / FDA 觀點**：Little 2012 NRC report *NEJM*[@little2012nrcreport]、LaVange & Permutt 2016 regulatory perspective[@lavange2016fda]
+- **ICH E9 (R1) estimands framework**：Mehrotra et al. 2016[@mehrotra2016estimands]
+
+> AI 對 MMRM 的細節（covariance 結構選擇、Kenward-Roger DoF 校正、estimand 對應 ITT vs treatment policy）**容易給看似合理但偏離 ICH/FDA 推薦的答案**。請以教材的「參考程式碼」為準，並對 MMRM 結構選擇查上方 ref 自行驗證。
+:::
 
 ::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
 > 我有兩個 R data frame：`baseline`（patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat...）和 `followup`（patient_id, week, bcva, cst, irf, srf）。請給我 R code：
@@ -45,9 +55,9 @@ followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
 
 ::: {.callout-tip title="速記"}
 - **paired t-test**：只能比 2 個時間點
-- **ANOVA**：把每個時間點當獨立 group，沒利用「同一隻眼睛」的 within-subject correlation
-- **MMRM**：明確 model 「同一隻眼睛在不同 visit 之間相關」，並且**自動處理 missing**（implicit imputation, MAR assumption）
-- **unstructured covariance**：不假設「兩 visit 距離越遠相關越低」，每對 visit 各有自己的 covariance；最 flexible，paper 都用這個
+- **ANOVA**：把每個時間點當獨立 group，沒利用「同一隻眼睛」的 within-subject correlation——這正是 Gueorguieva & Krystal 2004 *Archives Gen Psychiatry* 〈Move Over ANOVA〉所主張要被 MMRM 取代的原因[@gueorguieva2004moveover]
+- **MMRM**：明確 model 「同一隻眼睛在不同 visit 之間相關」[@mallinckrodt2008mmrm; @mallinckrodt2004correlation]，並且**自動處理 missing**（implicit imputation, MAR assumption）[@little2012nrcreport]
+- **unstructured covariance**：不假設「兩 visit 距離越遠相關越低」，每對 visit 各有自己的 covariance；最 flexible，paper 都用這個[@mallinckrodt2004correlation; @bell2020mmrm]
 :::
 
 ---
@@ -130,8 +140,9 @@ summary(m_bcva)
 
 ::: {.callout-note title="模型 syntax 拆解"}
 - `arm + visit + arm:visit` — main effects 與 interaction（讓兩 arm 的時間趨勢可以不一樣）
-- `study + bcva_strat + lld_strat + region` — 分層因子（paper 也是這樣）
-- `us(visit | patient_id)` — 「同一個 patient 跨 visit 的 covariance 是 unstructured」
+- `study + bcva_strat + lld_strat + region` — 分層因子（paper 也是這樣）；多重 prognostic factor 的 adjustment 原則見 Kahan & Morris 2013[@kahan2013adjusting]
+- `us(visit | patient_id)` — 「同一個 patient 跨 visit 的 covariance 是 unstructured」；UN 在 RCT longitudinal data 是 FDA 接受的預設選擇[@mallinckrodt2004correlation; @lavange2016fda]
+- **Estimand 對應**：本書 demo 採「treatment policy」估計量（如 ICH E9 R1）[@mehrotra2016estimands]
 :::
 
 ::: {.callout-tip title="📖 名詞｜interaction / unstructured covariance / emmeans"}
@@ -170,7 +181,7 @@ contrast(emm_bcva, method = "revpairwise") |>
 
 📋 **複製這段話，貼給 AI**：
 
-> 請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 紫 #7B5CA8、aflibercept 灰藍 #7E9CB7）、加 error bar (95% CI)、加 point。標題 "(A) BCVA change from baseline"，y 軸 label "Adjusted Mean BCVA Change (Letters)"。
+> 請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 深藍 #1F5C8B、aflibercept 赭橙 #C75D38）、加 error bar (95% CI)、加 point。標題 "(A) BCVA change from baseline"，y 軸 label "Adjusted Mean BCVA Change (Letters)"。
 
 ### 參考程式碼
 

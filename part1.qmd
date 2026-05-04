@@ -12,7 +12,7 @@ source("_common.R")
 ::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
 如果你已經在 RStudio / Posit.Cloud 開好了，可以直接複製下面這段給 AI，一次跑完本章：
 
-> 我手上有兩個 csv：`data/vabysmo_baseline.csv`（一筆病人一列，欄位有 patient_id, arm, study, region, age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat）和 `data/vabysmo_followup.csv`（long format，每筆病人 × 回診一列，欄位有 patient_id, week, bcva, cst, irf, srf）。請給我一段 R code：
+> 我手上有兩個 csv：`data/faricimab_baseline.csv`（一筆病人一列，欄位有 patient_id, arm, study, region, age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat）和 `data/faricimab_followup.csv`（long format，每筆病人 × 回診一列，欄位有 patient_id, week, bcva, cst, irf, srf）。請給我一段 R code：
 >
 > 1. 用 `readr::read_csv()` 讀入這兩個檔案
 > 2. 用 `dplyr::glimpse()` 印出欄位結構
@@ -103,7 +103,7 @@ source("install.r")
 
 📋 **複製這段話，貼給 AI**：
 
-> 請給我 R code，用 `readr::read_csv()` 讀入 `data/vabysmo_baseline.csv` 和 `data/vabysmo_followup.csv`，然後用 `dplyr::glimpse()` 看欄位。請加中文註解。
+> 請給我 R code，用 `readr::read_csv()` 讀入 `data/faricimab_baseline.csv` 和 `data/faricimab_followup.csv`，然後用 `dplyr::glimpse()` 看欄位。請加中文註解。
 
 ### 參考程式碼
 
@@ -112,8 +112,8 @@ source("install.r")
 library(readr)
 library(dplyr)
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
-followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 glimpse(baseline)
 ```
@@ -167,6 +167,6 @@ followup |>
 ::: {.callout-note title="本章重點"}
 1. Posit.Cloud 是「在瀏覽器裡跑 RStudio」，零安裝
 2. AI 是你的 R 助手，但**你**要看懂結果
-3. `data/vabysmo_baseline.csv` 是病人層級、`data/vabysmo_followup.csv` 是回診層級
+3. `data/faricimab_baseline.csv` 是病人層級、`data/faricimab_followup.csv` 是回診層級
 4. MMRM 吃 long format，等下會看到
 :::

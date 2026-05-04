@@ -1,16 +1,16 @@
 #!/usr/bin/env Rscript
 #
-# 生成模擬 Vabysmo (faricimab) vs aflibercept RWE 資料集
+# 生成模擬 faricimab vs aflibercept RWE 資料集
 # 仿 TENAYA/LUCERNE 12-week head-to-head dosing phase
 # 參考：Cheung et al. Ophthalmology 2025;132:519-526
 #
 # 輸出：
-#   data/vabysmo_baseline.csv     1329 列，每病人一列
-#   data/vabysmo_followup.csv     long format, patient × visit at week 4/8/12
-#   data/vabysmo_my_hospital.csv  「假裝是你院內」n=180，同 schema
+#   data/faricimab_baseline.csv     1329 列，每病人一列
+#   data/faricimab_followup.csv     long format, patient × visit at week 4/8/12
+#   data/faricimab_my_hospital.csv  「假裝是你院內」n=180，同 schema
 #
 # 用法：
-#   Rscript R/simulate_vabysmo.R
+#   Rscript R/simulate_faricimab.R
 
 suppressPackageStartupMessages({
   library(dplyr)
@@ -279,8 +279,8 @@ resolve_out_dir <- function() {
 }
 out_dir <- resolve_out_dir()
 
-write_csv(baseline,    file.path(out_dir, "vabysmo_baseline.csv"))
-write_csv(followup,    file.path(out_dir, "vabysmo_followup.csv"))
+write_csv(baseline,    file.path(out_dir, "faricimab_baseline.csv"))
+write_csv(followup,    file.path(out_dir, "faricimab_followup.csv"))
 write_csv(mh_baseline |>
             left_join(mh_followup, by = "patient_id") |>
             # 也順便輸出一份 long 給學員看；主要 csv 是 baseline + followup
@@ -288,11 +288,11 @@ write_csv(mh_baseline |>
                    bcva_baseline, cst_baseline, irf_baseline, srf_baseline,
                    bcva_strat, lld_strat,
                    week, bcva, cst, irf, srf),
-          file.path(out_dir, "vabysmo_my_hospital.csv"))
+          file.path(out_dir, "faricimab_my_hospital.csv"))
 
 # 另外把 my_hospital 的 baseline 與 followup 也分檔（方便 part5 呼叫）
-write_csv(mh_baseline, file.path(out_dir, "vabysmo_my_hospital_baseline.csv"))
-write_csv(mh_followup, file.path(out_dir, "vabysmo_my_hospital_followup.csv"))
+write_csv(mh_baseline, file.path(out_dir, "faricimab_my_hospital_baseline.csv"))
+write_csv(mh_followup, file.path(out_dir, "faricimab_my_hospital_followup.csv"))
 
 # -----------------------------------------------------------------------------
 # Sanity check：印出 summary，與 paper 比對

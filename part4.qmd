@@ -10,12 +10,22 @@ library(tidyr)
 library(ggplot2)
 library(patchwork)
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
-followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 ```
 
 預計時間：30 分鐘。
 **deliverable：三張 absence proportion bar chart（IRF / SRF / IRF+SRF），對得起 paper Figure 2。**
+
+::: {.callout-note title="📚 CMH / stratified analysis 方法學引用"}
+- **CMH 原始**：Mantel & Haenszel 1959[@cmh1959]
+- **稀疏分層的方差估計**：Greenland & Robins 1985[@greenland1985mh]
+- **MH 在 RCT 中的角色與最新觀點**：Qiu et al. 2025 *Biometrics*[@qiu2025mhrole]
+- **加權選擇（minimum-risk vs CMH）**：Mehrotra & Railkar 2000[@mehrotra2000minrisk]
+- **多分層因子的 adjustment**：Kahan & Morris 2013[@kahan2013adjusting]、Agoritsas 2017 *JAMA*[@agoritsas2017adjusted]
+
+> AI 對 CMH 權重公式（hypergeometric 還是 sample-size weights）、空 stratum 處理、以及加權 vs unstratified 之間的差異**經常給錯**。Cheung 2025 paper 採 CMH-weighted proportion，本書範例對齊 paper、並在小 stratum 自動 drop 掉。
+:::
 
 ::: {.callout-note collapse="true" title="🚀 一鍵 Prompt：整章一次跑完"}
 > 我有 R data frame `baseline` 和 `followup`（已合併好），想做 paper Figure 2：分別在 week 4、8、12 算「absence of IRF」、「absence of SRF」、「absence of both」這三個 outcome 的比例，分 arm，並且 CMH-weighted by 分層因子（study × bcva_strat × lld_strat × region）。請給我 R code：
@@ -41,9 +51,9 @@ followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
 
 ::: {.callout-tip title="速記"}
 - **不 stratify**：直接算 faricimab arm 的 SRF absence% vs aflibercept arm 的 SRF absence%
-- **問題**：如果某個 stratum（例如 baseline severe）兩 arm 比例不一致，整體比較會被扭曲
-- **CMH 解法**：每個 stratum 算自己的 absence 差異，再加權平均；權重 = 該 stratum 兩 arm 樣本數的調和平均
-- **一句話**：把 24 個 stratum 的「小局結果」加權平均成一個整體 odds ratio / proportion difference
+- **問題**：如果某個 stratum（例如 baseline severe）兩 arm 比例不一致，整體比較會被扭曲[@kahan2013adjusting]
+- **CMH 解法**：每個 stratum 算自己的 absence 差異，再加權平均；權重 = 該 stratum 兩 arm 樣本數的調和平均[@cmh1959; @greenland1985mh]
+- **一句話**：把 24 個 stratum 的「小局結果」加權平均成一個整體 odds ratio / proportion difference[@qiu2025mhrole]
 :::
 
 ::: {.callout-tip title="📖 名詞｜stratum / strata / 為何 24 個"}

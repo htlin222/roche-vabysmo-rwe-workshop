@@ -2,10 +2,10 @@
 
 /* 任務 callout 加強對比 */
 .callout-note {
-  border-left-color: #7B5CA8 !important;
+  border-left-color: #1F5C8B !important;
 }
 .callout-tip {
-  border-left-color: #7E9CB7 !important;
+  border-left-color: #4A7C8A !important;
 }
 
 /* 程式碼區塊 */
@@ -16,8 +16,8 @@ pre code {
 
 /* 📋 prompt 區塊：用 blockquote 加底色 */
 blockquote {
-  background: #f6f1fb;
-  border-left: 4px solid #7B5CA8;
+  background: #EAF1F8;
+  border-left: 4px solid #1F5C8B;
   padding: 0.8em 1em;
   margin: 1em 0;
   font-style: normal;

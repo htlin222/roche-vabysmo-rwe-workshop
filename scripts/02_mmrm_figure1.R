@@ -8,10 +8,10 @@ suppressPackageStartupMessages({
   library(ggplot2); library(patchwork)
 })
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
-followup <- read_csv("data/vabysmo_followup.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
-arm_colours <- c("faricimab" = "#7B5CA8", "aflibercept" = "#7E9CB7")
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
 
 fu_long <- followup |>
   left_join(

@@ -1,4 +1,4 @@
-# Part 5：換你院內資料
+# Part 5：換你院內資料（含 PSM + ASMD）
 
 ```{r}
 #| label: setup-part5
@@ -8,6 +8,8 @@ library(readr)
 library(dplyr)
 library(tidyr)
 library(gtsummary)
+library(MatchIt)
+library(cobalt)
 library(mmrm)
 library(emmeans)
 library(ggplot2)
@@ -19,24 +21,38 @@ library(patchwork)
 
 > 上半場你看到了：1329 個病人、24 個 stratum、漂亮的 paper 圖。
 >
-> 下半場你會看到：**同樣的 code、換成 180 個病人的院內資料、跑出你自己的 paper draft**。
+> 下半場你會看到：**同樣的 pipeline、加上 PSM 處理院內 cohort 的非隨機分派、跑出可投稿的 Figure 1/2 草稿**。
+
+::: {.callout-important title="📚 這章的方法論引用"}
+- **PSM（propensity score matching）**：Austin 2011 *Multivariate Behavioral Research*[@austin2011propensity]、Stuart 2010 *Statistical Science*[@stuart2010matching]
+- **ASMD（absolute standardized mean difference）**：Austin 2009 *Statistics in Medicine*[@austin2009smd]
+- **MatchIt 套件**：Ho et al. 2011 *J Stat Softw*[@ho2011matchit]
+- **未測量混淆 sensitivity analysis（E-value）**：VanderWeele & Ding 2017 *Ann Intern Med*[@vanderweele2017evalue]、限制與誤用見 Ioannidis 2019[@ioannidis2019evaluelimits]
+- **Target trial emulation 報告標準**：Hansford 2023 *JAMA Netw Open*[@hansford2023targettrial]、TARGET Statement 2025 *JAMA*[@cashin2025target]
+- **觀察性研究 adjusted analysis 解讀**：Agoritsas 2017 *JAMA* Users' Guide[@agoritsas2017adjusted]
+- **真實世界 faricimab cohort 範例**：Khanani 2024 TRUCKEE[@khanani2024antivegf]
+
+> AI 對 PSM 細節（caliper、ratio、common support、unmeasured confounding 估計）常會給「看起來像、其實不對」的答案。請以教材的參考程式碼為準，並回查上面的 ref 自行驗證。
+:::
 
 ---
 
 ## 任務 21：載入「假裝是你院內」的資料
 
-我們準備了一份 `vabysmo_my_hospital.csv`，n = 180（faricimab 100 / aflibercept 80），region 全部 = `Asia-Pacific`。
+我們準備了一份 `faricimab_my_hospital.csv`，n = 180（faricimab 100 / aflibercept 80），region 全部 = `Asia-Pacific`。
 **schema 跟 trial 資料一模一樣。**
 
 📋 **複製這段話，貼給 AI**：
 
-> 請用 `readr::read_csv()` 讀 `data/vabysmo_my_hospital_baseline.csv` 和 `data/vabysmo_my_hospital_followup.csv`，看欄位是否跟 trial 資料一致。
+> 請用 `readr::read_csv()` 讀 `data/faricimab_my_hospital_baseline.csv` 和 `data/faricimab_my_hospital_followup.csv`，看欄位是否跟 trial 資料一致。
+>
+> 回答之後，**請等我看過教材的「參考程式碼」再執行**——課堂上同學要跑同一份 code 結果才能對得上。
 
 ```{r}
 #| label: load-mh
-mh_baseline <- read_csv("data/vabysmo_my_hospital_baseline.csv",
+mh_baseline <- read_csv("data/faricimab_my_hospital_baseline.csv",
                         show_col_types = FALSE)
-mh_followup <- read_csv("data/vabysmo_my_hospital_followup.csv",
+mh_followup <- read_csv("data/faricimab_my_hospital_followup.csv",
                         show_col_types = FALSE)
 
 glimpse(mh_baseline)
@@ -57,12 +73,162 @@ mh_baseline |> count(arm)
 
 ---
 
-## 任務 22：把 Part 2/3/4 的 code 直接套上去（code 一行不改）
+### 為什麼院內資料**必須**先做 PSM？
 
-這是工作坊的關鍵 demo：
-**證明你今天學的不是「跑那個 paper」，是「跑這類 paper」。**
+院內 cohort 跟 RCT 最大的差別：**沒有隨機分派**。誰被打 faricimab、誰被打 aflibercept 是醫師根據病情、藥效預期、健保給付等決定，所以兩組的 baseline 通常**不平衡**（例如 faricimab 組可能本來就比較嚴重、年紀較大、CST 較厚）。
 
-### Table 1（同 part2 的 code）
+如果直接套 Part 2/3/4 的 code，跑出來的差異會混合「藥效」與「baseline 差距」，**reviewer 第一輪退稿就會問：你怎麼處理 confounding？**
+
+| 方法 | 概念 | 何時用 |
+|---|---|---|
+| **Propensity score matching (PSM)** | 算每個病人「被分到 faricimab 的傾向分數」，然後 1:1 配對讓兩組分布相似 | n 中等（100–500），interpret 容易，本書範例 |
+| **Inverse probability of treatment weighting (IPTW)** | 每個病人加權，讓全 cohort 模擬隨機 | n 大、想保留樣本數時 |
+
+本書走 PSM 路線。完整背景見 Austin 2011 *Multivariate Behavioral Research*[@austin2011propensity] 與 Stuart 2010 *Stat Sci*[@stuart2010matching]。
+
+::: {.callout-tip title="📖 名詞｜propensity score / caliper / ratio"}
+- **propensity score** = 「給定 baseline 共變項，被分到 treatment 組的機率」，通常用 logistic regression 估計
+- **caliper** = 配對時兩人傾向分數差距的上限；常用 0.2 × SD(logit(propensity))
+- **ratio** = 配對比例（1:1、1:2、1:k）；本書用 1:1 nearest neighbor
+:::
+
+---
+
+## 任務 22：診斷 baseline 不平衡（PSM 前的 ASMD）
+
+📋 **複製這段話，貼給 AI**：
+
+> 我有一個 R data frame `mh_baseline`，欄位 patient_id, arm (faricimab/aflibercept), age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat。請用 `cobalt::bal.tab()` 算每個共變項的 absolute standardized mean difference (ASMD)，threshold = 0.1，並幫我解讀哪些變項不平衡。
+
+### 參考程式碼
+
+```{r}
+#| label: psm-pre-asmd
+mh_baseline <- mh_baseline |>
+  mutate(
+    treat = if_else(arm == "faricimab", 1L, 0L),
+    sex   = factor(sex),
+    bcva_strat = factor(bcva_strat),
+    lld_strat  = factor(lld_strat)
+  )
+
+covariates <- c("age", "sex", "bcva_baseline", "cst_baseline",
+                "irf_baseline", "srf_baseline", "bcva_strat", "lld_strat")
+
+bal_pre <- bal.tab(
+  reformulate(covariates, response = "treat"),
+  data        = mh_baseline,
+  estimand    = "ATT",
+  thresholds  = c(m = 0.1),
+  un          = TRUE
+)
+bal_pre
+```
+
+::: {.callout-tip title="🎯 怎麼讀 ASMD"}
+- **|ASMD| < 0.1** ✅ 平衡，不需要 adjust
+- **0.1 ≤ |ASMD| < 0.25** ⚠️ 輕微不平衡，建議 adjust
+- **|ASMD| ≥ 0.25** ❌ 嚴重不平衡，必定要 PSM 或在 model 裡 adjust
+
+模擬資料中你會看到部分變項 ASMD > 0.1——這是很典型的「院內病人 selection bias」。
+:::
+
+---
+
+## 任務 23：跑 1:1 nearest neighbor PSM
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用 `MatchIt::matchit()` 做 1:1 nearest neighbor PSM，treatment 是 faricimab vs aflibercept，共變項 age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat，distance 用 logistic regression、caliper = 0.2、ratio = 1。配對完拿 `match.data()`。
+
+### 參考程式碼
+
+```{r}
+#| label: psm-fit
+set.seed(20260530)
+
+m_out <- matchit(
+  treat ~ age + sex + bcva_baseline + cst_baseline +
+          irf_baseline + srf_baseline + bcva_strat + lld_strat,
+  data     = mh_baseline,
+  method   = "nearest",
+  distance = "glm",
+  ratio    = 1,
+  caliper  = 0.2
+)
+
+summary(m_out)
+```
+
+```{r}
+#| label: psm-matched-data
+mh_matched <- match.data(m_out) |> as_tibble()
+
+cat("配對後樣本數：", nrow(mh_matched),
+    "（faricimab:", sum(mh_matched$treat == 1),
+    "aflibercept:", sum(mh_matched$treat == 0), "）\n")
+
+mh_matched_followup <- mh_followup |>
+  semi_join(mh_matched, by = "patient_id")
+cat("配對後 follow-up rows：", nrow(mh_matched_followup), "\n")
+```
+
+::: {.callout-tip title="🎯 配對掉了多少人？"}
+1:1 + caliper 0.2 通常會丟掉一些「找不到夠相似 control」的病人。丟越多 → bias 解得越乾淨、power 越弱。**這是 PSM 永恆的 tradeoff。**
+:::
+
+---
+
+## 任務 24：配對後重算 ASMD + Love plot
+
+📋 **複製這段話，貼給 AI**：
+
+> 請用 `cobalt::bal.tab()` 算配對後的 ASMD，並用 `cobalt::love.plot()` 畫前後對比的 Love plot（threshold 線 0.1）。
+
+### 參考程式碼
+
+```{r}
+#| label: psm-post-asmd
+bal_post <- bal.tab(m_out, thresholds = c(m = 0.1), un = TRUE)
+bal_post
+```
+
+```{r}
+#| label: fig-love-plot
+#| fig-cap: "Love plot — PSM 前後 ASMD 對比；垂直線是 0.1 平衡門檻"
+#| fig-width: 8
+#| fig-height: 5
+
+love.plot(
+  m_out,
+  binary    = "std",
+  threshold = 0.1,
+  abs       = TRUE,
+  var.order = "unadjusted",
+  colors    = c("#C75D38", "#1F5C8B"),
+  shapes    = c("circle filled", "triangle filled"),
+  sample.names = c("配對前 (Unadjusted)", "配對後 (Matched)"),
+  title     = "ASMD: Before vs After 1:1 PSM"
+) +
+  theme(legend.position = "bottom")
+```
+
+::: {.callout-tip title="🎯 配對成功的訊號"}
+1. **大部分變項 ASMD 從 > 0.1 掉到 < 0.1**（紅圈 → 藍三角）
+2. **沒有任何變項配對後反而更不平衡**
+3. 樣本縮水可接受（通常掉 10–30%）
+:::
+
+---
+
+## 任務 25：把 Part 2/3/4 的 pipeline 套到 matched cohort
+
+::: {.callout-warning title="⚠️ 5.2.2、5.2.3 用的是配對後資料"}
+**5.2.1 Table 1 用 unmatched cohort 顯示原本不平衡。
+5.2.2 MMRM 與 5.2.3 CMH 一律用 matched cohort 跑**——這是投稿 RWE 的標準呈現。
+:::
+
+### 5.2.1 Table 1（unmatched — 顯示原始 cohort 的不平衡）
 
 ```{r}
 #| label: mh-table1
@@ -76,69 +242,52 @@ mh_baseline |>
     digits = list(all_continuous() ~ 1)
   ) |>
   add_overall() |>
-  modify_caption("**Table 1 (My Hospital).** Baseline characteristics, n=180")
+  modify_caption("**Table 1 (My Hospital, unmatched).** Baseline characteristics, n=180")
 ```
 
-::: {.callout-tip}
-你會看到院內 BCVA 偏低（~55 letters）、CST 偏高（~395 μm）。這是 RWE 比 trial 嚴重的「常見方向」——trial 通常 enrol 比較好的個案。
-:::
-
-### Figure 1（MMRM）— 同 part3 的 code
+### 5.2.2 Figure 1（MMRM on matched cohort）
 
 ```{r}
 #| label: mh-fig1
-#| fig-cap: "Figure 1 (My Hospital) — Same MMRM pipeline applied to n=180 cohort"
+#| fig-cap: "Figure 1 (My Hospital, post-PSM matched cohort) — MMRM on matched cohort"
 #| fig-width: 11
 #| fig-height: 5
 
-mh_fu_long <- mh_followup |>
+mh_fu_long <- mh_matched_followup |>
   left_join(
-    mh_baseline |> select(patient_id, arm, study, region,
-                          bcva_baseline, cst_baseline,
-                          bcva_strat, lld_strat),
+    mh_matched |> select(patient_id, arm, study, region,
+                         bcva_baseline, cst_baseline,
+                         bcva_strat, lld_strat),
     by = "patient_id"
   ) |>
   mutate(
     bcva_change = bcva - bcva_baseline,
     cst_change  = cst - cst_baseline,
     visit       = factor(week, levels = c(4, 8, 12)),
-    arm         = factor(arm, levels = c("aflibercept","faricimab")),
+    arm         = factor(arm, levels = c("aflibercept", "faricimab")),
     bcva_strat  = factor(bcva_strat),
     lld_strat   = factor(lld_strat)
-    # study 和 region 在院內常常單一值，會被 mmrm 自動 drop
   )
 
-# 注意：region 全部 Asia-Pacific、study 全部一樣，所以 model 拿掉這兩個分層
 m_bcva_mh <- tryCatch(
-  mmrm(
-    formula = bcva_change ~ arm + visit + arm:visit +
-      bcva_strat + lld_strat + us(visit | patient_id),
-    data = mh_fu_long |> filter(!is.na(bcva_change))
-  ),
+  mmrm(bcva_change ~ arm + visit + arm:visit + bcva_strat + lld_strat +
+       us(visit | patient_id),
+       data = mh_fu_long |> filter(!is.na(bcva_change))),
   error = function(e) {
-    message("MMRM 在小樣本下可能收斂困難，改 covariance 為 cs：", e$message)
-    mmrm(
-      formula = bcva_change ~ arm + visit + arm:visit +
-        bcva_strat + lld_strat + cs(visit | patient_id),
-      data = mh_fu_long |> filter(!is.na(bcva_change))
-    )
-  }
-)
+    mmrm(bcva_change ~ arm + visit + arm:visit + bcva_strat + lld_strat +
+         cs(visit | patient_id),
+         data = mh_fu_long |> filter(!is.na(bcva_change)))
+  })
 
 m_cst_mh <- tryCatch(
-  mmrm(
-    formula = cst_change ~ arm + visit + arm:visit +
-      bcva_strat + lld_strat + us(visit | patient_id),
-    data = mh_fu_long |> filter(!is.na(cst_change))
-  ),
+  mmrm(cst_change ~ arm + visit + arm:visit + bcva_strat + lld_strat +
+       us(visit | patient_id),
+       data = mh_fu_long |> filter(!is.na(cst_change))),
   error = function(e) {
-    mmrm(
-      formula = cst_change ~ arm + visit + arm:visit +
-        bcva_strat + lld_strat + cs(visit | patient_id),
-      data = mh_fu_long |> filter(!is.na(cst_change))
-    )
-  }
-)
+    mmrm(cst_change ~ arm + visit + arm:visit + bcva_strat + lld_strat +
+         cs(visit | patient_id),
+         data = mh_fu_long |> filter(!is.na(cst_change)))
+  })
 
 emm_b <- as.data.frame(emmeans(m_bcva_mh, ~ arm | visit)) |>
   mutate(week = as.numeric(as.character(visit)))
@@ -147,7 +296,7 @@ emm_c <- as.data.frame(emmeans(m_cst_mh, ~ arm | visit)) |>
 
 baseline_zero <- function(df) {
   bind_rows(
-    data.frame(arm = c("aflibercept","faricimab"),
+    data.frame(arm = c("aflibercept", "faricimab"),
                week = 0, emmean = 0, lower.CL = 0, upper.CL = 0),
     df |> select(arm, week, emmean, lower.CL, upper.CL)
   ) |> arrange(arm, week)
@@ -158,8 +307,8 @@ p_b <- ggplot(baseline_zero(emm_b),
   geom_line(linewidth = 1) + geom_point(size = 3) +
   geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.4) +
   scale_colour_manual(values = arm_colours, name = NULL) +
-  scale_x_continuous(breaks = c(0,4,8,12)) +
-  labs(title = "(A) BCVA — My Hospital",
+  scale_x_continuous(breaks = c(0, 4, 8, 12)) +
+  labs(title = "(A) BCVA — My Hospital (post-PSM)",
        x = "Time (Weeks)", y = "Adjusted Mean BCVA Change\n(Letters)")
 
 p_c <- ggplot(baseline_zero(emm_c),
@@ -167,8 +316,8 @@ p_c <- ggplot(baseline_zero(emm_c),
   geom_line(linewidth = 1) + geom_point(size = 3) +
   geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.4) +
   scale_colour_manual(values = arm_colours, name = NULL) +
-  scale_x_continuous(breaks = c(0,4,8,12)) +
-  labs(title = "(B) CST — My Hospital",
+  scale_x_continuous(breaks = c(0, 4, 8, 12)) +
+  labs(title = "(B) CST — My Hospital (post-PSM)",
        x = "Time (Weeks)", y = "Adjusted Mean CST Change\n(μm)")
 
 p_b + p_c + plot_layout(guides = "collect") &
@@ -176,37 +325,34 @@ p_b + p_c + plot_layout(guides = "collect") &
 ```
 
 ::: {.callout-tip title="🎯 看出差別了嗎？"}
-- 整體**走勢**和 paper 一致：CST 兩 arm 都急速下降，faricimab 略多
-- 但**信賴區間變寬很多**——n=180 vs n=1329，CI 大約寬 √(1329/180) ≈ 2.7 倍
-- 這就是你回院後第一個會被 reviewer 抓的點：「power 不夠」。可能的解法：拉長收案、聯院 / 多中心
+- 走勢與 paper 一致：CST 兩 arm 都急速下降，faricimab 略多
+- CI 寬約 √(1329/n_matched) 倍
+- PSM 後估計值是「近似 ATT」（average treatment effect on the treated），論文要寫清楚
 :::
 
-### Figure 2（CMH）— 同 part4 的 code
+### 5.2.3 Figure 2（CMH on matched cohort）
 
 ```{r}
 #| label: mh-fig2
-#| fig-cap: "Figure 2 (My Hospital) — CMH-weighted absence proportions, n=180"
+#| fig-cap: "Figure 2 (My Hospital, post-PSM) — CMH-weighted absence proportions on matched cohort"
 #| fig-width: 12
 #| fig-height: 5
 
-# 重複 part4 的 cmh_weighted_proportion 函數
 cmh_weighted_proportion <- function(data, outcome_col,
                                     arm_col = "arm",
-                                    strata_cols = c("bcva_strat","lld_strat")) {
+                                    strata_cols = c("bcva_strat", "lld_strat")) {
   d <- data |>
     filter(!is.na(.data[[outcome_col]])) |>
     mutate(stratum = do.call(paste, c(across(all_of(strata_cols)), sep = "|")))
 
   per_stratum <- d |>
     group_by(stratum, !!sym(arm_col)) |>
-    summarise(n = n(), x = sum(.data[[outcome_col]]), p = x / n,
-              .groups = "drop")
+    summarise(n = n(), x = sum(.data[[outcome_col]]), p = x / n, .groups = "drop")
 
   arms <- levels(factor(per_stratum[[arm_col]]))
   ws <- per_stratum |>
     select(stratum, !!sym(arm_col), n) |>
-    pivot_wider(names_from = !!sym(arm_col), values_from = n,
-                values_fill = 0) |>
+    pivot_wider(names_from = !!sym(arm_col), values_from = n, values_fill = 0) |>
     mutate(w = (.data[[arms[1]]] * .data[[arms[2]]]) /
                 pmax(.data[[arms[1]]] + .data[[arms[2]]], 1)) |>
     filter(.data[[arms[1]]] > 0 & .data[[arms[2]]] > 0) |>
@@ -224,10 +370,10 @@ cmh_weighted_proportion <- function(data, outcome_col,
            upper = pmin(p_hat + 1.96 * se, 1))
 }
 
-mh_fu_strata <- mh_followup |>
+mh_fu_strata <- mh_matched_followup |>
   left_join(
-    mh_baseline |> select(patient_id, arm, bcva_strat, lld_strat,
-                          irf_baseline, srf_baseline),
+    mh_matched |> select(patient_id, arm, bcva_strat, lld_strat,
+                         irf_baseline, srf_baseline),
     by = "patient_id"
   ) |>
   mutate(
@@ -235,16 +381,16 @@ mh_fu_strata <- mh_followup |>
     abs_srf  = if_else(is.na(srf), NA, as.integer(srf == 0)),
     abs_both = if_else(is.na(irf) | is.na(srf), NA,
                        as.integer(irf == 0 & srf == 0)),
-    arm = factor(arm, levels = c("aflibercept","faricimab"))
+    arm = factor(arm, levels = c("aflibercept", "faricimab"))
   )
 
-mh_baseline_abs <- mh_baseline |>
+mh_baseline_abs <- mh_matched |>
   mutate(
     week = 0L,
     abs_irf  = as.integer(irf_baseline == 0),
     abs_srf  = as.integer(srf_baseline == 0),
     abs_both = as.integer(irf_baseline == 0 & srf_baseline == 0),
-    arm = factor(arm, levels = c("aflibercept","faricimab"))
+    arm = factor(arm, levels = c("aflibercept", "faricimab"))
   ) |>
   select(patient_id, arm, bcva_strat, lld_strat,
          week, abs_irf, abs_srf, abs_both)
@@ -256,7 +402,7 @@ mh_fu_strata <- bind_rows(
 )
 
 mh_results <- expand.grid(
-  outcome = c("abs_irf","abs_srf","abs_both"),
+  outcome = c("abs_irf", "abs_srf", "abs_both"),
   wk      = c(0, 4, 8, 12),
   stringsAsFactors = FALSE
 ) |>
@@ -285,33 +431,35 @@ make_mh_panel <- function(out_col, ttl) {
     theme(legend.position = "bottom")
 }
 
-(make_mh_panel("abs_both","(A) IRF and SRF") |
-   make_mh_panel("abs_irf","(B) IRF") |
-   make_mh_panel("abs_srf","(C) SRF")) +
+(make_mh_panel("abs_both", "(A) IRF and SRF") |
+   make_mh_panel("abs_irf", "(B) IRF") |
+   make_mh_panel("abs_srf", "(C) SRF")) +
   plot_layout(guides = "collect") &
   theme(legend.position = "bottom")
 ```
 
 ---
 
-## 任務 23：討論 — 你院內資料的 paper 該怎麼寫？
+## 任務 26：討論 — 你院內資料的 paper 該怎麼寫？
 
 📋 **複製這段話，貼給 AI**：
 
-> 我用 n=180 的院內 cohort 跑出和 TENAYA/LUCERNE 同方向的結果，但 95% CI 寬很多。如果我要把這個結果投 Ophthalmology 這類期刊，我應該：（1）強調什麼？（2）reviewer 會質疑什麼？（3）下一步該怎麼處理 limitation？請給我 3 段建議文字。
+> 我用 n=180 的院內 cohort、配對後做 1:1 PSM 跑出和 TENAYA/LUCERNE 同方向的結果，但 95% CI 寬很多。如果我要把這個結果投 Ophthalmology 這類期刊，我應該：（1）強調什麼？（2）reviewer 會質疑什麼？（3）下一步該怎麼處理 limitation？請給我 3 段建議文字。
+>
+> （提醒：AI 給的論文寫法**會幻想 reviewer 意見**，請對照真實期刊的最新 RWE methodological standard 自行驗證。）
 
-::: {.callout-tip title="期刊 reviewer 常見質疑"}
+::: {.callout-tip title="期刊 reviewer 常見質疑（對 PSM 後 RWE）"}
 1. **Power 不足** → 解法：聯院 / 多中心、或定位成 hypothesis-generating
 2. **單一族群（Asia-Pacific）** → 解法：明確說 generalizability 限於該族群
-3. **沒有隨機分派** → 解法：propensity score matching、IPTW（這超出今天 scope，下次工作坊再講）
-4. **觀察期短（12 週）** → 解法：拉長到 48 / 60 / 108 週，引用 paper 的 long-term data 對比
+3. **PSM 把哪些人排除掉了？** → 解法：附 unmatched vs matched ASMD 對比表（Love plot）、報告 effective sample size[@austin2009smd]
+4. **未測量混淆（unmeasured confounding）** → 解法：sensitivity analysis（E-value[@vanderweele2017evalue; @ioannidis2019evaluelimits]、negative control outcome）
+5. **觀察期短（12 週）** → 解法：拉長到 48 / 60 / 108 週，引用 paper 的 long-term data 對比
+6. **是不是隨便找 cohort？** → 解法：用 **target trial emulation** framework 描述設計、follow TARGET / Hansford 2023 報告 checklist[@cashin2025target; @hansford2023targettrial]
 :::
 
 ---
 
-## 任務 24：你回院後的 checklist
-
-當你決定真的要做的時候：
+## 任務 27：你回院後的 checklist
 
 ### Step 1：找院內 IT 撈 cohort
 
@@ -320,7 +468,8 @@ make_mh_panel <- function(out_col, ttl) {
 - 年齡、性別、區域（如果跨院）
 - index 日期（首次注射日）
 - index 日後 4/8/12 週的 BCVA、OCT CST
-- index 日後 4/8/12 週的 OCT 報告（IRF/SRF presence，可以從 keyword search 或結構化欄位）」
+- index 日後 4/8/12 週的 OCT 報告（IRF/SRF presence）
+- baseline 共變項：合併症、過去打過幾針、是否雙眼…（PSM 共變項清單越完整越好）」
 
 ### Step 2：IRB 申請
 
@@ -330,10 +479,7 @@ make_mh_panel <- function(out_col, ttl) {
 ### Step 3：把 csv 放進 `data/`、改本書 `_quarto.yml` 的 title → render
 
 ```r
-# 在 RStudio Console
 quarto::quarto_render()
-# 或 terminal
-# quarto render
 ```
 
 完成後 `_book/` 裡就是「**用你院內資料做出的論文 draft**」。
@@ -343,8 +489,9 @@ quarto::quarto_render()
 ---
 
 ::: {.callout-note title="本章重點"}
-1. **同一份 code、換 csv 路徑**就能 reproduce 整個 pipeline
-2. 院內 n 通常小很多，**95% CI 會寬**——不可避免，但 paper 寫得好還是能投
-3. `data/data_dictionary.md` 是你跟院內 IT 溝通的「規格書」
-4. MMRM 在 small n + single region 上有時收斂不順，function 已準備好 fallback (`cs()`)
+1. 院內 RWE 沒有隨機分派 → **必須先做 PSM 或 IPTW**，否則 reviewer 退稿
+2. PSM 三步驟：算 propensity score → caliper-restricted nearest neighbor matching → 重算 ASMD 確認 < 0.1
+3. **5.2.2（MMRM）和 5.2.3（CMH）使用 matched cohort**，Table 1 同時呈現 unmatched 與 matched
+4. PSM 後估計的是 ATT（不是 RCT 的 ATE），論文要寫清楚
+5. 同一份 pipeline + 換 csv 路徑就能跑，但 Power 與 generalizability 限制要誠實寫
 :::

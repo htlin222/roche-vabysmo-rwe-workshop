@@ -15,14 +15,16 @@ execute:
   freeze: auto
 
 book:
-  title: "讓你的 Vabysmo RWE 長得像 Ophthalmology 論文"
-  subtitle: "眼科醫師研究工作坊教材"
-  author: "林協霆 / 邵時傑"
+  title: "讓你的 Faricimab RWE 長得像 Ophthalmology 論文"
+  subtitle: "羅氏眼科研究賦能工作坊教材"
+  author:
+    - "和信治癌中心醫院 林協霆醫師"
+    - "羅氏大藥廠 邵時傑博士"
   date: "2026/05/30"
   reader-mode: true
   page-footer:
     left: |
-      © 2026 林協霆 · 教材授權 CC BY 4.0
+      © 2026 林協霆、邵時傑 · 教材授權 CC BY 4.0 · 主辦單位：羅氏大藥廠
     right: |
       Built with [Quarto](https://quarto.org/)
   chapters:

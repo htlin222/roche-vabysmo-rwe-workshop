@@ -10,7 +10,7 @@ suppressPackageStartupMessages({
   library(gtsummary); library(gt)
 })
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
 
 t1 <- baseline |>
   select(arm, age, sex, region, bcva_baseline, cst_baseline,

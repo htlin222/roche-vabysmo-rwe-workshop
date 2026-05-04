@@ -4,10 +4,10 @@
 #
 # 用法：
 #   1. 把你的院內 csv 改名成下面這四個檔案，放進 data/：
-#        - vabysmo_baseline.csv
-#        - vabysmo_followup.csv
-#        - vabysmo_my_hospital_baseline.csv
-#        - vabysmo_my_hospital_followup.csv
+#        - faricimab_baseline.csv
+#        - faricimab_followup.csv
+#        - faricimab_my_hospital_baseline.csv
+#        - faricimab_my_hospital_followup.csv
 #      （或是改 _quarto.yml 與各 qmd 中的檔名）
 #   2. 跑 Rscript scripts/05_render_report_for_my_data.R
 

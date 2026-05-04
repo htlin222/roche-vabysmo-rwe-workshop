@@ -9,7 +9,7 @@ library(dplyr)
 library(gtsummary)
 library(gt)
 
-baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
 ```
 
 預計時間：20 分鐘。
@@ -31,9 +31,14 @@ baseline <- read_csv("data/vabysmo_baseline.csv", show_col_types = FALSE)
 ---
 
 ::: {.callout-tip title="📖 名詞｜ETDRS letters / mean (SD) / n (%)"}
-- **ETDRS letters** = 國際標準視力表，每行 5 letter，看清楚一行 = 5 letter；總分 0–100。+5 letter ≈ 視力「進步一行」
+- **ETDRS letters** = 國際標準視力表[@etdrs1985manual]，每行 5 letter，看清楚一行 = 5 letter；總分 0–100。+5 letter ≈ 視力「進步一行」
 - **mean (SD)** = 平均 (標準差)，連續變項的 paper 標準寫法。SD 大 = 個體差異大
 - **n (%)** = 人數 (百分比)，類別變項標準寫法
+:::
+
+::: {.callout-note title="📚 Table 1 / SMD 方法學引用"}
+- RCT 的 Table 1 用來描述基線、不應強調 p value（隨機分派下差異是 chance）；RWE / 觀察性研究則用 **standardized mean difference (SMD/ASMD) > 0.1** 標示需要 adjust 的混淆因子，這是 propensity score 領域的標準[@austin2009smd; @austin2011propensity]。
+- 多重 prognostic factor 的調整原則參考 Kahan & Morris 2013[@kahan2013adjusting]、Agoritsas 2017 *JAMA* Users' Guide[@agoritsas2017adjusted]。
 :::
 
 ## 任務 6：第一張 Table 1
@@ -162,9 +167,9 @@ t1 |>
 :::
 
 ::: {.callout-tip title="📖 名詞｜SMD（standardized mean difference）"}
-標準化均差。RCT 用 p value 看 baseline 平衡夠不夠，但 RWE 沒有隨機分派，**SMD 是 paper reviewer 比較買單的指標**：
+標準化均差。RCT 用 p value 看 baseline 平衡夠不夠，但 RWE 沒有隨機分派，**SMD 是 paper reviewer 比較買單的指標**[@austin2009smd]：
 SMD 把「兩組差距」除以「合併標準差」，這樣不同單位（年齡 vs 視力 letters）也能比較。
-**SMD > 0.1 通常被認為「值得 adjust」**。
+**SMD > 0.1 通常被認為「值得 adjust」**[@austin2009smd; @austin2011propensity]。
 :::
 
 ---

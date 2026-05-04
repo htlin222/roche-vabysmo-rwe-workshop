@@ -31,10 +31,10 @@ theme_set(
     )
 )
 
-# Treatment arm 配色 — 模仿 paper：faricimab 紫、aflibercept 灰藍
+# Treatment arm 配色 — 教材中性色（避免商品識別色）：faricimab 深藍、aflibercept 赭橙
 arm_colours <- c(
-  "faricimab"   = "#7B5CA8",
-  "aflibercept" = "#7E9CB7"
+  "faricimab"   = "#1F5C8B",
+  "aflibercept" = "#C75D38"
 )
 
 # dplyr 輸出寬度

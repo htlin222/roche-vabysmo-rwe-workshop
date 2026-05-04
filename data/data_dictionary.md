@@ -1,6 +1,6 @@
 # 院內 csv schema（資料字典）
 
-「下課後想做自己的 Vabysmo cohort」時，請你的院內 IT 把資料整理成下面這個樣子。
+「下課後想做自己的 faricimab cohort」時，請你的院內 IT 把資料整理成下面這個樣子。
 **欄位名稱、單位、編碼都對齊**，本書的程式碼就可以直接重跑。
 
 ---
@@ -12,7 +12,7 @@
 | 欄位 | 型別 | 範例 | 必須 | 說明 |
 |---|---|---|---|---|
 | `patient_id` | string | `PT-001` | ✅ | 院內去識別化編號（不要放真姓名 / 真病歷號） |
-| `arm` | string | `faricimab` / `aflibercept` | ✅ | 治療組別。也可以放 `vabysmo` / `eylea` 這類藥名再 mutate 對齊 |
+| `arm` | string | `faricimab` / `aflibercept` | ✅ | 治療組別；本教材一律用學名。若院內欄位是商品名，請先 mutate 對齊 |
 | `study` | string | `KFSYSCC-2024-01` | ✅ | 研究 / cohort 識別碼。本書範例用 `TENAYA` / `LUCERNE`，你可以填院名加年份 |
 | `region` | string | `Asia-Pacific` | ✅ | 地理區。院內單一地區可以全填 `Asia-Pacific` |
 | `age` | integer | `74` | ✅ | 用藥開始時的歲數 |
