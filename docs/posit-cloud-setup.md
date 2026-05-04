@@ -1,11 +1,36 @@
 # 老師現場 / 工作坊前的 Posit.Cloud 設定
 
 > 給講師（你）— 學員不必看這份。
+>
+> 對齊版本：教材 v0.2.x（2026-05 改版後，含 PSM/ASMD、faricimab_*.csv、6 支 standalone scripts）
 
-學員端 90% 的痛苦來自「**第一次 install 套件**」：mmrm + tidyverse + survminer + ggsci 在 Posit.Cloud 免費 node 上要 5–10 分鐘，而且一旦遇到網路抖動、版本不合就會卡死。
+## TL;DR
+
+```text
+你（老師）做一次：
+  1. Posit.Cloud → New Project from Git Repository → 貼 repo URL
+  2. Console: source("install.r")          # 5–10 分鐘，14 個套件含 MatchIt/cobalt
+  3. Console: quarto::quarto_render()      # 2–3 分鐘，充滿 _freeze/ cache
+  4. Project 三點 → Access → Everyone + Allow Permanent Copies
+  5. 複製 project URL，工作坊當天發給學員
+
+學員每人做一次（< 30 秒）：
+  1. 點老師的連結（Google 登入 Posit.Cloud）
+  2. 右上 Save a Permanent Copy
+  3. 雙擊 part1.qmd → Render → 開做
+```
+
+完整版 SOP 與 fallback 在下面。
+
+學員端 90% 的痛苦來自「**第一次 install 套件**」：mmrm + tidyverse + survminer + ggsci + **MatchIt + cobalt**（v0.2 後 PSM 用）在 Posit.Cloud 免費 node 上要 5–10 分鐘，而且一旦遇到網路抖動、版本不合就會卡死。
 
 避免方式：**前一晚老師在自己 Posit.Cloud 帳號上預烤一份「已裝好套件」的 project，把 public 連結發給學員**。
 學員點連結 → **Save a Permanent Copy** → 5 秒得到一份完整可用的 RStudio。
+
+::: {.callout-important}
+**v0.2 教材改版（2026-05）後 install.r 套件清單已擴充至 14 個**，新增 `MatchIt`、`cobalt` 給 Part 5 的 PSM/ASMD 工作流。
+若你的預烤 project 是 v0.1 時做的，**請重新 `source("install.r")` 一次**，否則學員跑 Part 5 會缺套件。
+:::
 
 ---
 
@@ -18,7 +43,7 @@
 3. 貼：<https://github.com/htlin222/roche-vabysmo-rwe-workshop>
 4. 等 30 秒 RStudio 跳出來
 
-### Step 2 — 預裝套件
+### Step 2 — 預裝套件（14 個，包含 PSM）
 
 在 Console 跑：
 
@@ -28,14 +53,41 @@ source("install.r")
 
 會跑 5–10 分鐘，泡杯咖啡。看到 `[OK] 套件安裝完成` 就好。
 
+清單（給你心裡有底）：
+- **資料**：tidyverse, readr
+- **表格**：gtsummary, gt, knitr
+- **MMRM**：mmrm, emmeans, broom, broom.mixed
+- **CMH / 比例**：DescTools
+- **PSM / ASMD（v0.2 新增）**：MatchIt, cobalt
+- **Survival**：survival, survminer
+- **繪圖**：ggplot2, patchwork, ggsci, scales
+- **i18n / 字型**：showtext, sysfonts
+- **Render**：rmarkdown, quarto
+
 ### Step 3 — 預跑一次 render（充快取）
 
 ```r
 quarto::quarto_render()
 ```
 
-會跑 1–2 分鐘。看到 `Output created: _book/index.html` 就好。
+會跑 1–3 分鐘（含 PSM 章節跑 MatchIt + Love plot）。看到 `Output created: _book/index.html` 就好。
 這步驟把 `_freeze/` cache 充滿，學員之後改一個 chunk 重 render 只需要幾秒。
+
+### Step 3.5 — （可選）預跑 6 支 standalone scripts
+
+讓你自己心裡有把握、`_book/` 內也存有現成的標準輸出可以對學員圖：
+
+```r
+# 在 RStudio Terminal（注意是 terminal、不是 Console）
+Rscript scripts/01_table1.R              # → _book/table1_standalone.html
+Rscript scripts/02_mmrm_figure1.R        # → _book/figure1_standalone.png
+Rscript scripts/03_cmh_figure2.R         # → _book/figure2_standalone.png
+Rscript scripts/04_km_figure3.R          # → _book/figure3_standalone.png
+Rscript scripts/06_psm_my_hospital.R     # → Love plot + matched fig 1/2
+```
+
+這些 `*_standalone.*` 檔可以給「完全不寫 code」的學員直接 `Rscript scripts/0X_xxx.R` 重跑。
+詳細流程在書內 appendix 開頭「🚀 完全不會寫程式：6 支腳本一行跑完」。
 
 ### Step 4 — 公開這份 project
 
@@ -57,6 +109,10 @@ quarto::quarto_render()
 > 3. RStudio 跳出來後，點 `part1.qmd`，按 Render → 開始跟著做
 
 **整個過程 < 30 秒**，因為套件已經幫他們裝過了。
+
+::: {.callout-tip title="完全不寫 code 的學員"}
+若有學員只想看圖、不想跟 prompt：直接打開 RStudio Terminal、依序 `Rscript scripts/01_table1.R` ~ `06_psm_my_hospital.R`，每支 30 秒內輸出對應 `_book/*_standalone.*`。書內 appendix 開頭有完整對應表。
+:::
 
 ---
 
@@ -80,6 +136,8 @@ quarto::quarto_render()
 | Console 跑 `install.r` 跑到一半就斷 | 免費 tier 1 GB RAM 編譯到 mmrm 時撐不住 | 重跑 `source("install.r")`，pak 會跳過已裝好的 |
 | `Save a Permanent Copy` 灰色按不下去 | 學員還沒登入 | 點右上人頭 → Sign In |
 | 課堂 25 hr/月用完了 | 免費 tier 限制 | 升級 Cloud Plus（$5/月）或匯出 zip 本機跑 |
+| Part 5 跑到 `library(MatchIt)` 跳錯 | 預烤 project 是 v0.1 時做的、沒裝 PSM 套件 | Console 跑 `pak::pak(c("MatchIt","cobalt"))` 補裝；或重做 setup |
+| 「找不到 `data/faricimab_baseline.csv`」 | 預烤 project 還是舊檔名 `vabysmo_*.csv` | 重新 `git pull`、或重做 New Project from Git |
 
 ---
 
