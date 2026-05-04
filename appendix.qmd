@@ -8,6 +8,27 @@ source("_common.R")
 
 ---
 
+## 🩺 環境健檢：`validate_env.R`
+
+開課前 / 卡關時，跑一次：
+
+```r
+source("validate_env.R")     # RStudio Console
+# 或
+# Rscript validate_env.R     # terminal
+```
+
+30 秒內檢查 5 件事：
+1. R / Quarto 版本
+2. 22 個套件都裝好且 load 得起來（含 v0.2 新增的 `MatchIt` / `cobalt`）
+3. 5 個 `data/faricimab_*.csv` 都在、欄位 schema 正確
+4. `_freeze/` 預烤 cache + `_book/index.html` 已 render
+5. 6 支 `scripts/0[1-6]_*.R` 齊全
+
+回傳 `PASS / WARN / FAIL` 三色摘要、每個 FAIL 都附 💡 解法提示。CI 友善：FAIL > 0 會 exit 1。
+
+---
+
 ## 🚀 完全不會寫程式：6 支腳本一行跑完
 
 如果你**完全不想跟 AI 對話、也不想看 R code**，

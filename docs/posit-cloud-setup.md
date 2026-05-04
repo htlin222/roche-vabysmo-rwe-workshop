@@ -9,15 +9,17 @@
 ```text
 你（老師）做一次：
   1. Posit.Cloud → New Project from Git Repository → 貼 repo URL
-  2. Console: source("install.r")          # 5–10 分鐘，14 個套件含 MatchIt/cobalt
+  2. Console: source("install.r")          # 5–10 分鐘，22 個套件含 MatchIt/cobalt
   3. Console: quarto::quarto_render()      # 2–3 分鐘，充滿 _freeze/ cache
-  4. Project 三點 → Access → Everyone + Allow Permanent Copies
-  5. 複製 project URL，工作坊當天發給學員
+  4. Console: source("validate_env.R")     # 30 秒環境健檢，全綠就 OK
+  5. Project 三點 → Access → Everyone + Allow Permanent Copies
+  6. 複製 project URL，工作坊當天發給學員
 
 學員每人做一次（< 30 秒）：
   1. 點老師的連結（Google 登入 Posit.Cloud）
   2. 右上 Save a Permanent Copy
   3. 雙擊 part1.qmd → Render → 開做
+  · 卡關時：source("validate_env.R") 看哪一項紅 ❌
 ```
 
 完整版 SOP 與 fallback 在下面。

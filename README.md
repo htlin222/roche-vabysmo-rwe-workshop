@@ -56,7 +56,7 @@ gh workflow run deploy-book.yml
 
 | 層 | 怎麼進 | 體驗 | 適合 |
 |---|---|---|---|
-| 🥇 **老師現場給的「預烤 Posit.Cloud 連結」** | 點 → Save a Permanent Copy | 30 秒進 RStudio，**套件已裝好** | 全部學員（推薦） |
+| 🥇 **預烤 Posit.Cloud 連結** | <https://posit.cloud/content/12416569> → Save a Permanent Copy | 30 秒進 RStudio，**套件已裝好** | 全部學員（推薦） |
 | 🥈 **GitHub fork** | Posit.Cloud → New Project from Git Repository → 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop` → Console 跑 `source("install.r")` | 5–10 分鐘安裝後可跑 code | 預烤連結掛了 / 想保留自己版本 |
 | 🥉 **純讀網頁版** | <https://htlin222.github.io/roche-vabysmo-rwe-workshop/> | 0 安裝、純閱讀 | 環境完全裝不起來 |
 
