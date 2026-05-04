@@ -9,31 +9,31 @@
 
 ### 1. `your_baseline.csv`（一筆病人一列）
 
-| 欄位            | 型別    | 範例                        | 必須 | 說明                                                                      |
-| --------------- | ------- | --------------------------- | ---- | ------------------------------------------------------------------------- |
-| `patient_id`    | string  | `PT-001`                    | ✅   | 院內去識別化編號（不要放真姓名 / 真病歷號）                               |
-| `arm`           | string  | `faricimab` / `aflibercept` | ✅   | 治療組別；本教材一律用學名。若院內欄位是商品名，請先 mutate 對齊          |
-| `study`         | string  | `KFSYSCC-2024-01`           | ✅   | 研究 / cohort 識別碼。本書範例用 `TENAYA` / `LUCERNE`，你可以填院名加年份 |
-| `region`        | string  | `Asia-Pacific`              | ✅   | 地理區。院內單一地區可以全填 `Asia-Pacific`                               |
-| `age`           | integer | `74`                        | ✅   | 用藥開始時的歲數                                                          |
-| `sex`           | string  | `F` / `M`                   | ✅   | 生理性別                                                                  |
-| `bcva_baseline` | integer | `62`                        | ✅   | 用藥前 BCVA（ETDRS letters，0–100）                                       |
-| `cst_baseline`  | integer | `345`                       | ✅   | 用藥前 OCT 中央視網膜厚度（μm）                                           |
-| `irf_baseline`  | 0/1     | `0`                         | ✅   | 用藥前是否有 intraretinal fluid（1 = 有）                                 |
-| `srf_baseline`  | 0/1     | `1`                         | ✅   | 用藥前是否有 subretinal fluid（1 = 有）                                   |
-| `bcva_strat`    | string  | `>=74` / `55-73` / `<=54`   | ⚠️   | 由 `bcva_baseline` 派生。也可以讓 R 自動算                                |
-| `lld_strat`     | string  | `<33` / `>=33`              | ⚠️   | low-luminance deficit 分層。沒量 LLD 可全填 `<33` 或刪掉這欄並調整 model  |
+| 欄位 | 型別 | 範例 | 必須 | 說明 |
+|---|---|---|---|---|
+| `patient_id` | string | `PT-001` | ✅ | 院內去識別化編號（不要放真姓名 / 真病歷號） |
+| `arm` | string | `faricimab` / `aflibercept` | ✅ | 治療組別；本教材一律用學名。若院內欄位是商品名，請先 mutate 對齊 |
+| `study` | string | `KFSYSCC-2024-01` | ✅ | 研究 / cohort 識別碼。本書範例用 `TENAYA` / `LUCERNE`，你可以填院名加年份 |
+| `region` | string | `Asia-Pacific` | ✅ | 地理區。院內單一地區可以全填 `Asia-Pacific` |
+| `age` | integer | `74` | ✅ | 用藥開始時的歲數 |
+| `sex` | string | `F` / `M` | ✅ | 生理性別 |
+| `bcva_baseline` | integer | `62` | ✅ | 用藥前 BCVA（ETDRS letters，0–100） |
+| `cst_baseline` | integer | `345` | ✅ | 用藥前 OCT 中央視網膜厚度（μm） |
+| `irf_baseline` | 0/1 | `0` | ✅ | 用藥前是否有 intraretinal fluid（1 = 有） |
+| `srf_baseline` | 0/1 | `1` | ✅ | 用藥前是否有 subretinal fluid（1 = 有） |
+| `bcva_strat` | string | `>=74` / `55-73` / `<=54` | ⚠️ | 由 `bcva_baseline` 派生。也可以讓 R 自動算 |
+| `lld_strat` | string | `<33` / `>=33` | ⚠️ | low-luminance deficit 分層。沒量 LLD 可全填 `<33` 或刪掉這欄並調整 model |
 
 ### 2. `your_followup.csv`（同一病人多列，每次回診一列；long format）
 
-| 欄位         | 型別    | 範例     | 必須 | 說明                                                                     |
-| ------------ | ------- | -------- | ---- | ------------------------------------------------------------------------ |
-| `patient_id` | string  | `PT-001` | ✅   | 對應 baseline 的 id                                                      |
-| `week`       | integer | `4`      | ✅   | 距用藥起始的週數。本書範例用 `4`/`8`/`12`，你的院內可以 `0`/`4`/`8`/`12` |
-| `bcva`       | integer | `66`     | ⚠️   | 該次回診的 BCVA。沒量留空（`NA`）即可，MMRM 會自動處理                   |
-| `cst`        | integer | `220`    | ⚠️   | 該次回診的 CST                                                           |
-| `irf`        | 0/1     | `0`      | ⚠️   | 該次 IRF 是否仍存在                                                      |
-| `srf`        | 0/1     | `0`      | ⚠️   | 該次 SRF 是否仍存在                                                      |
+| 欄位 | 型別 | 範例 | 必須 | 說明 |
+|---|---|---|---|---|
+| `patient_id` | string | `PT-001` | ✅ | 對應 baseline 的 id |
+| `week` | integer | `4` | ✅ | 距用藥起始的週數。本書範例用 `4`/`8`/`12`，你的院內可以 `0`/`4`/`8`/`12` |
+| `bcva` | integer | `66` | ⚠️ | 該次回診的 BCVA。沒量留空（`NA`）即可，MMRM 會自動處理 |
+| `cst` | integer | `220` | ⚠️ | 該次回診的 CST |
+| `irf` | 0/1 | `0` | ⚠️ | 該次 IRF 是否仍存在 |
+| `srf` | 0/1 | `0` | ⚠️ | 該次 SRF 是否仍存在 |
 
 > **⚠️ Missing 是 OK 的**。MMRM 預設假設 missing-at-random（病人沒回診的原因和未測得的數值無關），會自動 implicit imputation。CMH 對 missing 也容忍，但會降低 power。
 

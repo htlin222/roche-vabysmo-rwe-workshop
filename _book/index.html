@@ -1,1834 +1,1224 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="generator" content="quarto-1.7.32" />
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=yes"
-    />
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
 
-    <meta name="author" content="和信治癌中心醫院 林協霆醫師" />
-    <meta name="author" content="羅氏大藥廠 邵時傑博士" />
-    <meta name="dcterms.date" content="2026-05-30" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-    <title>讓你的 Faricimab RWE 長得像 Ophthalmology 論文</title>
-    <style>
-      code {
-        white-space: pre-wrap;
-      }
-      span.smallcaps {
-        font-variant: small-caps;
-      }
-      div.columns {
-        display: flex;
-        gap: min(4vw, 1.5em);
-      }
-      div.column {
-        flex: auto;
-        overflow-x: auto;
-      }
-      div.hanging-indent {
-        margin-left: 1.5em;
-        text-indent: -1.5em;
-      }
-      ul.task-list {
-        list-style: none;
-      }
-      ul.task-list li input[type="checkbox"] {
-        width: 0.8em;
-        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
-        vertical-align: middle;
-      }
-      /* CSS for syntax highlighting */
-      html {
-        -webkit-text-size-adjust: 100%;
-      }
-      pre > code.sourceCode {
-        white-space: pre;
-        position: relative;
-      }
-      pre > code.sourceCode > span {
-        display: inline-block;
-        line-height: 1.25;
-      }
-      pre > code.sourceCode > span:empty {
-        height: 1.2em;
-      }
-      .sourceCode {
-        overflow: visible;
-      }
-      code.sourceCode > span {
-        color: inherit;
-        text-decoration: inherit;
-      }
-      div.sourceCode {
-        margin: 1em 0;
-      }
-      pre.sourceCode {
-        margin: 0;
-      }
-      @media screen {
-        div.sourceCode {
-          overflow: auto;
-        }
-      }
-      @media print {
-        pre > code.sourceCode {
-          white-space: pre-wrap;
-        }
-        pre > code.sourceCode > span {
-          text-indent: -5em;
-          padding-left: 5em;
-        }
-      }
-      pre.numberSource code {
-        counter-reset: source-line 0;
-      }
-      pre.numberSource code > span {
-        position: relative;
-        left: -4em;
-        counter-increment: source-line;
-      }
-      pre.numberSource code > span > a:first-child::before {
-        content: counter(source-line);
-        position: relative;
-        left: -1em;
-        text-align: right;
-        vertical-align: baseline;
-        border: none;
-        display: inline-block;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        padding: 0 4px;
-        width: 4em;
-      }
-      pre.numberSource {
-        margin-left: 3em;
-        padding-left: 4px;
-      }
-      div.sourceCode {
-      }
-      @media screen {
-        pre > code.sourceCode > span > a:first-child::before {
-          text-decoration: underline;
-        }
-      }
-      /* CSS for citations */
-      div.csl-bib-body {
-      }
-      div.csl-entry {
-        clear: both;
-      }
-      .hanging-indent div.csl-entry {
-        margin-left: 2em;
-        text-indent: -2em;
-      }
-      div.csl-left-margin {
-        min-width: 2em;
-        float: left;
-      }
-      div.csl-right-inline {
-        margin-left: 2em;
-        padding-left: 1em;
-      }
-      div.csl-indent {
-        margin-left: 2em;
-      }
-    </style>
+<meta name="author" content="和信治癌中心醫院 林協霆醫師">
+<meta name="author" content="羅氏大藥廠 邵時傑博士">
+<meta name="dcterms.date" content="2026-05-30">
 
-    <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-    <script src="site_libs/quarto-nav/headroom.min.js"></script>
-    <script src="site_libs/clipboard/clipboard.min.js"></script>
-    <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-    <script src="site_libs/quarto-search/fuse.min.js"></script>
-    <script src="site_libs/quarto-search/quarto-search.js"></script>
-    <meta name="quarto:offset" content="./" />
-    <link href="./primer.html" rel="next" />
-    <script src="site_libs/quarto-html/quarto.js" type="module"></script>
-    <script
-      src="site_libs/quarto-html/tabsets/tabsets.js"
-      type="module"
-    ></script>
-    <script src="site_libs/quarto-html/popper.min.js"></script>
-    <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-    <script src="site_libs/quarto-html/anchor.min.js"></script>
-    <link href="site_libs/quarto-html/tippy.css" rel="stylesheet" />
-    <link
-      href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css"
-      rel="stylesheet"
-      id="quarto-text-highlighting-styles"
-    />
-    <script src="site_libs/bootstrap/bootstrap.min.js"></script>
-    <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet" />
-    <link
-      href="site_libs/bootstrap/bootstrap-9b98f18118eee809be1c051eb5cc78e4.min.css"
-      rel="stylesheet"
-      append-hash="true"
-      id="quarto-bootstrap"
-      data-mode="light"
-    />
-    <script id="quarto-search-options" type="application/json">
-      {
-        "location": "sidebar",
-        "copy-button": false,
-        "collapse-after": 3,
-        "panel-placement": "start",
-        "type": "textbox",
-        "limit": 50,
-        "keyboard-shortcut": ["f", "/", "s"],
-        "show-item-context": false,
-        "language": {
-          "search-no-results-text": "No results",
-          "search-matching-documents-text": "matching documents",
-          "search-copy-link-title": "Copy link to search",
-          "search-hide-matches-text": "Hide additional matches",
-          "search-more-match-text": "more match in this document",
-          "search-more-matches-text": "more matches in this document",
-          "search-clear-button-title": "Clear",
-          "search-text-placeholder": "",
-          "search-detached-cancel-button-title": "Cancel",
-          "search-submit-button-title": "Submit",
-          "search-label": "Search"
-        }
-      }
-    </script>
+<title>羅氏眼科研究賦能工作坊教材</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
-    <link rel="stylesheet" href="styles.css" />
-  </head>
 
-  <body class="nav-sidebar floating quarto-light">
-    <div id="quarto-search-results"></div>
-    <header id="quarto-header" class="headroom fixed-top">
-      <nav class="quarto-secondary-nav">
-        <div class="container-fluid d-flex">
-          <button
-            type="button"
-            class="quarto-btn-toggle btn"
-            data-bs-toggle="collapse"
-            role="button"
-            data-bs-target=".quarto-sidebar-collapse-item"
-            aria-controls="quarto-sidebar"
-            aria-expanded="false"
-            aria-label="Toggle sidebar navigation"
-            onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"
-          >
-            <i class="bi bi-layout-text-sidebar-reverse"></i>
-          </button>
-          <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="./index.html">前言</a></li>
-            </ol>
-          </nav>
-          <a
-            class="flex-grow-1"
-            role="navigation"
-            data-bs-toggle="collapse"
-            data-bs-target=".quarto-sidebar-collapse-item"
-            aria-controls="quarto-sidebar"
-            aria-expanded="false"
-            aria-label="Toggle sidebar navigation"
-            onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"
-          >
-          </a>
-          <button
-            type="button"
-            class="btn quarto-search-button"
-            aria-label="Search"
-            onclick="window.quartoOpenSearch();"
-          >
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
-      </nav>
-    </header>
-    <!-- content -->
-    <div
-      id="quarto-content"
-      class="quarto-container page-columns page-rows-contents page-layout-article"
-    >
-      <!-- sidebar -->
-      <nav
-        id="quarto-sidebar"
-        class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"
-      >
-        <div class="pt-lg-2 mt-2 text-left sidebar-header">
-          <div class="sidebar-title mb-0 py-0">
-            <a href="./">讓你的 Faricimab RWE 長得像 Ophthalmology 論文</a>
-            <div class="sidebar-tools-main">
-              <a
-                href=""
-                class="quarto-reader-toggle quarto-navigation-tool px-1"
-                onclick="window.quartoToggleReader(); return false;"
-                title="Toggle reader mode"
-              >
-                <div class="quarto-reader-toggle-btn">
-                  <i class="bi"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-          <div class="sidebar-search">
-            <div id="quarto-search" class="" title="Search"></div>
-          </div>
-        </div>
-        <div class="sidebar-menu-container">
-          <ul class="list-unstyled mt-1">
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a
-                  href="./index.html"
-                  class="sidebar-item-text sidebar-link active"
-                >
-                  <span class="menu-text">前言</span></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./primer.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    >Primer：給非眼科醫師的背景補充</span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part1.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">1</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 1：認識 paper + 認識資料</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part2.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">2</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 2：Table 1 — Baseline characteristics</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part3.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">3</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 3：Figure 1 — MMRM 跑 BCVA + CST</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part4.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">4</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 4：Figure 2 — CMH-weighted absence proportions</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part5.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">5</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 5：換你院內資料（含 PSM + ASMD）</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part6.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">6</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 6（Bonus）：Figure 3 — Time to first absence of
-                      fluid</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a
-                  href="./appendix.html"
-                  class="sidebar-item-text sidebar-link"
-                >
-                  <span class="menu-text"
-                    ><span class="chapter-number">7</span>&nbsp;
-                    <span class="chapter-title">附錄：回院之後的事</span></span
-                  ></a
-                >
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div
-        id="quarto-sidebar-glass"
-        class="quarto-sidebar-collapse-item"
-        data-bs-toggle="collapse"
-        data-bs-target=".quarto-sidebar-collapse-item"
-      ></div>
-      <!-- margin-sidebar -->
-      <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-          <h2 id="toc-title">Table of contents</h2>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./primer.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9b98f18118eee809be1c051eb5cc78e4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
-          <ul>
-            <li>
-              <a
-                href="#前言"
-                id="toc-前言"
-                class="nav-link active"
-                data-scroll-target="#前言"
-                >前言</a
-              >
-              <ul class="collapse">
-                <li>
-                  <a
-                    href="#重要連結書籤起來"
-                    id="toc-重要連結書籤起來"
-                    class="nav-link"
-                    data-scroll-target="#重要連結書籤起來"
-                    >🔗 重要連結（書籤起來）</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#課程目標"
-                    id="toc-課程目標"
-                    class="nav-link"
-                    data-scroll-target="#課程目標"
-                    >課程目標</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#這堂課的玩法"
-                    id="toc-這堂課的玩法"
-                    class="nav-link"
-                    data-scroll-target="#這堂課的玩法"
-                    >這堂課的玩法</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#tenaya-lucerne我們今天要-reproduce-的-paper"
-                    id="toc-tenaya-lucerne我們今天要-reproduce-的-paper"
-                    class="nav-link"
-                    data-scroll-target="#tenaya-lucerne我們今天要-reproduce-的-paper"
-                    >TENAYA / LUCERNE：我們今天要 reproduce 的 paper</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#工作坊全圖"
-                    id="toc-工作坊全圖"
-                    class="nav-link"
-                    data-scroll-target="#工作坊全圖"
-                    >工作坊全圖</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#一個重要的觀念"
-                    id="toc-一個重要的觀念"
-                    class="nav-link"
-                    data-scroll-target="#一個重要的觀念"
-                    >一個重要的觀念</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">前言</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">羅氏眼科研究賦能工作坊教材</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
       </div>
-      <!-- main -->
-      <main class="content" id="quarto-document-content">
-        <header id="title-block-header" class="quarto-title-block default">
-          <div class="quarto-title">
-            <div class="quarto-title-block">
-              <div>
-                <h1 class="title">
-                  讓你的 Faricimab RWE 長得像 Ophthalmology 論文
-                </h1>
-                <button
-                  type="button"
-                  class="btn code-tools-button"
-                  id="quarto-code-tools-source"
-                >
-                  <i class="bi"></i> Code
-                </button>
-              </div>
-            </div>
-            <p class="subtitle lead">羅氏眼科研究賦能工作坊教材</p>
-          </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Primer：給非眼科醫師的背景補充</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Part 1：認識 paper + 認識資料</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 2：Table 1 — Baseline characteristics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Part 5：換你院內資料（含 PSM + ASMD）</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Part 6（Bonus）：Figure 3 — Time to first absence of fluid</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">附錄：回院之後的事</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#前言" id="toc-前言" class="nav-link active" data-scroll-target="#前言">前言</a>
+  <ul class="collapse">
+  <li><a href="#重要連結書籤起來" id="toc-重要連結書籤起來" class="nav-link" data-scroll-target="#重要連結書籤起來">🔗 重要連結（書籤起來）</a></li>
+  <li><a href="#課程目標" id="toc-課程目標" class="nav-link" data-scroll-target="#課程目標">課程目標</a></li>
+  <li><a href="#這堂課的玩法" id="toc-這堂課的玩法" class="nav-link" data-scroll-target="#這堂課的玩法">這堂課的玩法</a></li>
+  <li><a href="#tenaya-lucerne我們今天要-reproduce-的-paper" id="toc-tenaya-lucerne我們今天要-reproduce-的-paper" class="nav-link" data-scroll-target="#tenaya-lucerne我們今天要-reproduce-的-paper">TENAYA / LUCERNE：我們今天要 reproduce 的 paper</a></li>
+  <li><a href="#工作坊全圖" id="toc-工作坊全圖" class="nav-link" data-scroll-target="#工作坊全圖">工作坊全圖</a></li>
+  <li><a href="#一個重要的觀念" id="toc-一個重要的觀念" class="nav-link" data-scroll-target="#一個重要的觀念">一個重要的觀念</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-          <div class="quarto-title-meta">
-            <div>
-              <div class="quarto-title-meta-heading">Authors</div>
-              <div class="quarto-title-meta-contents">
-                <p>和信治癌中心醫院 林協霆醫師</p>
-                <p>羅氏大藥廠 邵時傑博士</p>
-              </div>
-            </div>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">羅氏眼科研究賦能工作坊教材</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">讓你的 Faricimab RWE 長得像 Ophthalmology 論文</p>
+</div>
 
-            <div>
-              <div class="quarto-title-meta-heading">Published</div>
-              <div class="quarto-title-meta-contents">
-                <p class="date">May 30, 2026</p>
-              </div>
-            </div>
-          </div>
-        </header>
 
-        <section id="前言" class="level1 unnumbered">
-          <h1 class="unnumbered">前言</h1>
-          <p>
-            歡迎來到「<strong
-              >讓你的 Faricimab RWE 長得像 Ophthalmology 論文</strong
-            >」工作坊。
-          </p>
-          <p>
-            這份教材的目標<strong>不是</strong>讓你學會 R，也不是讓你學會 MMRM
-            或 CMH 的數學原理。 是讓你下課後做得到這件事：
-          </p>
-          <blockquote class="blockquote">
-            <p>
-              <strong
-                >拿你院內的 faricimab cohort，產出可以投 Ophthalmology
-                的圖表。</strong
-              >
-            </p>
-          </blockquote>
-          <div
-            class="callout callout-style-default callout-important callout-titled"
-            title="📣 主辦單位與利益揭露"
-          >
-            <div class="callout-header d-flex align-content-center">
-              <div class="callout-icon-container">
-                <i class="callout-icon"></i>
-              </div>
-              <div class="callout-title-container flex-fill">
-                📣 主辦單位與利益揭露
-              </div>
-            </div>
-            <div class="callout-body-container callout-body">
-              <ul>
-                <li>
-                  <strong>主辦單位</strong>：羅氏大藥廠（Roche Products
-                  Ltd.&nbsp;Taiwan）
-                </li>
-                <li>
-                  <strong>作者</strong>：和信治癌中心醫院 林協霆醫師、羅氏大藥廠
-                  邵時傑博士
-                </li>
-                <li>
-                  <strong>資金</strong
-                  >：本工作坊由羅氏大藥廠贊助舉辦。教材內容以方法學教學為主，所有藥物以<strong>學名</strong>（faricimab、aflibercept）呈現，不使用商品名；圖表配色為教材中性色，與任何商品識別色無關。
-                </li>
-                <li>
-                  <strong>教材授權</strong>：CC BY
-                  4.0，可自由修改、再散布、引用。
-                </li>
-                <li>
-                  <strong>AI 工具</strong>：本書建議搭配 free-tier ChatGPT /
-                  Gemini / Claude 使用；AI
-                  生成的內容<strong>仍可能有錯誤</strong>，請對照教材中提供的參考程式碼與引用文獻，自行驗證。
-                </li>
-              </ul>
-            </div>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>和信治癌中心醫院 林協霆醫師 </p>
+             <p>羅氏大藥廠 邵時傑博士 </p>
           </div>
-          <hr />
-          <section id="重要連結書籤起來" class="level2">
-            <h2 class="anchored" data-anchor-id="重要連結書籤起來">
-              🔗 重要連結（書籤起來）
-            </h2>
-            <div
-              class="callout callout-style-default callout-important callout-titled"
-              title="📌 跑這本書 / 跑這課"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  📌 跑這本書 / 跑這課
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <table class="caption-top table">
-                  <thead>
-                    <tr class="header">
-                      <th>用途</th>
-                      <th>連結</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd">
-                      <td>📖 <strong>線上書</strong>（這本，可分享）</td>
-                      <td>
-                        <a
-                          href="https://htlin222.github.io/roche-vabysmo-rwe-workshop/"
-                          class="uri"
-                          >https://htlin222.github.io/roche-vabysmo-rwe-workshop/</a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="even">
-                      <td>
-                        📦 <strong>程式碼 repo</strong>（給 Posit.Cloud fork）
-                      </td>
-                      <td>
-                        <a
-                          href="https://github.com/htlin222/roche-vabysmo-rwe-workshop"
-                          class="uri"
-                          >https://github.com/htlin222/roche-vabysmo-rwe-workshop</a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="odd">
-                      <td>
-                        🧪 <strong>Posit.Cloud</strong>（瀏覽器跑 RStudio）
-                      </td>
-                      <td>
-                        <a href="https://posit.cloud/" class="uri"
-                          >https://posit.cloud/</a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="even">
-                      <td>
-                        🎁
-                        <strong>老師預烤 Posit.Cloud project</strong
-                        >（建議路線）
-                      </td>
-                      <td><strong>🎤 現場由老師發放</strong></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="🤖 AI 助手（free-tier 都可以）"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  🤖 AI 助手（free-tier 都可以）
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <table class="caption-top table">
-                  <thead>
-                    <tr class="header">
-                      <th>工具</th>
-                      <th>連結</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd">
-                      <td>ChatGPT</td>
-                      <td>
-                        <a href="https://chat.openai.com/" class="uri"
-                          >https://chat.openai.com/</a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="even">
-                      <td>Google Gemini</td>
-                      <td>
-                        <a href="https://gemini.google.com/" class="uri"
-                          >https://gemini.google.com/</a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="odd">
-                      <td>Claude</td>
-                      <td>
-                        <a href="https://claude.ai/" class="uri"
-                          >https://claude.ai/</a
-                        >
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <p>3 選 1 即可，本書的 📋 prompt 在哪一個都跑得出 R code。</p>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="📑 參考材料 / 速查"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  📑 參考材料 / 速查
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <table class="caption-top table">
-                  <thead>
-                    <tr class="header">
-                      <th>用途</th>
-                      <th>連結</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd">
-                      <td>原始論文（<strong>CC BY 全文</strong>）</td>
-                      <td>
-                        <a href="https://doi.org/10.1016/j.ophtha.2024.11.023"
-                          >Cheung 2025 <em>Ophthalmology</em> — DOI</a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="even">
-                      <td>院內 csv schema</td>
-                      <td>
-                        <a
-                          href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/data/data_dictionary.md"
-                          ><code>data/data_dictionary.md</code></a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="odd">
-                      <td>模擬資料下載</td>
-                      <td>
-                        <a
-                          href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/tree/main/data"
-                          ><code>data/</code> 全部 csv</a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="even">
-                      <td>課堂 FAQ（29 Q&amp;A）</td>
-                      <td>
-                        <a
-                          href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/faq.md"
-                          ><code>docs/faq.md</code></a
-                        >
-                      </td>
-                    </tr>
-                    <tr class="odd">
-                      <td>名詞 / 縮寫速查</td>
-                      <td><a href="appendix.html">Appendix G</a></td>
-                    </tr>
-                    <tr class="even">
-                      <td>統計 / 程式 ELI5</td>
-                      <td><a href="appendix.html">Appendix E、F</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-note callout-titled"
-              title="🎓 給老師、助教（學員可略過）"
-            >
-              <div
-                class="callout-header d-flex align-content-center"
-                data-bs-toggle="collapse"
-                data-bs-target=".callout-5-contents"
-                aria-controls="callout-5"
-                aria-expanded="false"
-                aria-label="Toggle callout"
-              >
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  🎓 給老師、助教（學員可略過）
-                </div>
-                <div
-                  class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"
-                >
-                  <i class="callout-toggle"></i>
-                </div>
-              </div>
-              <div
-                id="callout-5"
-                class="callout-5-contents callout-collapse collapse"
-              >
-                <div class="callout-body-container callout-body">
-                  <table class="caption-top table">
-                    <thead>
-                      <tr class="header">
-                        <th>用途</th>
-                        <th>連結</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="odd">
-                        <td>TA 工作手冊</td>
-                        <td>
-                          <a
-                            href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/ta-handbook.md"
-                            ><code>docs/ta-handbook.md</code></a
-                          >
-                        </td>
-                      </tr>
-                      <tr class="even">
-                        <td>老師課前預烤 SOP</td>
-                        <td>
-                          <a
-                            href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/posit-cloud-setup.md"
-                            ><code>docs/posit-cloud-setup.md</code></a
-                          >
-                        </td>
-                      </tr>
-                      <tr class="odd">
-                        <td>對口 / 內部行事曆</td>
-                        <td>
-                          <a
-                            href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/internal-notes.md"
-                            ><code>docs/internal-notes.md</code></a
-                          >
-                        </td>
-                      </tr>
-                      <tr class="even">
-                        <td>Issues / 教材 bug 回報</td>
-                        <td>
-                          <a
-                            href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/issues"
-                            class="uri"
-                            >https://github.com/htlin222/roche-vabysmo-rwe-workshop/issues</a
-                          >
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <hr />
-          </section>
-          <section id="課程目標" class="level2">
-            <h2 class="anchored" data-anchor-id="課程目標">課程目標</h2>
-            <p>今天結束時，你應該可以：</p>
-            <ul>
-              <li>✅ 看懂一篇眼科 RWE paper 的圖表是用什麼方法跑出來的</li>
-              <li>✅ 把問題講清楚，讓 AI 幫你寫 R 程式碼</li>
-              <li>
-                ✅ 在 <a href="https://posit.cloud/">Posit.Cloud</a> 上跑出
-                Table 1 + Figure 1（MMRM）+ Figure 2（CMH）
-              </li>
-              <li>✅ 把同一份 code 套到「你院內的 csv」，看圖換掉</li>
-              <li>✅ 知道你回院後要請 IT 撈什麼樣的資料</li>
-            </ul>
-          </section>
-          <section id="這堂課的玩法" class="level2">
-            <h2 class="anchored" data-anchor-id="這堂課的玩法">這堂課的玩法</h2>
-            <table class="caption-top table">
-              <thead>
-                <tr class="header">
-                  <th style="text-align: center">步驟</th>
-                  <th>你做的事</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="odd">
-                  <td style="text-align: center">1</td>
-                  <td>複製本書的「📋 prompt」</td>
-                </tr>
-                <tr class="even">
-                  <td style="text-align: center">2</td>
-                  <td>貼給 AI（ChatGPT / Gemini / Claude，free-tier 即可）</td>
-                </tr>
-                <tr class="odd">
-                  <td style="text-align: center">3</td>
-                  <td>AI 給你 R code</td>
-                </tr>
-                <tr class="even">
-                  <td style="text-align: center">4</td>
-                  <td>貼到 Posit.Cloud 跑</td>
-                </tr>
-                <tr class="odd">
-                  <td style="text-align: center">5</td>
-                  <td>看結果、聽我們解釋</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              <strong
-                >你的工作是「問對問題」、「看懂結果」，不是「寫對程式」。</strong
-              >
-            </p>
-            <div
-              class="callout callout-style-default callout-warning callout-titled"
-              title="⚠️ AI 給的 code 跟教材不同？以教材為準"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  ⚠️ AI 給的 code 跟教材不同？以教材為準
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <p>
-                  為了讓全班跑出<strong>一致的結果</strong>，每個任務後面都附「<strong>參考程式碼</strong>」一欄。
-                  - 學員與 AI 對話<strong>只是在練「拆需求 / 看懂程式」</strong
-                  >，AI 的版本可能用不同套件、不同命名、不同預設參數。 -
-                  真正下指令跑的時候，<strong>請統一複製教材的「參考程式碼」</strong>——這樣老師、助教、同學的圖才會對得上。
-                  - AI
-                  對於「眼科專業內容」與「統計細節」<strong>仍有可能出錯</strong>：碰到
-                  reviewer 才會在意的細節（例如 random effect 結構、CMH
-                  權重公式、PSM caliper 設定），請以教材中標註 ref
-                  的內容為準，並自行驗證。
-                </p>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="🚀 完全不想看 code？6 支腳本一行跑完"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  🚀 完全不想看 code？6 支腳本一行跑完
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <p>打開 Terminal，確認 CWD 在專案根目錄，依序：</p>
-                <div class="sourceCode" id="cb1">
-                  <pre
-                    class="sourceCode bash code-with-copy"
-                  ><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> install.r                       <span class="co"># 第一次裝套件</span></span>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 30, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="前言" class="level1 unnumbered">
+<h1 class="unnumbered">前言</h1>
+<p>歡迎來到「<strong>羅氏眼科研究賦能工作坊</strong>」——副標：「讓你的 Faricimab RWE 長得像 Ophthalmology 論文」。</p>
+<p>這份教材的目標<strong>不是</strong>讓你學會 R，也不是讓你學會 MMRM 或 CMH 的數學原理。 是讓你下課後做得到這件事：</p>
+<blockquote class="blockquote">
+<p><strong>拿你院內的 faricimab cohort，產出可以投 Ophthalmology 的圖表。</strong></p>
+</blockquote>
+<div class="callout callout-style-default callout-important callout-titled" title="📣 主辦單位與利益揭露">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📣 主辦單位與利益揭露
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>主辦單位</strong>：羅氏大藥廠（Roche Products Ltd.&nbsp;Taiwan）</li>
+<li><strong>作者</strong>：和信治癌中心醫院 林協霆醫師、羅氏大藥廠 邵時傑博士</li>
+<li><strong>資金</strong>：本工作坊由羅氏大藥廠贊助舉辦。教材內容以方法學教學為主，所有藥物以<strong>學名</strong>（faricimab、aflibercept）呈現，不使用商品名；圖表配色為教材中性色，與任何商品識別色無關。</li>
+<li><strong>教材授權</strong>：CC BY 4.0，可自由修改、再散布、引用。</li>
+<li><strong>AI 工具</strong>：本書建議搭配 free-tier ChatGPT / Gemini / Claude 使用；AI 生成的內容<strong>仍可能有錯誤</strong>，請對照教材中提供的參考程式碼與引用文獻，自行驗證。</li>
+</ul>
+</div>
+</div>
+<hr>
+<section id="重要連結書籤起來" class="level2">
+<h2 class="anchored" data-anchor-id="重要連結書籤起來">🔗 重要連結（書籤起來）</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="📌 跑這本書 / 跑這課">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📌 跑這本書 / 跑這課
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>用途</th>
+<th>連結</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>📖 <strong>線上書</strong>（這本，可分享）</td>
+<td><a href="https://htlin222.github.io/roche-vabysmo-rwe-workshop/" class="uri">https://htlin222.github.io/roche-vabysmo-rwe-workshop/</a></td>
+</tr>
+<tr class="even">
+<td>📦 <strong>程式碼 repo</strong>（給 Posit.Cloud fork）</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop" class="uri">https://github.com/htlin222/roche-vabysmo-rwe-workshop</a></td>
+</tr>
+<tr class="odd">
+<td>🧪 <strong>Posit.Cloud</strong>（瀏覽器跑 RStudio）</td>
+<td><a href="https://posit.cloud/" class="uri">https://posit.cloud/</a></td>
+</tr>
+<tr class="even">
+<td>🎁 <strong>老師預烤 Posit.Cloud project</strong>（建議路線）</td>
+<td><strong>🎤 現場由老師發放</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🤖 AI 助手（free-tier 都可以）">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🤖 AI 助手（free-tier 都可以）
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>工具</th>
+<th>連結</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ChatGPT</td>
+<td><a href="https://chat.openai.com/" class="uri">https://chat.openai.com/</a></td>
+</tr>
+<tr class="even">
+<td>Google Gemini</td>
+<td><a href="https://gemini.google.com/" class="uri">https://gemini.google.com/</a></td>
+</tr>
+<tr class="odd">
+<td>Claude</td>
+<td><a href="https://claude.ai/" class="uri">https://claude.ai/</a></td>
+</tr>
+</tbody>
+</table>
+<p>3 選 1 即可，本書的 📋 prompt 在哪一個都跑得出 R code。</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="📑 參考材料 / 速查">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📑 參考材料 / 速查
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>用途</th>
+<th>連結</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>原始論文（<strong>CC BY 全文</strong>）</td>
+<td><a href="https://doi.org/10.1016/j.ophtha.2024.11.023">Cheung 2025 <em>Ophthalmology</em> — DOI</a></td>
+</tr>
+<tr class="even">
+<td>院內 csv schema</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/data/data_dictionary.md"><code>data/data_dictionary.md</code></a></td>
+</tr>
+<tr class="odd">
+<td>模擬資料下載</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/tree/main/data"><code>data/</code> 全部 csv</a></td>
+</tr>
+<tr class="even">
+<td>課堂 FAQ（29 Q&amp;A）</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/faq.md"><code>docs/faq.md</code></a></td>
+</tr>
+<tr class="odd">
+<td>名詞 / 縮寫速查</td>
+<td><a href="appendix.html">Appendix G</a></td>
+</tr>
+<tr class="even">
+<td>統計 / 程式 ELI5</td>
+<td><a href="appendix.html">Appendix E、F</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🎓 給老師、助教（學員可略過）">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎓 給老師、助教（學員可略過）
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>用途</th>
+<th>連結</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TA 工作手冊</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/ta-handbook.md"><code>docs/ta-handbook.md</code></a></td>
+</tr>
+<tr class="even">
+<td>老師課前預烤 SOP</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/posit-cloud-setup.md"><code>docs/posit-cloud-setup.md</code></a></td>
+</tr>
+<tr class="odd">
+<td>對口 / 內部行事曆</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/internal-notes.md"><code>docs/internal-notes.md</code></a></td>
+</tr>
+<tr class="even">
+<td>Issues / 教材 bug 回報</td>
+<td><a href="https://github.com/htlin222/roche-vabysmo-rwe-workshop/issues" class="uri">https://github.com/htlin222/roche-vabysmo-rwe-workshop/issues</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="課程目標" class="level2">
+<h2 class="anchored" data-anchor-id="課程目標">課程目標</h2>
+<p>今天結束時，你應該可以：</p>
+<ul>
+<li>✅ 看懂一篇眼科 RWE paper 的圖表是用什麼方法跑出來的</li>
+<li>✅ 把問題講清楚，讓 AI 幫你寫 R 程式碼</li>
+<li>✅ 在 <a href="https://posit.cloud/">Posit.Cloud</a> 上跑出 Table 1 + Figure 1（MMRM）+ Figure 2（CMH）</li>
+<li>✅ 把同一份 code 套到「你院內的 csv」，看圖換掉</li>
+<li>✅ 知道你回院後要請 IT 撈什麼樣的資料</li>
+</ul>
+</section>
+<section id="這堂課的玩法" class="level2">
+<h2 class="anchored" data-anchor-id="這堂課的玩法">這堂課的玩法</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">步驟</th>
+<th>你做的事</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td>複製本書的「📋 prompt」</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td>貼給 AI（ChatGPT / Gemini / Claude，free-tier 即可）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td>AI 給你 R code</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td>貼到 Posit.Cloud 跑</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td>看結果、聽我們解釋</td>
+</tr>
+</tbody>
+</table>
+<p><strong>你的工作是「問對問題」、「看懂結果」，不是「寫對程式」。</strong></p>
+<div class="callout callout-style-default callout-warning callout-titled" title="⚠️ AI 給的 code 跟教材不同？以教材為準">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+⚠️ AI 給的 code 跟教材不同？以教材為準
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>為了讓全班跑出<strong>一致的結果</strong>，每個任務後面都附「<strong>參考程式碼</strong>」一欄。 - 學員與 AI 對話<strong>只是在練「拆需求 / 看懂程式」</strong>，AI 的版本可能用不同套件、不同命名、不同預設參數。 - 真正下指令跑的時候，<strong>請統一複製教材的「參考程式碼」</strong>——這樣老師、助教、同學的圖才會對得上。 - AI 對於「眼科專業內容」與「統計細節」<strong>仍有可能出錯</strong>：碰到 reviewer 才會在意的細節（例如 random effect 結構、CMH 權重公式、PSM caliper 設定），請以教材中標註 ref 的內容為準，並自行驗證。</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🚀 完全不想看 code？6 支腳本一行跑完">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🚀 完全不想看 code？6 支腳本一行跑完
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>打開 Terminal，確認 CWD 在專案根目錄，依序：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> install.r                       <span class="co"># 第一次裝套件</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/01_table1.R             <span class="co"># Part 2</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/02_mmrm_figure1.R       <span class="co"># Part 3</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/03_cmh_figure2.R        <span class="co"># Part 4</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/04_km_figure3.R         <span class="co"># Part 6</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/06_psm_my_hospital.R    <span class="co"># Part 5（PSM + matched MMRM/CMH）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-                </div>
-                <p>
-                  完整對應表與前提條件見附錄頂端「🚀 完全不會寫程式：6
-                  支腳本一行跑完」。
-                </p>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="🔖 看到陌生縮寫不要慌"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  🔖 看到陌生縮寫不要慌
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <p>
-                  本書最後的
-                  <strong>Appendix G「名詞速查表」</strong>
-                  整理了眼科、試驗、統計、工具的所有縮寫。 看到
-                  <code>BCVA</code> / <code>CST</code> / <code>MMRM</code> /
-                  <code>CMH</code> / <code>PSM</code> / <code>ASMD</code> /
-                  <code>Q4W</code> 等不認得 → 翻 appendix G.1–G.5。
-                  看到方法概念不懂（什麼是 random
-                  intercept、censoring、propensity score）→ 翻 appendix E、F 的
-                  ELI5。
-                </p>
-              </div>
-            </div>
-            <hr />
-          </section>
-          <section
-            id="tenaya-lucerne我們今天要-reproduce-的-paper"
-            class="level2"
-          >
-            <h2
-              class="anchored"
-              data-anchor-id="tenaya-lucerne我們今天要-reproduce-的-paper"
-            >
-              TENAYA / LUCERNE：我們今天要 reproduce 的 paper
-            </h2>
-            <blockquote class="blockquote">
-              <p>
-                Cheung CMG, Lim JI, Priglinger S, et al.&nbsp;<strong
-                  >Anatomic Outcomes with Faricimab vs Aflibercept in
-                  Head-to-Head Dosing Phase of the TENAYA/LUCERNE Trials in
-                  Neovascular Age-related Macular Degeneration.</strong
-                >
-                <em>Ophthalmology</em>. 2025;132(5):519-526.<span
-                  class="citation"
-                  data-cites="cheung2025anatomic"
-                  ><sup
-                    ><a href="#ref-cheung2025anatomic" role="doc-biblioref"
-                      >1</a
-                    ></sup
-                  ></span
-                >
-              </p>
-            </blockquote>
-            <p>一頁懶人包：</p>
-            <table class="caption-top table">
-              <colgroup>
-                <col style="width: 50%" />
-                <col style="width: 50%" />
-              </colgroup>
-              <thead>
-                <tr class="header">
-                  <th>項目</th>
-                  <th>內容</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="odd">
-                  <td><strong>設計</strong></td>
-                  <td>
-                    TENAYA + LUCERNE 兩個 phase 3 RCT 的 pooled post-hoc
-                    analysis
-                  </td>
-                </tr>
-                <tr class="even">
-                  <td><strong>N</strong></td>
-                  <td>1329 病人（faricimab 665 vs aflibercept 664）</td>
-                </tr>
-                <tr class="odd">
-                  <td><strong>時間窗</strong></td>
-                  <td>
-                    前 12 週 head-to-head dosing phase（兩臂都打同 3 針 Q4W）
-                  </td>
-                </tr>
-                <tr class="even">
-                  <td><strong>outcomes</strong></td>
-                  <td>
-                    BCVA、CST、IRF/SRF absence proportion、time to first absence
-                  </td>
-                </tr>
-                <tr class="odd">
-                  <td><strong>statistical methods</strong></td>
-                  <td>
-                    <strong>MMRM</strong>（連續變項）+
-                    <strong>CMH-weighted</strong>（二元變項）+
-                    Kaplan–Meier（time-to-event）
-                  </td>
-                </tr>
-                <tr class="even">
-                  <td><strong>結論</strong></td>
-                  <td>
-                    faricimab 在 anatomic outcomes（CST、SRF absence）優於
-                    aflibercept，BCVA 接近
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="📖 outcomes 名詞速解"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  📖 outcomes 名詞速解
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <ul>
-                  <li>
-                    <strong>BCVA</strong> = best-corrected visual
-                    acuity，最佳矯正視力，用 ETDRS letters
-                    計分（0–100，越高越好）
-                  </li>
-                  <li>
-                    <strong>CST</strong> = central subfield thickness，OCT
-                    量到的中央視網膜厚度（單位 μm）
-                  </li>
-                  <li>
-                    <strong>IRF / SRF</strong> = intraretinal / subretinal
-                    fluid，視網膜內 / 下液（OCT 看得到的積水）
-                  </li>
-                  <li>
-                    <strong>absence proportion</strong> = 看不到 fluid
-                    的病人比例（治療目標：把這個比例做高）
-                  </li>
-                  <li>
-                    <strong>head-to-head</strong> = 兩藥同期同 dose 直接對打（前
-                    12 週兩臂都是 Q4W 三針）
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="📖 method 名詞速解"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  📖 method 名詞速解
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <ul>
-                  <li>
-                    <strong>MMRM</strong> = mixed model for repeated
-                    measures，「同一隻眼睛被量很多次」的迴歸
-                  </li>
-                  <li>
-                    <strong>CMH-weighted</strong> = Cochran-Mantel-Haenszel
-                    加權；先在每個分層算差異、再加權平均
-                  </li>
-                  <li>
-                    <strong>Kaplan–Meier</strong> =
-                    「時間到事件」的階梯狀曲線（如多久才把 fluid 擠光）
-                  </li>
-                </ul>
-                <p>完整 ELI5 在 Appendix E。</p>
-              </div>
-            </div>
-            <blockquote class="blockquote">
-              <p>
-                📄 完整 PDF 在 <code>refs/tenaya-lucerne-paper.pdf</code>（CC BY
-                授權，可下載）。
-              </p>
-            </blockquote>
-            <hr />
-          </section>
-          <section id="工作坊全圖" class="level2">
-            <h2 class="anchored" data-anchor-id="工作坊全圖">工作坊全圖</h2>
-            <table class="caption-top table">
-              <colgroup>
-                <col style="width: 25%" />
-                <col style="width: 25%" />
-                <col style="width: 25%" />
-                <col style="width: 25%" />
-              </colgroup>
-              <thead>
-                <tr class="header">
-                  <th>章節</th>
-                  <th>主題</th>
-                  <th>預計時間</th>
-                  <th>你會做出</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="odd">
-                  <td><strong>Part 1</strong></td>
-                  <td>認識 paper + 認識資料</td>
-                  <td>30–40 min</td>
-                  <td>Posit.Cloud 開好、看到模擬資料的欄位</td>
-                </tr>
-                <tr class="even">
-                  <td><strong>Part 2</strong></td>
-                  <td>Table 1 baseline characteristics</td>
-                  <td>20 min</td>
-                  <td>一張對得起 paper 的 Table 1</td>
-                </tr>
-                <tr class="odd">
-                  <td><strong>Part 3</strong></td>
-                  <td>Figure 1：MMRM 跑 BCVA + CST</td>
-                  <td>40 min</td>
-                  <td>兩張隨時間變化的曲線圖</td>
-                </tr>
-                <tr class="even">
-                  <td><strong>Part 4</strong></td>
-                  <td>Figure 2：CMH 跑 IRF/SRF/both</td>
-                  <td>30 min</td>
-                  <td>三張 absence proportion bar chart</td>
-                </tr>
-                <tr class="odd">
-                  <td><strong>Part 5</strong></td>
-                  <td><strong>換你院內資料</strong></td>
-                  <td>30 min</td>
-                  <td>同一份 code、跑出「假裝是你院內」的 paper draft</td>
-                </tr>
-                <tr class="even">
-                  <td><strong>Part 6</strong></td>
-                  <td>(bonus) Figure 3：KM + Cox</td>
-                  <td>20 min</td>
-                  <td>一張 time-to-event 曲線</td>
-                </tr>
-                <tr class="odd">
-                  <td><strong>Appendix</strong></td>
-                  <td>你回院之後要做的事</td>
-                  <td>—</td>
-                  <td>院內 csv schema、AI 對話技巧、常見錯誤</td>
-                </tr>
-              </tbody>
-            </table>
-            <hr />
-          </section>
-          <section id="一個重要的觀念" class="level2">
-            <h2 class="anchored" data-anchor-id="一個重要的觀念">
-              一個重要的觀念
-            </h2>
-            <div class="cell">
-              <div class="cell-output-display">
-                <div>
-                  <figure class="figure">
-                    <p>
-                      <img
-                        src="index_files/figure-html/schematic-1.png"
-                        class="img-fluid figure-img"
-                        alt="RCT vs RWE 的差別示意圖"
-                        width="1050"
-                      />
-                    </p>
-                  </figure>
-                </div>
-              </div>
-            </div>
-            <p>
-              RCT 是「用 1329 個病人證明藥的效果」；RWE 是「用你院內 100–200
-              個病人<strong>展示同一個方法在你的人群跑出什麼樣</strong>」。
-              <strong>方法不變，能講的故事略小</strong>——這就是為什麼你今天學的
-              code 可以直接搬。
-            </p>
-            <hr />
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="老師快速指引"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  老師快速指引
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <ul>
-                  <li>沒看過 R 也沒關係，跟著「📋 複製這段話貼給 AI」就好</li>
-                  <li>卡住舉手，助教會來看</li>
-                  <li>
-                    結束時你會帶走：一個 Posit.Cloud project + 這本書的 PDF +
-                    院內 csv schema
-                  </li>
-                </ul>
-              </div>
-            </div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/06_psm_my_hospital.R    <span class="co"># Part 5（PSM + matched MMRM/CMH）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>完整對應表與前提條件見附錄頂端「🚀 完全不會寫程式：6 支腳本一行跑完」。</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🔖 看到陌生縮寫不要慌">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔖 看到陌生縮寫不要慌
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>本書最後的 <strong>Appendix G「名詞速查表」</strong> 整理了眼科、試驗、統計、工具的所有縮寫。 看到 <code>BCVA</code> / <code>CST</code> / <code>MMRM</code> / <code>CMH</code> / <code>PSM</code> / <code>ASMD</code> / <code>Q4W</code> 等不認得 → 翻 appendix G.1–G.5。 看到方法概念不懂（什麼是 random intercept、censoring、propensity score）→ 翻 appendix E、F 的 ELI5。</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="tenaya-lucerne我們今天要-reproduce-的-paper" class="level2">
+<h2 class="anchored" data-anchor-id="tenaya-lucerne我們今天要-reproduce-的-paper">TENAYA / LUCERNE：我們今天要 reproduce 的 paper</h2>
+<blockquote class="blockquote">
+<p>Cheung CMG, Lim JI, Priglinger S, et al.&nbsp;<strong>Anatomic Outcomes with Faricimab vs Aflibercept in Head-to-Head Dosing Phase of the TENAYA/LUCERNE Trials in Neovascular Age-related Macular Degeneration.</strong> <em>Ophthalmology</em>. 2025;132(5):519-526.<span class="citation" data-cites="cheung2025anatomic"><sup><a href="#ref-cheung2025anatomic" role="doc-biblioref">1</a></sup></span></p>
+</blockquote>
+<p>一頁懶人包：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>項目</th>
+<th>內容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>設計</strong></td>
+<td>TENAYA + LUCERNE 兩個 phase 3 RCT 的 pooled post-hoc analysis</td>
+</tr>
+<tr class="even">
+<td><strong>N</strong></td>
+<td>1329 病人（faricimab 665 vs aflibercept 664）</td>
+</tr>
+<tr class="odd">
+<td><strong>時間窗</strong></td>
+<td>前 12 週 head-to-head dosing phase（兩臂都打同 3 針 Q4W）</td>
+</tr>
+<tr class="even">
+<td><strong>outcomes</strong></td>
+<td>BCVA、CST、IRF/SRF absence proportion、time to first absence</td>
+</tr>
+<tr class="odd">
+<td><strong>statistical methods</strong></td>
+<td><strong>MMRM</strong>（連續變項）+ <strong>CMH-weighted</strong>（二元變項）+ Kaplan–Meier（time-to-event）</td>
+</tr>
+<tr class="even">
+<td><strong>結論</strong></td>
+<td>faricimab 在 anatomic outcomes（CST、SRF absence）優於 aflibercept，BCVA 接近</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled" title="📖 outcomes 名詞速解">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📖 outcomes 名詞速解
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>BCVA</strong> = best-corrected visual acuity，最佳矯正視力，用 ETDRS letters 計分（0–100，越高越好）</li>
+<li><strong>CST</strong> = central subfield thickness，OCT 量到的中央視網膜厚度（單位 μm）</li>
+<li><strong>IRF / SRF</strong> = intraretinal / subretinal fluid，視網膜內 / 下液（OCT 看得到的積水）</li>
+<li><strong>absence proportion</strong> = 看不到 fluid 的病人比例（治療目標：把這個比例做高）</li>
+<li><strong>head-to-head</strong> = 兩藥同期同 dose 直接對打（前 12 週兩臂都是 Q4W 三針）</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="📖 method 名詞速解">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📖 method 名詞速解
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>MMRM</strong> = mixed model for repeated measures，「同一隻眼睛被量很多次」的迴歸</li>
+<li><strong>CMH-weighted</strong> = Cochran-Mantel-Haenszel 加權；先在每個分層算差異、再加權平均</li>
+<li><strong>Kaplan–Meier</strong> = 「時間到事件」的階梯狀曲線（如多久才把 fluid 擠光）</li>
+</ul>
+<p>完整 ELI5 在 Appendix E。</p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>📄 完整 PDF 在 <code>refs/tenaya-lucerne-paper.pdf</code>（CC BY 授權，可下載）。</p>
+</blockquote>
+<hr>
+</section>
+<section id="工作坊全圖" class="level2">
+<h2 class="anchored" data-anchor-id="工作坊全圖">工作坊全圖</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>章節</th>
+<th>主題</th>
+<th>預計時間</th>
+<th>你會做出</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Part 1</strong></td>
+<td>認識 paper + 認識資料</td>
+<td>30–40 min</td>
+<td>Posit.Cloud 開好、看到模擬資料的欄位</td>
+</tr>
+<tr class="even">
+<td><strong>Part 2</strong></td>
+<td>Table 1 baseline characteristics</td>
+<td>20 min</td>
+<td>一張對得起 paper 的 Table 1</td>
+</tr>
+<tr class="odd">
+<td><strong>Part 3</strong></td>
+<td>Figure 1：MMRM 跑 BCVA + CST</td>
+<td>40 min</td>
+<td>兩張隨時間變化的曲線圖</td>
+</tr>
+<tr class="even">
+<td><strong>Part 4</strong></td>
+<td>Figure 2：CMH 跑 IRF/SRF/both</td>
+<td>30 min</td>
+<td>三張 absence proportion bar chart</td>
+</tr>
+<tr class="odd">
+<td><strong>Part 5</strong></td>
+<td><strong>換你院內資料</strong></td>
+<td>30 min</td>
+<td>同一份 code、跑出「假裝是你院內」的 paper draft</td>
+</tr>
+<tr class="even">
+<td><strong>Part 6</strong></td>
+<td>(bonus) Figure 3：KM + Cox</td>
+<td>20 min</td>
+<td>一張 time-to-event 曲線</td>
+</tr>
+<tr class="odd">
+<td><strong>Appendix</strong></td>
+<td>你回院之後要做的事</td>
+<td>—</td>
+<td>院內 csv schema、AI 對話技巧、常見錯誤</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="一個重要的觀念" class="level2">
+<h2 class="anchored" data-anchor-id="一個重要的觀念">一個重要的觀念</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/schematic-1.png" class="img-fluid figure-img" alt="RCT vs RWE 的差別示意圖" width="1050"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>RCT 是「用 1329 個病人證明藥的效果」；RWE 是「用你院內 100–200 個病人<strong>展示同一個方法在你的人群跑出什麼樣</strong>」。 <strong>方法不變，能講的故事略小</strong>——這就是為什麼你今天學的 code 可以直接搬。</p>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled" title="老師快速指引">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+老師快速指引
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>沒看過 R 也沒關係，跟著「📋 複製這段話貼給 AI」就好</li>
+<li>卡住舉手，助教會來看</li>
+<li>結束時你會帶走：一個 Posit.Cloud project + 這本書的 PDF + 院內 csv schema</li>
+</ul>
+</div>
+</div>
 
-            <!-- -->
 
-            <div id="refs" class="references csl-bib-body" role="list">
-              <div
-                id="ref-cheung2025anatomic"
-                class="csl-entry"
-                role="listitem"
-              >
-                <div class="csl-left-margin">1.</div>
-                <div class="csl-right-inline">
-                  Cheung CMG, Lim JI, Priglinger S, et al. Anatomic outcomes
-                  with faricimab vs aflibercept in head-to-head dosing phase of
-                  the <span>TENAYA/LUCERNE</span> trials in neovascular
-                  age-related macular degeneration. <em>Ophthalmology</em>.
-                  2025;132(5):519-526. doi:<a
-                    href="https://doi.org/10.1016/j.ophtha.2024.11.023"
-                    >10.1016/j.ophtha.2024.11.023</a
-                  >
-                </div>
-              </div>
-            </div>
-          </section>
-        </section>
-      </main>
-      <!-- /main -->
-      <script id="quarto-html-after-body" type="application/javascript">
-        window.document.addEventListener("DOMContentLoaded", function (event) {
-          const icon = "";
-          const anchorJS = new window.AnchorJS();
-          anchorJS.options = {
-            placement: "right",
-            icon: icon,
-          };
-          anchorJS.add(".anchored");
-          const isCodeAnnotation = (el) => {
-            for (const clz of el.classList) {
-              if (clz.startsWith("code-annotation-")) {
-                return true;
-              }
-            }
-            return false;
-          };
-          const onCopySuccess = function (e) {
-            // button target
-            const button = e.trigger;
-            // don't keep focus
-            button.blur();
-            // flash "checked"
-            button.classList.add("code-copy-button-checked");
-            var currentTitle = button.getAttribute("title");
-            button.setAttribute("title", "Copied!");
-            let tooltip;
-            if (window.bootstrap) {
-              button.setAttribute("data-bs-toggle", "tooltip");
-              button.setAttribute("data-bs-placement", "left");
-              button.setAttribute("data-bs-title", "Copied!");
-              tooltip = new bootstrap.Tooltip(button, {
-                trigger: "manual",
-                customClass: "code-copy-button-tooltip",
-                offset: [0, -8],
-              });
-              tooltip.show();
-            }
-            setTimeout(function () {
-              if (tooltip) {
-                tooltip.hide();
-                button.removeAttribute("data-bs-title");
-                button.removeAttribute("data-bs-toggle");
-                button.removeAttribute("data-bs-placement");
-              }
-              button.setAttribute("title", currentTitle);
-              button.classList.remove("code-copy-button-checked");
-            }, 1000);
-            // clear code selection
-            e.clearSelection();
-          };
-          const getTextToCopy = function (trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
-            }
-            return codeEl.innerText;
-          };
-          const clipboard = new window.ClipboardJS(
-            ".code-copy-button:not([data-in-quarto-modal])",
-            {
-              text: getTextToCopy,
-            },
-          );
-          clipboard.on("success", onCopySuccess);
-          if (
-            window.document.getElementById("quarto-embedded-source-code-modal")
-          ) {
-            const clipboardModal = new window.ClipboardJS(
-              ".code-copy-button[data-in-quarto-modal]",
-              {
-                text: getTextToCopy,
-                container: window.document.getElementById(
-                  "quarto-embedded-source-code-modal",
-                ),
-              },
-            );
-            clipboardModal.on("success", onCopySuccess);
+<!-- -->
+
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-cheung2025anatomic" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Cheung CMG, Lim JI, Priglinger S, et al. Anatomic outcomes with faricimab vs aflibercept in head-to-head dosing phase of the <span>TENAYA/LUCERNE</span> trials in neovascular age-related macular degeneration. <em>Ophthalmology</em>. 2025;132(5):519-526. doi:<a href="https://doi.org/10.1016/j.ophtha.2024.11.023">10.1016/j.ophtha.2024.11.023</a></div>
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
-          const viewSource =
-            window.document.getElementById("quarto-view-source") ||
-            window.document.getElementById("quarto-code-tools-source");
-          if (viewSource) {
-            const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-            viewSource.addEventListener("click", function (e) {
-              if (sourceUrl) {
-                // rstudio viewer pane
-                if (/\bcapabilities=\b/.test(window.location)) {
-                  window.open(sourceUrl);
-                } else {
-                  window.location.href = sourceUrl;
-                }
-              } else {
-                const modal = new bootstrap.Modal(
-                  document.getElementById("quarto-embedded-source-code-modal"),
-                );
-                modal.show();
-              }
-              return false;
-            });
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
           }
-          function toggleCodeHandler(show) {
-            return function (e) {
-              const detailsSrc = window.document.querySelectorAll(
-                ".cell > details > .sourceCode",
-              );
-              for (let i = 0; i < detailsSrc.length; i++) {
-                const details = detailsSrc[i].parentElement;
-                if (show) {
-                  details.open = true;
-                } else {
-                  details.removeAttribute("open");
-                }
-              }
-              const cellCodeDivs = window.document.querySelectorAll(
-                ".cell > .sourceCode",
-              );
-              const fromCls = show ? "hidden" : "unhidden";
-              const toCls = show ? "unhidden" : "hidden";
-              for (let i = 0; i < cellCodeDivs.length; i++) {
-                const codeDiv = cellCodeDivs[i];
-                if (codeDiv.classList.contains(fromCls)) {
-                  codeDiv.classList.remove(fromCls);
-                  codeDiv.classList.add(toCls);
-                }
-              }
-              return false;
-            };
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
           }
-          const hideAllCode = window.document.getElementById(
-            "quarto-hide-all-code",
-          );
-          if (hideAllCode) {
-            hideAllCode.addEventListener("click", toggleCodeHandler(false));
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          const showAllCode = window.document.getElementById(
-            "quarto-show-all-code",
-          );
-          if (showAllCode) {
-            showAllCode.addEventListener("click", toggleCodeHandler(true));
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
           }
-          var localhostRegex = new RegExp(
-            /^(?:http|https):\/\/localhost\:?[0-9]*\//,
-          );
-          var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("/" + window.location.host + "/");
-          var isInternal = (href) => {
-            return (
-              filterRegex.test(href) ||
-              localhostRegex.test(href) ||
-              mailtoRegex.test(href)
-            );
-          };
-          // Inspect non-navigation links and adorn them if external
-          var links = window.document.querySelectorAll(
-            "a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)",
-          );
-          for (var i = 0; i < links.length; i++) {
-            const link = links[i];
-            if (!isInternal(link.href)) {
-              // undo the damage that might have been done by quarto-nav.js in the case of
-              // links that we want to consider external
-              if (link.dataset.originalHref !== undefined) {
-                link.href = link.dataset.originalHref;
-              }
-            }
-          }
-          function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-            const config = {
-              allowHTML: true,
-              maxWidth: 500,
-              delay: 100,
-              arrow: false,
-              appendTo: function (el) {
-                return el.parentElement;
-              },
-              interactive: true,
-              interactiveBorder: 10,
-              theme: "quarto",
-              placement: "bottom-start",
-            };
-            if (contentFn) {
-              config.content = contentFn;
-            }
-            if (onTriggerFn) {
-              config.onTrigger = onTriggerFn;
-            }
-            if (onUntriggerFn) {
-              config.onUntrigger = onUntriggerFn;
-            }
-            window.tippy(el, config);
-          }
-          const noterefs = window.document.querySelectorAll(
-            'a[role="doc-noteref"]',
-          );
-          for (var i = 0; i < noterefs.length; i++) {
-            const ref = noterefs[i];
-            tippyHover(ref, function () {
-              // use id or data attribute instead here
-              let href =
-                ref.getAttribute("data-footnote-href") ||
-                ref.getAttribute("href");
-              try {
-                href = new URL(href).hash;
-              } catch {}
-              const id = href.replace(/^#\/?/, "");
-              const note = window.document.getElementById(id);
-              if (note) {
-                return note.innerHTML;
-              } else {
-                return "";
-              }
-            });
-          }
-          const xrefs = window.document.querySelectorAll("a.quarto-xref");
-          const processXRef = (id, note) => {
-            // Strip column container classes
-            const stripColumnClz = (el) => {
-              el.classList.remove("page-full", "page-columns");
-              if (el.children) {
-                for (const child of el.children) {
-                  stripColumnClz(child);
-                }
-              }
-            };
-            stripColumnClz(note);
-            if (id === null || id.startsWith("sec-")) {
-              // Special case sections, only their first couple elements
-              const container = document.createElement("div");
-              if (note.children && note.children.length > 2) {
-                container.appendChild(note.children[0].cloneNode(true));
-                for (let i = 1; i < note.children.length; i++) {
-                  const child = note.children[i];
-                  if (child.tagName === "P" && child.innerText === "") {
-                    continue;
-                  } else {
-                    container.appendChild(child.cloneNode(true));
-                    break;
-                  }
-                }
-                if (window.Quarto?.typesetMath) {
-                  window.Quarto.typesetMath(container);
-                }
-                return container.innerHTML;
-              } else {
-                if (window.Quarto?.typesetMath) {
-                  window.Quarto.typesetMath(note);
-                }
-                return note.innerHTML;
-              }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
             } else {
-              // Remove any anchor links if they are present
-              const anchorLink = note.querySelector("a.anchorjs-link");
-              if (anchorLink) {
-                anchorLink.remove();
-              }
-              if (window.Quarto?.typesetMath) {
-                window.Quarto.typesetMath(note);
-              }
-              if (note.classList.contains("callout")) {
-                return note.outerHTML;
-              } else {
-                return note.innerHTML;
-              }
+              container.appendChild(child.cloneNode(true));
+              break;
             }
-          };
-          for (var i = 0; i < xrefs.length; i++) {
-            const xref = xrefs[i];
-            tippyHover(
-              xref,
-              undefined,
-              function (instance) {
-                instance.disable();
-                let url = xref.getAttribute("href");
-                let hash = undefined;
-                if (url.startsWith("#")) {
-                  hash = url;
-                } else {
-                  try {
-                    hash = new URL(url).hash;
-                  } catch {}
-                }
-                if (hash) {
-                  const id = hash.replace(/^#\/?/, "");
-                  const note = window.document.getElementById(id);
-                  if (note !== null) {
-                    try {
-                      const html = processXRef(id, note.cloneNode(true));
-                      instance.setContent(html);
-                    } finally {
-                      instance.enable();
-                      instance.show();
-                    }
-                  } else {
-                    // See if we can fetch this
-                    fetch(url.split("#")[0])
-                      .then((res) => res.text())
-                      .then((html) => {
-                        const parser = new DOMParser();
-                        const htmlDoc = parser.parseFromString(
-                          html,
-                          "text/html",
-                        );
-                        const note = htmlDoc.getElementById(id);
-                        if (note !== null) {
-                          const html = processXRef(id, note);
-                          instance.setContent(html);
-                        }
-                      })
-                      .finally(() => {
-                        instance.enable();
-                        instance.show();
-                      });
-                  }
-                } else {
-                  // See if we can fetch a full url (with no hash to target)
-                  // This is a special case and we should probably do some content thinning / targeting
-                  fetch(url)
-                    .then((res) => res.text())
-                    .then((html) => {
-                      const parser = new DOMParser();
-                      const htmlDoc = parser.parseFromString(html, "text/html");
-                      const note = htmlDoc.querySelector("main.content");
-                      if (note !== null) {
-                        // This should only happen for chapter cross references
-                        // (since there is no id in the URL)
-                        // remove the first header
-                        if (
-                          note.children.length > 0 &&
-                          note.children[0].tagName === "HEADER"
-                        ) {
-                          note.children[0].remove();
-                        }
-                        const html = processXRef(null, note);
-                        instance.setContent(html);
-                      }
-                    })
-                    .finally(() => {
-                      instance.enable();
-                      instance.show();
-                    });
-                }
-              },
-              function (instance) {},
-            );
           }
-          let selectedAnnoteEl;
-          const selectorForAnnotation = (cell, annotation) => {
-            let cellAttr = 'data-code-cell="' + cell + '"';
-            let lineAttr = 'data-code-annotation="' + annotation + '"';
-            const selector = "span[" + cellAttr + "][" + lineAttr + "]";
-            return selector;
-          };
-          const selectCodeLines = (annoteEl) => {
-            const doc = window.document;
-            const targetCell = annoteEl.getAttribute("data-target-cell");
-            const targetAnnotation = annoteEl.getAttribute(
-              "data-target-annotation",
-            );
-            const annoteSpan = window.document.querySelector(
-              selectorForAnnotation(targetCell, targetAnnotation),
-            );
-            const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-            const lineIds = lines.map((line) => {
-              return targetCell + "-" + line;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
             });
-            let top = null;
-            let height = null;
-            let parent = null;
-            if (lineIds.length > 0) {
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
               //compute the position of the single el (top and bottom and make a div)
               const el = window.document.getElementById(lineIds[0]);
               top = el.offsetTop;
               height = el.offsetHeight;
               parent = el.parentElement.parentElement;
-              if (lineIds.length > 1) {
-                const lastEl = window.document.getElementById(
-                  lineIds[lineIds.length - 1],
-                );
-                const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-                height = bottom - top;
-              }
-              if (top !== null && height !== null && parent !== null) {
-                // cook up a div (if necessary) and position it
-                let div = window.document.getElementById(
-                  "code-annotation-line-highlight",
-                );
-                if (div === null) {
-                  div = window.document.createElement("div");
-                  div.setAttribute("id", "code-annotation-line-highlight");
-                  div.style.position = "absolute";
-                  parent.appendChild(div);
-                }
-                div.style.top = top - 2 + "px";
-                div.style.height = height + 4 + "px";
-                div.style.left = 0;
-                let gutterDiv = window.document.getElementById(
-                  "code-annotation-line-highlight-gutter",
-                );
-                if (gutterDiv === null) {
-                  gutterDiv = window.document.createElement("div");
-                  gutterDiv.setAttribute(
-                    "id",
-                    "code-annotation-line-highlight-gutter",
-                  );
-                  gutterDiv.style.position = "absolute";
-                  const codeCell = window.document.getElementById(targetCell);
-                  const gutter = codeCell.querySelector(
-                    ".code-annotation-gutter",
-                  );
-                  gutter.appendChild(gutterDiv);
-                }
-                gutterDiv.style.top = top - 2 + "px";
-                gutterDiv.style.height = height + 4 + "px";
-              }
-              selectedAnnoteEl = annoteEl;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
             }
-          };
-          const unselectCodeLines = () => {
-            const elementsIds = [
-              "code-annotation-line-highlight",
-              "code-annotation-line-highlight-gutter",
-            ];
-            elementsIds.forEach((elId) => {
-              const div = window.document.getElementById(elId);
-              if (div) {
-                div.remove();
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
               }
-            });
-            selectedAnnoteEl = undefined;
-          };
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
           // Handle positioning of the toggle
-          window.addEventListener(
-            "resize",
-            throttle(() => {
-              elRect = undefined;
-              if (selectedAnnoteEl) {
-                selectCodeLines(selectedAnnoteEl);
-              }
-            }, 10),
-          );
-          function throttle(fn, ms) {
-            let throttle = false;
-            let timer;
-            return (...args) => {
-              if (!throttle) {
-                // first call gets through
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
                 fn.apply(this, args);
-                throttle = true;
-              } else {
-                // all the others get throttled
-                if (timer) clearTimeout(timer); // cancel #2
-                timer = setTimeout(() => {
-                  fn.apply(this, args);
-                  timer = throttle = false;
-                }, ms);
-              }
-            };
+                timer = throttle = false;
+              }, ms);
           }
-          // Attach click handler to the DT
-          const annoteDls = window.document.querySelectorAll(
-            "dt[data-target-cell]",
-          );
-          for (const annoteDlNode of annoteDls) {
-            annoteDlNode.addEventListener("click", (event) => {
-              const clickedEl = event.target;
-              if (clickedEl !== selectedAnnoteEl) {
-                unselectCodeLines();
-                const activeEl = window.document.querySelector(
-                  "dt[data-target-cell].code-annotation-active",
-                );
-                if (activeEl) {
-                  activeEl.classList.remove("code-annotation-active");
-                }
-                selectCodeLines(clickedEl);
-                clickedEl.classList.add("code-annotation-active");
-              } else {
-                // Unselect the line
-                unselectCodeLines();
-                clickedEl.classList.remove("code-annotation-active");
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
               }
-            });
-          }
-          const findCites = (el) => {
-            const parentEl = el.parentElement;
-            if (parentEl) {
-              const cites = parentEl.dataset.cites;
-              if (cites) {
-                return {
-                  el,
-                  cites: cites.split(" "),
-                };
-              } else {
-                return findCites(el.parentElement);
-              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
             } else {
-              return undefined;
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
             }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
           };
-          var bibliorefs = window.document.querySelectorAll(
-            'a[role="doc-biblioref"]',
-          );
-          for (var i = 0; i < bibliorefs.length; i++) {
-            const ref = bibliorefs[i];
-            const citeInfo = findCites(ref);
-            if (citeInfo) {
-              tippyHover(citeInfo.el, function () {
-                var popup = window.document.createElement("div");
-                citeInfo.cites.forEach(function (cite) {
-                  var citeDiv = window.document.createElement("div");
-                  citeDiv.classList.add("hanging-indent");
-                  citeDiv.classList.add("csl-entry");
-                  var biblioDiv = window.document.getElementById("ref-" + cite);
-                  if (biblioDiv) {
-                    citeDiv.innerHTML = biblioDiv.innerHTML;
-                  }
-                  popup.appendChild(citeDiv);
-                });
-                return popup.innerHTML;
-              });
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
             }
-          }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
         });
-      </script>
-      <nav class="page-navigation">
-        <div class="nav-page nav-page-previous"></div>
-        <div class="nav-page nav-page-next">
-          <a
-            href="./primer.html"
-            class="pagination-link"
-            aria-label="Primer：給非眼科醫師的背景補充"
-          >
-            <span class="nav-page-text">Primer：給非眼科醫師的背景補充</span>
-            <i class="bi bi-arrow-right-short"></i>
-          </a>
-        </div>
-      </nav>
-      <div
-        class="modal fade"
-        id="quarto-embedded-source-code-modal"
-        tabindex="-1"
-        aria-labelledby="quarto-embedded-source-code-modal-label"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5
-                class="modal-title"
-                id="quarto-embedded-source-code-modal-label"
-              >
-                Source Code
-              </h5>
-              <button class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <div class="">
-                <div class="sourceCode" id="cb2" data-shortcodes="false">
-                  <pre
-                    class="sourceCode markdown code-with-copy"
-                  ><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 前言 {.unnumbered}</span></span>
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./primer.html" class="pagination-link" aria-label="Primer：給非眼科醫師的背景補充">
+        <span class="nav-page-text">Primer：給非眼科醫師的背景補充</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 前言 {.unnumbered}</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-index</span></span>
@@ -1836,7 +1226,7 @@
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"_common.R"</span>)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>歡迎來到「**讓你的 Faricimab RWE 長得像 Ophthalmology 論文**」工作坊。</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>歡迎來到「**羅氏眼科研究賦能工作坊**」——副標：「讓你的 Faricimab RWE 長得像 Ophthalmology 論文」。</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>這份教材的目標**不是**讓你學會 R，也不是讓你學會 MMRM 或 CMH 的數學原理。</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>是讓你下課後做得到這件事：</span>
@@ -2037,27 +1427,24 @@
 <span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>卡住舉手，助教會來看</span>
 <span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>結束時你會帶走：一個 Posit.Cloud project + 這本書的 PDF + 院內 csv schema</span>
 <span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 林協霆、邵時傑 · 教材授權 CC BY 4.0 · 主辦單位：羅氏大藥廠</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
     </div>
-    <!-- /content -->
-    <footer class="footer">
-      <div class="nav-footer">
-        <div class="nav-footer-left">
-          <p>
-            © 2026 林協霆、邵時傑 · 教材授權 CC BY 4.0 · 主辦單位：羅氏大藥廠
-          </p>
-        </div>
-        <div class="nav-footer-center">&nbsp;</div>
-        <div class="nav-footer-right">
-          <p>Built with <a href="https://quarto.org/">Quarto</a></p>
-        </div>
-      </div>
-    </footer>
-  </body>
-</html>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

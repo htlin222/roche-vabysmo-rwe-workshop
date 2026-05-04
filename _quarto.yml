@@ -15,8 +15,8 @@ execute:
   freeze: auto
 
 book:
-  title: "讓你的 Faricimab RWE 長得像 Ophthalmology 論文"
-  subtitle: "羅氏眼科研究賦能工作坊教材"
+  title: "羅氏眼科研究賦能工作坊教材"
+  subtitle: "讓你的 Faricimab RWE 長得像 Ophthalmology 論文"
   author:
     - "和信治癌中心醫院 林協霆醫師"
     - "羅氏大藥廠 邵時傑博士"

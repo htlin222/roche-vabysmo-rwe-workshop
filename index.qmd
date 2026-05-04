@@ -6,7 +6,7 @@
 source("_common.R")
 ```
 
-歡迎來到「**讓你的 Faricimab RWE 長得像 Ophthalmology 論文**」工作坊。
+歡迎來到「**羅氏眼科研究賦能工作坊**」——副標：「讓你的 Faricimab RWE 長得像 Ophthalmology 論文」。
 
 這份教材的目標**不是**讓你學會 R，也不是讓你學會 MMRM 或 CMH 的數學原理。
 是讓你下課後做得到這件事：

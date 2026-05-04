@@ -1,830 +1,375 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="generator" content="quarto-1.7.32" />
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=yes"
-    />
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
 
-    <title>
-      4&nbsp; Part 4：Figure 2 — CMH-weighted absence proportions – 讓你的
-      Faricimab RWE 長得像 Ophthalmology 論文
-    </title>
-    <style>
-      code {
-        white-space: pre-wrap;
-      }
-      span.smallcaps {
-        font-variant: small-caps;
-      }
-      div.columns {
-        display: flex;
-        gap: min(4vw, 1.5em);
-      }
-      div.column {
-        flex: auto;
-        overflow-x: auto;
-      }
-      div.hanging-indent {
-        margin-left: 1.5em;
-        text-indent: -1.5em;
-      }
-      ul.task-list {
-        list-style: none;
-      }
-      ul.task-list li input[type="checkbox"] {
-        width: 0.8em;
-        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
-        vertical-align: middle;
-      }
-      /* CSS for syntax highlighting */
-      html {
-        -webkit-text-size-adjust: 100%;
-      }
-      pre > code.sourceCode {
-        white-space: pre;
-        position: relative;
-      }
-      pre > code.sourceCode > span {
-        display: inline-block;
-        line-height: 1.25;
-      }
-      pre > code.sourceCode > span:empty {
-        height: 1.2em;
-      }
-      .sourceCode {
-        overflow: visible;
-      }
-      code.sourceCode > span {
-        color: inherit;
-        text-decoration: inherit;
-      }
-      div.sourceCode {
-        margin: 1em 0;
-      }
-      pre.sourceCode {
-        margin: 0;
-      }
-      @media screen {
-        div.sourceCode {
-          overflow: auto;
-        }
-      }
-      @media print {
-        pre > code.sourceCode {
-          white-space: pre-wrap;
-        }
-        pre > code.sourceCode > span {
-          text-indent: -5em;
-          padding-left: 5em;
-        }
-      }
-      pre.numberSource code {
-        counter-reset: source-line 0;
-      }
-      pre.numberSource code > span {
-        position: relative;
-        left: -4em;
-        counter-increment: source-line;
-      }
-      pre.numberSource code > span > a:first-child::before {
-        content: counter(source-line);
-        position: relative;
-        left: -1em;
-        text-align: right;
-        vertical-align: baseline;
-        border: none;
-        display: inline-block;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        padding: 0 4px;
-        width: 4em;
-      }
-      pre.numberSource {
-        margin-left: 3em;
-        padding-left: 4px;
-      }
-      div.sourceCode {
-      }
-      @media screen {
-        pre > code.sourceCode > span > a:first-child::before {
-          text-decoration: underline;
-        }
-      }
-      /* CSS for citations */
-      div.csl-bib-body {
-      }
-      div.csl-entry {
-        clear: both;
-      }
-      .hanging-indent div.csl-entry {
-        margin-left: 2em;
-        text-indent: -2em;
-      }
-      div.csl-left-margin {
-        min-width: 2em;
-        float: left;
-      }
-      div.csl-right-inline {
-        margin-left: 2em;
-        padding-left: 1em;
-      }
-      div.csl-indent {
-        margin-left: 2em;
-      }
-    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-    <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-    <script src="site_libs/quarto-nav/headroom.min.js"></script>
-    <script src="site_libs/clipboard/clipboard.min.js"></script>
-    <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-    <script src="site_libs/quarto-search/fuse.min.js"></script>
-    <script src="site_libs/quarto-search/quarto-search.js"></script>
-    <meta name="quarto:offset" content="./" />
-    <link href="./part5.html" rel="next" />
-    <link href="./part3.html" rel="prev" />
-    <script src="site_libs/quarto-html/quarto.js" type="module"></script>
-    <script
-      src="site_libs/quarto-html/tabsets/tabsets.js"
-      type="module"
-    ></script>
-    <script src="site_libs/quarto-html/popper.min.js"></script>
-    <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-    <script src="site_libs/quarto-html/anchor.min.js"></script>
-    <link href="site_libs/quarto-html/tippy.css" rel="stylesheet" />
-    <link
-      href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css"
-      rel="stylesheet"
-      id="quarto-text-highlighting-styles"
-    />
-    <script src="site_libs/bootstrap/bootstrap.min.js"></script>
-    <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet" />
-    <link
-      href="site_libs/bootstrap/bootstrap-9b98f18118eee809be1c051eb5cc78e4.min.css"
-      rel="stylesheet"
-      append-hash="true"
-      id="quarto-bootstrap"
-      data-mode="light"
-    />
-    <script id="quarto-search-options" type="application/json">
-      {
-        "location": "sidebar",
-        "copy-button": false,
-        "collapse-after": 3,
-        "panel-placement": "start",
-        "type": "textbox",
-        "limit": 50,
-        "keyboard-shortcut": ["f", "/", "s"],
-        "show-item-context": false,
-        "language": {
-          "search-no-results-text": "No results",
-          "search-matching-documents-text": "matching documents",
-          "search-copy-link-title": "Copy link to search",
-          "search-hide-matches-text": "Hide additional matches",
-          "search-more-match-text": "more match in this document",
-          "search-more-matches-text": "more matches in this document",
-          "search-clear-button-title": "Clear",
-          "search-text-placeholder": "",
-          "search-detached-cancel-button-title": "Cancel",
-          "search-submit-button-title": "Submit",
-          "search-label": "Search"
-        }
-      }
-    </script>
 
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+<title>4&nbsp; Part 4：Figure 2 — CMH-weighted absence proportions – 羅氏眼科研究賦能工作坊教材</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
-  <body class="nav-sidebar floating quarto-light">
-    <div id="quarto-search-results"></div>
-    <header id="quarto-header" class="headroom fixed-top">
-      <nav class="quarto-secondary-nav">
-        <div class="container-fluid d-flex">
-          <button
-            type="button"
-            class="quarto-btn-toggle btn"
-            data-bs-toggle="collapse"
-            role="button"
-            data-bs-target=".quarto-sidebar-collapse-item"
-            aria-controls="quarto-sidebar"
-            aria-expanded="false"
-            aria-label="Toggle sidebar navigation"
-            onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"
-          >
-            <i class="bi bi-layout-text-sidebar-reverse"></i>
-          </button>
-          <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="./part4.html"
-                  ><span class="chapter-number">4</span>&nbsp;
-                  <span class="chapter-title"
-                    >Part 4：Figure 2 — CMH-weighted absence proportions</span
-                  ></a
-                >
-              </li>
-            </ol>
-          </nav>
-          <a
-            class="flex-grow-1"
-            role="navigation"
-            data-bs-toggle="collapse"
-            data-bs-target=".quarto-sidebar-collapse-item"
-            aria-controls="quarto-sidebar"
-            aria-expanded="false"
-            aria-label="Toggle sidebar navigation"
-            onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"
-          >
-          </a>
-          <button
-            type="button"
-            class="btn quarto-search-button"
-            aria-label="Search"
-            onclick="window.quartoOpenSearch();"
-          >
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
-      </nav>
-    </header>
-    <!-- content -->
-    <div
-      id="quarto-content"
-      class="quarto-container page-columns page-rows-contents page-layout-article"
-    >
-      <!-- sidebar -->
-      <nav
-        id="quarto-sidebar"
-        class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"
-      >
-        <div class="pt-lg-2 mt-2 text-left sidebar-header">
-          <div class="sidebar-title mb-0 py-0">
-            <a href="./">讓你的 Faricimab RWE 長得像 Ophthalmology 論文</a>
-            <div class="sidebar-tools-main">
-              <a
-                href=""
-                class="quarto-reader-toggle quarto-navigation-tool px-1"
-                onclick="window.quartoToggleReader(); return false;"
-                title="Toggle reader mode"
-              >
-                <div class="quarto-reader-toggle-btn">
-                  <i class="bi"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-          <div class="sidebar-search">
-            <div id="quarto-search" class="" title="Search"></div>
-          </div>
-        </div>
-        <div class="sidebar-menu-container">
-          <ul class="list-unstyled mt-1">
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./index.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text">前言</span></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./primer.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    >Primer：給非眼科醫師的背景補充</span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part1.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">1</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 1：認識 paper + 認識資料</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part2.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">2</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 2：Table 1 — Baseline characteristics</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part3.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">3</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 3：Figure 1 — MMRM 跑 BCVA + CST</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a
-                  href="./part4.html"
-                  class="sidebar-item-text sidebar-link active"
-                >
-                  <span class="menu-text"
-                    ><span class="chapter-number">4</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 4：Figure 2 — CMH-weighted absence proportions</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part5.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">5</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 5：換你院內資料（含 PSM + ASMD）</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a href="./part6.html" class="sidebar-item-text sidebar-link">
-                  <span class="menu-text"
-                    ><span class="chapter-number">6</span>&nbsp;
-                    <span class="chapter-title"
-                      >Part 6（Bonus）：Figure 3 — Time to first absence of
-                      fluid</span
-                    ></span
-                  ></a
-                >
-              </div>
-            </li>
-            <li class="sidebar-item">
-              <div class="sidebar-item-container">
-                <a
-                  href="./appendix.html"
-                  class="sidebar-item-text sidebar-link"
-                >
-                  <span class="menu-text"
-                    ><span class="chapter-number">7</span>&nbsp;
-                    <span class="chapter-title">附錄：回院之後的事</span></span
-                  ></a
-                >
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div
-        id="quarto-sidebar-glass"
-        class="quarto-sidebar-collapse-item"
-        data-bs-toggle="collapse"
-        data-bs-target=".quarto-sidebar-collapse-item"
-      ></div>
-      <!-- margin-sidebar -->
-      <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-          <h2 id="toc-title">Table of contents</h2>
 
-          <ul>
-            <li>
-              <a
-                href="#任務-16什麼是-stratified-analysis為什麼要-weight"
-                id="toc-任務-16什麼是-stratified-analysis為什麼要-weight"
-                class="nav-link active"
-                data-scroll-target="#任務-16什麼是-stratified-analysis為什麼要-weight"
-                ><span class="header-section-number">4.1</span> 任務 16：什麼是
-                stratified analysis？為什麼要 weight？</a
-              >
-            </li>
-            <li>
-              <a
-                href="#任務-17建立-wide-by-visit-的資料"
-                id="toc-任務-17建立-wide-by-visit-的資料"
-                class="nav-link"
-                data-scroll-target="#任務-17建立-wide-by-visit-的資料"
-                ><span class="header-section-number">4.2</span> 任務 17：建立
-                wide-by-visit 的資料</a
-              >
-            </li>
-            <li>
-              <a
-                href="#任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value"
-                id="toc-任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value"
-                class="nav-link"
-                data-scroll-target="#任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value"
-                ><span class="header-section-number">4.3</span> 任務 18：先用
-                base R 的 <code>mantelhaen.test()</code> 看一下整體 p value</a
-              >
-              <ul class="collapse">
-                <li>
-                  <a
-                    href="#參考程式碼"
-                    id="toc-參考程式碼"
-                    class="nav-link"
-                    data-scroll-target="#參考程式碼"
-                    ><span class="header-section-number">4.3.1</span>
-                    參考程式碼</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a
-                href="#任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci"
-                id="toc-任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci"
-                class="nav-link"
-                data-scroll-target="#任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci"
-                ><span class="header-section-number">4.4</span> 任務 19：寫
-                helper 算 CMH-weighted proportion 與 95% CI</a
-              >
-              <ul class="collapse">
-                <li>
-                  <a
-                    href="#參考程式碼-1"
-                    id="toc-參考程式碼-1"
-                    class="nav-link"
-                    data-scroll-target="#參考程式碼-1"
-                    ><span class="header-section-number">4.4.1</span>
-                    參考程式碼</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a
-                href="#跑全部-outcome-visit-arm"
-                id="toc-跑全部-outcome-visit-arm"
-                class="nav-link"
-                data-scroll-target="#跑全部-outcome-visit-arm"
-                ><span class="header-section-number">4.5</span> 跑全部 outcome ×
-                visit × arm</a
-              >
-            </li>
-            <li>
-              <a
-                href="#任務-20畫-figure-2-三個-panel"
-                id="toc-任務-20畫-figure-2-三個-panel"
-                class="nav-link"
-                data-scroll-target="#任務-20畫-figure-2-三個-panel"
-                ><span class="header-section-number">4.6</span> 任務 20：畫
-                Figure 2 — 三個 panel</a
-              >
-              <ul class="collapse">
-                <li>
-                  <a
-                    href="#參考程式碼-2"
-                    id="toc-參考程式碼-2"
-                    class="nav-link"
-                    data-scroll-target="#參考程式碼-2"
-                    ><span class="header-section-number">4.6.1</span>
-                    參考程式碼</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part5.html" rel="next">
+<link href="./part3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9b98f18118eee809be1c051eb5cc78e4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">羅氏眼科研究賦能工作坊教材</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
       </div>
-      <!-- main -->
-      <main class="content" id="quarto-document-content">
-        <header id="title-block-header" class="quarto-title-block default">
-          <div class="quarto-title">
-            <div class="quarto-title-block">
-              <div>
-                <h1 class="title">
-                  <span class="chapter-number">4</span>&nbsp;
-                  <span class="chapter-title"
-                    >Part 4：Figure 2 — CMH-weighted absence proportions</span
-                  >
-                </h1>
-                <button
-                  type="button"
-                  class="btn code-tools-button"
-                  id="quarto-code-tools-source"
-                >
-                  <i class="bi"></i> Code
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="quarto-title-meta"></div>
-        </header>
-
-        <p>
-          預計時間：30 分鐘。
-          <strong
-            >deliverable：三張 absence proportion bar chart（IRF / SRF /
-            IRF+SRF），對得起 paper Figure 2。</strong
-          >
-        </p>
-        <div
-          class="callout callout-style-default callout-note callout-titled"
-          title="📚 CMH / stratified analysis 方法學引用"
-        >
-          <div class="callout-header d-flex align-content-center">
-            <div class="callout-icon-container">
-              <i class="callout-icon"></i>
-            </div>
-            <div class="callout-title-container flex-fill">
-              📚 CMH / stratified analysis 方法學引用
-            </div>
-          </div>
-          <div class="callout-body-container callout-body">
-            <ul>
-              <li>
-                <strong>CMH 原始</strong>：Mantel &amp; Haenszel 1959<span
-                  class="citation"
-                  data-cites="cmh1959"
-                  ><sup
-                    ><a href="#ref-cmh1959" role="doc-biblioref">1</a></sup
-                  ></span
-                >
-              </li>
-              <li>
-                <strong>稀疏分層的方差估計</strong>：Greenland &amp; Robins
-                1985<span class="citation" data-cites="greenland1985mh"
-                  ><sup
-                    ><a href="#ref-greenland1985mh" role="doc-biblioref"
-                      >2</a
-                    ></sup
-                  ></span
-                >
-              </li>
-              <li>
-                <strong>MH 在 RCT 中的角色與最新觀點</strong>：Qiu et
-                al.&nbsp;2025 <em>Biometrics</em
-                ><span class="citation" data-cites="qiu2025mhrole"
-                  ><sup
-                    ><a href="#ref-qiu2025mhrole" role="doc-biblioref"
-                      >3</a
-                    ></sup
-                  ></span
-                >
-              </li>
-              <li>
-                <strong>加權選擇（minimum-risk vs CMH）</strong>：Mehrotra &amp;
-                Railkar 2000<span
-                  class="citation"
-                  data-cites="mehrotra2000minrisk"
-                  ><sup
-                    ><a href="#ref-mehrotra2000minrisk" role="doc-biblioref"
-                      >4</a
-                    ></sup
-                  ></span
-                >
-              </li>
-              <li>
-                <strong>多分層因子的 adjustment</strong>：Kahan &amp; Morris
-                2013<span class="citation" data-cites="kahan2013adjusting"
-                  ><sup
-                    ><a href="#ref-kahan2013adjusting" role="doc-biblioref"
-                      >5</a
-                    ></sup
-                  ></span
-                >、Agoritsas 2017 <em>JAMA</em
-                ><span class="citation" data-cites="agoritsas2017adjusted"
-                  ><sup
-                    ><a href="#ref-agoritsas2017adjusted" role="doc-biblioref"
-                      >6</a
-                    ></sup
-                  ></span
-                >
-              </li>
-            </ul>
-            <blockquote class="blockquote">
-              <p>
-                AI 對 CMH 權重公式（hypergeometric 還是 sample-size
-                weights）、空 stratum 處理、以及加權 vs unstratified
-                之間的差異<strong>經常給錯</strong>。Cheung 2025 paper 採
-                CMH-weighted proportion，本書範例對齊 paper、並在小 stratum 自動
-                drop 掉。
-              </p>
-            </blockquote>
-          </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
         </div>
-        <div
-          class="callout callout-style-default callout-note callout-titled"
-          title="🚀 一鍵 Prompt：整章一次跑完"
-        >
-          <div
-            class="callout-header d-flex align-content-center"
-            data-bs-toggle="collapse"
-            data-bs-target=".callout-2-contents"
-            aria-controls="callout-2"
-            aria-expanded="false"
-            aria-label="Toggle callout"
-          >
-            <div class="callout-icon-container">
-              <i class="callout-icon"></i>
-            </div>
-            <div class="callout-title-container flex-fill">
-              🚀 一鍵 Prompt：整章一次跑完
-            </div>
-            <div
-              class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"
-            >
-              <i class="callout-toggle"></i>
-            </div>
-          </div>
-          <div
-            id="callout-2"
-            class="callout-2-contents callout-collapse collapse"
-          >
-            <div class="callout-body-container callout-body">
-              <blockquote class="blockquote">
-                <p>
-                  我有 R data frame <code>baseline</code> 和
-                  <code>followup</code>（已合併好），想做 paper Figure 2：分別在
-                  week 4、8、12 算「absence of IRF」、「absence of
-                  SRF」、「absence of both」這三個 outcome 的比例，分 arm，並且
-                  CMH-weighted by 分層因子（study × bcva_strat × lld_strat ×
-                  region）。請給我 R code：
-                </p>
-                <ol type="1">
-                  <li>
-                    寫一個 helper 函數
-                    <code
-                      >cmh_weighted_proportion(data, outcome, arm_col,
-                      strata_cols)</code
-                    >，回傳 weighted proportion + 95% CI per arm
-                  </li>
-                  <li>
-                    對 IRF absence、SRF absence、IRF+SRF absence 各跑 4 個 visit
-                    (0/4/8/12)
-                  </li>
-                  <li>
-                    用 <code>mantelhaen.test()</code> 算 stratified test 的 p
-                    value (faricimab vs aflibercept)
-                  </li>
-                  <li>
-                    用 ggplot 三個 panel 畫 bar chart，y 是 %，x 是 visit，fill
-                    by arm，加 error bar，星號標 p &lt; 0.05
-                  </li>
-                </ol>
-                <p>加中文註解。我用 Posit.Cloud。</p>
-              </blockquote>
-            </div>
-          </div>
         </div>
-        <hr />
-        <section
-          id="任務-16什麼是-stratified-analysis為什麼要-weight"
-          class="level2"
-          data-number="4.1"
-        >
-          <h2
-            data-number="4.1"
-            class="anchored"
-            data-anchor-id="任務-16什麼是-stratified-analysis為什麼要-weight"
-          >
-            <span class="header-section-number">4.1</span> 任務 16：什麼是
-            stratified analysis？為什麼要 weight？
-          </h2>
-          <p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
-          <blockquote class="blockquote">
-            <p>
-              請用「給沒學過統計的眼科醫師聽」的方式，100 字內解釋： 1. 什麼是
-              stratified analysis？ 2. 為什麼比較兩 arm 的「比例」要 stratify by
-              隨機分層因子（study × baseline severity × region）？ 3. CMH
-              (Cochran-Mantel-Haenszel) test 在做什麼？
-            </p>
-          </blockquote>
-          <div
-            class="callout callout-style-default callout-tip callout-titled"
-            title="速記"
-          >
-            <div class="callout-header d-flex align-content-center">
-              <div class="callout-icon-container">
-                <i class="callout-icon"></i>
-              </div>
-              <div class="callout-title-container flex-fill">速記</div>
-            </div>
-            <div class="callout-body-container callout-body">
-              <ul>
-                <li>
-                  <strong>不 stratify</strong>：直接算 faricimab arm 的 SRF
-                  absence% vs aflibercept arm 的 SRF absence%
-                </li>
-                <li>
-                  <strong>問題</strong>：如果某個 stratum（例如 baseline
-                  severe）兩 arm 比例不一致，整體比較會被扭曲<span
-                    class="citation"
-                    data-cites="kahan2013adjusting"
-                    ><sup
-                      ><a href="#ref-kahan2013adjusting" role="doc-biblioref"
-                        >5</a
-                      ></sup
-                    ></span
-                  >
-                </li>
-                <li>
-                  <strong>CMH 解法</strong>：每個 stratum 算自己的 absence
-                  差異，再加權平均；權重 = 該 stratum 兩 arm
-                  樣本數的調和平均<span
-                    class="citation"
-                    data-cites="cmh1959 greenland1985mh"
-                    ><sup
-                      ><a href="#ref-cmh1959" role="doc-biblioref">1</a>,<a
-                        href="#ref-greenland1985mh"
-                        role="doc-biblioref"
-                        >2</a
-                      ></sup
-                    ></span
-                  >
-                </li>
-                <li>
-                  <strong>一句話</strong>：把 24 個 stratum
-                  的「小局結果」加權平均成一個整體 odds ratio / proportion
-                  difference<span class="citation" data-cites="qiu2025mhrole"
-                    ><sup
-                      ><a href="#ref-qiu2025mhrole" role="doc-biblioref"
-                        >3</a
-                      ></sup
-                    ></span
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
-            class="callout callout-style-default callout-tip callout-titled"
-            title="📖 名詞｜stratum / strata / 為何 24 個"
-          >
-            <div class="callout-header d-flex align-content-center">
-              <div class="callout-icon-container">
-                <i class="callout-icon"></i>
-              </div>
-              <div class="callout-title-container flex-fill">
-                📖 名詞｜stratum / strata / 為何 24 個
-              </div>
-            </div>
-            <div class="callout-body-container callout-body">
-              <ul>
-                <li>
-                  <strong>stratum</strong>（單） /
-                  <strong>strata</strong>（複）= 「同質子群」。本書用
-                  <code>study × bcva_strat × lld_strat × region</code> 共 4
-                  個分層因子，levels 各 2/3/2/2 →
-                  <strong>2 × 3 × 2 × 2 = 24</strong> 個 stratum
-                </li>
-                <li>
-                  每個 stratum 內，兩 arm 的人應該很像（隨機分派 + 分層）→
-                  比較才公平
-                </li>
-                <li>
-                  如果 stratum 太多、每格人數太少，CMH 估計會不穩 → Part 5 院內
-                  n=180 時會看到這問題，需要合併分層
-                </li>
-              </ul>
-            </div>
-          </div>
-          <hr />
-        </section>
-        <section
-          id="任務-17建立-wide-by-visit-的資料"
-          class="level2"
-          data-number="4.2"
-        >
-          <h2
-            data-number="4.2"
-            class="anchored"
-            data-anchor-id="任務-17建立-wide-by-visit-的資料"
-          >
-            <span class="header-section-number">4.2</span> 任務 17：建立
-            wide-by-visit 的資料
-          </h2>
-          <p>
-            把 followup 接上 baseline 的分層因子，並算出每個 visit 的 absence
-            indicator。
-          </p>
-          <div class="cell">
-            <div class="sourceCode cell-code" id="cb1">
-              <pre
-                class="sourceCode r code-with-copy"
-              ><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fu_with_strata <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Primer：給非眼科醫師的背景補充</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Part 1：認識 paper + 認識資料</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 2：Table 1 — Baseline characteristics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Part 5：換你院內資料（含 PSM + ASMD）</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Part 6（Bonus）：Figure 3 — Time to first absence of fluid</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">附錄：回院之後的事</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#任務-16什麼是-stratified-analysis為什麼要-weight" id="toc-任務-16什麼是-stratified-analysis為什麼要-weight" class="nav-link active" data-scroll-target="#任務-16什麼是-stratified-analysis為什麼要-weight"><span class="header-section-number">4.1</span> 任務 16：什麼是 stratified analysis？為什麼要 weight？</a></li>
+  <li><a href="#任務-17建立-wide-by-visit-的資料" id="toc-任務-17建立-wide-by-visit-的資料" class="nav-link" data-scroll-target="#任務-17建立-wide-by-visit-的資料"><span class="header-section-number">4.2</span> 任務 17：建立 wide-by-visit 的資料</a></li>
+  <li><a href="#任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value" id="toc-任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value" class="nav-link" data-scroll-target="#任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value"><span class="header-section-number">4.3</span> 任務 18：先用 base R 的 <code>mantelhaen.test()</code> 看一下整體 p value</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼" id="toc-參考程式碼" class="nav-link" data-scroll-target="#參考程式碼"><span class="header-section-number">4.3.1</span> 參考程式碼</a></li>
+  </ul></li>
+  <li><a href="#任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci" id="toc-任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci" class="nav-link" data-scroll-target="#任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci"><span class="header-section-number">4.4</span> 任務 19：寫 helper 算 CMH-weighted proportion 與 95% CI</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼-1" id="toc-參考程式碼-1" class="nav-link" data-scroll-target="#參考程式碼-1"><span class="header-section-number">4.4.1</span> 參考程式碼</a></li>
+  </ul></li>
+  <li><a href="#跑全部-outcome-visit-arm" id="toc-跑全部-outcome-visit-arm" class="nav-link" data-scroll-target="#跑全部-outcome-visit-arm"><span class="header-section-number">4.5</span> 跑全部 outcome × visit × arm</a></li>
+  <li><a href="#任務-20畫-figure-2-三個-panel" id="toc-任務-20畫-figure-2-三個-panel" class="nav-link" data-scroll-target="#任務-20畫-figure-2-三個-panel"><span class="header-section-number">4.6</span> 任務 20：畫 Figure 2 — 三個 panel</a>
+  <ul class="collapse">
+  <li><a href="#參考程式碼-2" id="toc-參考程式碼-2" class="nav-link" data-scroll-target="#參考程式碼-2"><span class="header-section-number">4.6.1</span> 參考程式碼</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>預計時間：30 分鐘。 <strong>deliverable：三張 absence proportion bar chart（IRF / SRF / IRF+SRF），對得起 paper Figure 2。</strong></p>
+<div class="callout callout-style-default callout-note callout-titled" title="📚 CMH / stratified analysis 方法學引用">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📚 CMH / stratified analysis 方法學引用
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>CMH 原始</strong>：Mantel &amp; Haenszel 1959<span class="citation" data-cites="cmh1959"><sup><a href="#ref-cmh1959" role="doc-biblioref">1</a></sup></span></li>
+<li><strong>稀疏分層的方差估計</strong>：Greenland &amp; Robins 1985<span class="citation" data-cites="greenland1985mh"><sup><a href="#ref-greenland1985mh" role="doc-biblioref">2</a></sup></span></li>
+<li><strong>MH 在 RCT 中的角色與最新觀點</strong>：Qiu et al.&nbsp;2025 <em>Biometrics</em><span class="citation" data-cites="qiu2025mhrole"><sup><a href="#ref-qiu2025mhrole" role="doc-biblioref">3</a></sup></span></li>
+<li><strong>加權選擇（minimum-risk vs CMH）</strong>：Mehrotra &amp; Railkar 2000<span class="citation" data-cites="mehrotra2000minrisk"><sup><a href="#ref-mehrotra2000minrisk" role="doc-biblioref">4</a></sup></span></li>
+<li><strong>多分層因子的 adjustment</strong>：Kahan &amp; Morris 2013<span class="citation" data-cites="kahan2013adjusting"><sup><a href="#ref-kahan2013adjusting" role="doc-biblioref">5</a></sup></span>、Agoritsas 2017 <em>JAMA</em><span class="citation" data-cites="agoritsas2017adjusted"><sup><a href="#ref-agoritsas2017adjusted" role="doc-biblioref">6</a></sup></span></li>
+</ul>
+<blockquote class="blockquote">
+<p>AI 對 CMH 權重公式（hypergeometric 還是 sample-size weights）、空 stratum 處理、以及加權 vs unstratified 之間的差異<strong>經常給錯</strong>。Cheung 2025 paper 採 CMH-weighted proportion，本書範例對齊 paper、並在小 stratum 自動 drop 掉。</p>
+</blockquote>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="🚀 一鍵 Prompt：整章一次跑完">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🚀 一鍵 Prompt：整章一次跑完
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>我有 R data frame <code>baseline</code> 和 <code>followup</code>（已合併好），想做 paper Figure 2：分別在 week 4、8、12 算「absence of IRF」、「absence of SRF」、「absence of both」這三個 outcome 的比例，分 arm，並且 CMH-weighted by 分層因子（study × bcva_strat × lld_strat × region）。請給我 R code：</p>
+<ol type="1">
+<li>寫一個 helper 函數 <code>cmh_weighted_proportion(data, outcome, arm_col, strata_cols)</code>，回傳 weighted proportion + 95% CI per arm</li>
+<li>對 IRF absence、SRF absence、IRF+SRF absence 各跑 4 個 visit (0/4/8/12)</li>
+<li>用 <code>mantelhaen.test()</code> 算 stratified test 的 p value (faricimab vs aflibercept)</li>
+<li>用 ggplot 三個 panel 畫 bar chart，y 是 %，x 是 visit，fill by arm，加 error bar，星號標 p &lt; 0.05</li>
+</ol>
+<p>加中文註解。我用 Posit.Cloud。</p>
+</blockquote>
+</div>
+</div>
+</div>
+<hr>
+<section id="任務-16什麼是-stratified-analysis為什麼要-weight" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="任務-16什麼是-stratified-analysis為什麼要-weight"><span class="header-section-number">4.1</span> 任務 16：什麼是 stratified analysis？為什麼要 weight？</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>請用「給沒學過統計的眼科醫師聽」的方式，100 字內解釋： 1. 什麼是 stratified analysis？ 2. 為什麼比較兩 arm 的「比例」要 stratify by 隨機分層因子（study × baseline severity × region）？ 3. CMH (Cochran-Mantel-Haenszel) test 在做什麼？</p>
+</blockquote>
+<div class="callout callout-style-default callout-tip callout-titled" title="速記">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+速記
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>不 stratify</strong>：直接算 faricimab arm 的 SRF absence% vs aflibercept arm 的 SRF absence%</li>
+<li><strong>問題</strong>：如果某個 stratum（例如 baseline severe）兩 arm 比例不一致，整體比較會被扭曲<span class="citation" data-cites="kahan2013adjusting"><sup><a href="#ref-kahan2013adjusting" role="doc-biblioref">5</a></sup></span></li>
+<li><strong>CMH 解法</strong>：每個 stratum 算自己的 absence 差異，再加權平均；權重 = 該 stratum 兩 arm 樣本數的調和平均<span class="citation" data-cites="cmh1959 greenland1985mh"><sup><a href="#ref-cmh1959" role="doc-biblioref">1</a>,<a href="#ref-greenland1985mh" role="doc-biblioref">2</a></sup></span></li>
+<li><strong>一句話</strong>：把 24 個 stratum 的「小局結果」加權平均成一個整體 odds ratio / proportion difference<span class="citation" data-cites="qiu2025mhrole"><sup><a href="#ref-qiu2025mhrole" role="doc-biblioref">3</a></sup></span></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="📖 名詞｜stratum / strata / 為何 24 個">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+📖 名詞｜stratum / strata / 為何 24 個
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>stratum</strong>（單） / <strong>strata</strong>（複）= 「同質子群」。本書用 <code>study × bcva_strat × lld_strat × region</code> 共 4 個分層因子，levels 各 2/3/2/2 → <strong>2 × 3 × 2 × 2 = 24</strong> 個 stratum</li>
+<li>每個 stratum 內，兩 arm 的人應該很像（隨機分派 + 分層）→ 比較才公平</li>
+<li>如果 stratum 太多、每格人數太少，CMH 估計會不穩 → Part 5 院內 n=180 時會看到這問題，需要合併分層</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="任務-17建立-wide-by-visit-的資料" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="任務-17建立-wide-by-visit-的資料"><span class="header-section-number">4.2</span> 任務 17：建立 wide-by-visit 的資料</h2>
+<p>把 followup 接上 baseline 的分層因子，並算出每個 visit 的 absence indicator。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fu_with_strata <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    baseline <span class="sc">|&gt;</span> <span class="fu">select</span>(patient_id, arm, study, bcva_strat, lld_strat, region,</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                       irf_baseline, srf_baseline),</span>
@@ -854,45 +399,20 @@
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  baseline_abs,</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  fu_with_strata <span class="sc">|&gt;</span> <span class="fu">select</span>(patient_id, arm, study, bcva_strat, lld_strat, region,</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                           week, abs_irf, abs_srf, abs_both)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-            </div>
-          </div>
-          <hr />
-        </section>
-        <section
-          id="任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value"
-          class="level2"
-          data-number="4.3"
-        >
-          <h2
-            data-number="4.3"
-            class="anchored"
-            data-anchor-id="任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value"
-          >
-            <span class="header-section-number">4.3</span> 任務 18：先用 base R
-            的 <code>mantelhaen.test()</code> 看一下整體 p value
-          </h2>
-          <p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
-          <blockquote class="blockquote">
-            <p>
-              用 R 內建 <code>mantelhaen.test()</code> 對 week 12 的「IRF and
-              SRF both absent」outcome 做 stratified test：兩 arm
-              的差異，stratified by study × bcva_strat × lld_strat × region。
-            </p>
-          </blockquote>
-          <section id="參考程式碼" class="level3" data-number="4.3.1">
-            <h3
-              data-number="4.3.1"
-              class="anchored"
-              data-anchor-id="參考程式碼"
-            >
-              <span class="header-section-number">4.3.1</span> 參考程式碼
-            </h3>
-            <div class="cell">
-              <div class="sourceCode cell-code" id="cb2">
-                <pre
-                  class="sourceCode r code-with-copy"
-                ><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cmh_test_at_week <span class="ot">&lt;-</span> <span class="cf">function</span>(data, outcome_col, week_val) {</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="任務-18先用-base-r-的-mantelhaen.test-看一下整體-p-value"><span class="header-section-number">4.3</span> 任務 18：先用 base R 的 <code>mantelhaen.test()</code> 看一下整體 p value</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>用 R 內建 <code>mantelhaen.test()</code> 對 week 12 的「IRF and SRF both absent」outcome 做 stratified test：兩 arm 的差異，stratified by study × bcva_strat × lld_strat × region。</p>
+</blockquote>
+<section id="參考程式碼" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="參考程式碼"><span class="header-section-number">4.3.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cmh_test_at_week <span class="ot">&lt;-</span> <span class="cf">function</span>(data, outcome_col, week_val) {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(week <span class="sc">==</span> week_val) <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">stratum =</span> <span class="fu">paste</span>(study, bcva_strat, lld_strat, region, <span class="at">sep =</span> <span class="st">"|"</span>)) <span class="sc">|&gt;</span></span>
@@ -907,10 +427,9 @@
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mantelhaen.test</span>(arr, <span class="at">exact =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cmh_test_at_week</span>(fu_with_strata, <span class="st">"abs_both"</span>, <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-              </div>
-              <div class="cell-output cell-output-stdout">
-                <pre><code>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cmh_test_at_week</span>(fu_with_strata, <span class="st">"abs_both"</span>, <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
     Mantel-Haenszel chi-squared test with continuity correction
 
 data:  arr
@@ -921,67 +440,34 @@ alternative hypothesis: true common odds ratio is not equal to 1
 sample estimates:
 common odds ratio 
          1.848757 </code></pre>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">Tip</div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <p>
-                  <code>Mantel-Haenszel X-squared</code> 越大、p
-                  越小，代表「在分層之後，兩臂的差異仍顯著」。
-                </p>
-              </div>
-            </div>
-            <hr />
-          </section>
-        </section>
-        <section
-          id="任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci"
-          class="level2"
-          data-number="4.4"
-        >
-          <h2
-            data-number="4.4"
-            class="anchored"
-            data-anchor-id="任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci"
-          >
-            <span class="header-section-number">4.4</span> 任務 19：寫 helper 算
-            CMH-weighted proportion 與 95% CI
-          </h2>
-          <p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
-          <blockquote class="blockquote">
-            <p>
-              請給我一個 R 函數
-              <code
-                >cmh_weighted_proportion(data, outcome_col, arm_col,
-                strata_cols)</code
-              >： 1. 對每個 (stratum × arm)，算 proportion (events / n) 2. CMH
-              權重 w_k = (n_1k * n_2k) / (n_1k + n_2k) 3. 加權平均：p_hat_arm =
-              Σ w_k * p_arm_k / Σ w_k 4. SE：sqrt(Σ w_k^2 * p * (1-p) / n) / Σ
-              w_k 5. 回傳 tibble (arm, p_hat, se, lower, upper) 6. 跳過 stratum
-              中 n=0 的
-            </p>
-          </blockquote>
-          <section id="參考程式碼-1" class="level3" data-number="4.4.1">
-            <h3
-              data-number="4.4.1"
-              class="anchored"
-              data-anchor-id="參考程式碼-1"
-            >
-              <span class="header-section-number">4.4.1</span> 參考程式碼
-            </h3>
-            <div class="cell">
-              <div class="sourceCode cell-code" id="cb4">
-                <pre
-                  class="sourceCode r code-with-copy"
-                ><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cmh_weighted_proportion <span class="ot">&lt;-</span> <span class="cf">function</span>(data, outcome_col,</span>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>Mantel-Haenszel X-squared</code> 越大、p 越小，代表「在分層之後，兩臂的差異仍顯著」。</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="任務-19寫-helper-算-cmh-weighted-proportion-與-95-ci"><span class="header-section-number">4.4</span> 任務 19：寫 helper 算 CMH-weighted proportion 與 95% CI</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>請給我一個 R 函數 <code>cmh_weighted_proportion(data, outcome_col, arm_col, strata_cols)</code>： 1. 對每個 (stratum × arm)，算 proportion (events / n) 2. CMH 權重 w_k = (n_1k * n_2k) / (n_1k + n_2k) 3. 加權平均：p_hat_arm = Σ w_k * p_arm_k / Σ w_k 4. SE：sqrt(Σ w_k^2 * p * (1-p) / n) / Σ w_k 5. 回傳 tibble (arm, p_hat, se, lower, upper) 6. 跳過 stratum 中 n=0 的</p>
+</blockquote>
+<section id="參考程式碼-1" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="參考程式碼-1"><span class="header-section-number">4.4.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cmh_weighted_proportion <span class="ot">&lt;-</span> <span class="cf">function</span>(data, outcome_col,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">arm_col =</span> <span class="st">"arm"</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">strata_cols =</span> <span class="fu">c</span>(<span class="st">"study"</span>,<span class="st">"bcva_strat"</span>,<span class="st">"lld_strat"</span>,<span class="st">"region"</span>)) {</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
@@ -1028,37 +514,23 @@ common odds ratio
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="fu">cmh_weighted_proportion</span>(</span>
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  fu_with_strata <span class="sc">|&gt;</span> <span class="fu">filter</span>(week <span class="sc">==</span> <span class="dv">12</span>),</span>
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_col =</span> <span class="st">"abs_srf"</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-              </div>
-              <div class="cell-output cell-output-stdout">
-                <pre><code># A tibble: 2 × 5
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
   arm         p_hat     se lower upper
   &lt;fct&gt;       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1 aflibercept 0.790 0.0161 0.758 0.821
 2 faricimab   0.892 0.0121 0.868 0.915</code></pre>
-              </div>
-            </div>
-            <p>
-              對照 paper：faricimab 87.9% (85.4–90.4)、aflibercept 79.0%
-              (76.0–82.1)。差 ~9 pp。
-            </p>
-            <hr />
-          </section>
-        </section>
-        <section id="跑全部-outcome-visit-arm" class="level2" data-number="4.5">
-          <h2
-            data-number="4.5"
-            class="anchored"
-            data-anchor-id="跑全部-outcome-visit-arm"
-          >
-            <span class="header-section-number">4.5</span> 跑全部 outcome ×
-            visit × arm
-          </h2>
-          <div class="cell">
-            <div class="sourceCode cell-code" id="cb6">
-              <pre
-                class="sourceCode r code-with-copy"
-              ><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>all_results <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+</div>
+</div>
+<p>對照 paper：faricimab 87.9% (85.4–90.4)、aflibercept 79.0% (76.0–82.1)。差 ~9 pp。</p>
+<hr>
+</section>
+</section>
+<section id="跑全部-outcome-visit-arm" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="跑全部-outcome-visit-arm"><span class="header-section-number">4.5</span> 跑全部 outcome × visit × arm</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>all_results <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome =</span> <span class="fu">c</span>(<span class="st">"abs_irf"</span>, <span class="st">"abs_srf"</span>, <span class="st">"abs_both"</span>),</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">wk      =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>),</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
@@ -1076,10 +548,9 @@ common odds ratio
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest</span>(res) <span class="sc">|&gt;</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">week =</span> wk)</span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>all_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-            </div>
-            <div class="cell-output cell-output-stdout">
-              <pre><code># A tibble: 24 × 7
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>all_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 7
   outcome   week arm         p_hat     se lower upper
   &lt;chr&gt;    &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1 abs_irf      0 aflibercept 0.520 0.0193 0.482 0.558
@@ -1089,14 +560,11 @@ common odds ratio
 5 abs_both     0 aflibercept 0.170 0.0142 0.142 0.198
 6 abs_both     0 faricimab   0.189 0.0149 0.160 0.218
 # ℹ 18 more rows</code></pre>
-            </div>
-          </div>
-          <p>加上 stratified p value：</p>
-          <div class="cell">
-            <div class="sourceCode cell-code" id="cb8">
-              <pre
-                class="sourceCode r code-with-copy"
-              ><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>get_p <span class="ot">&lt;-</span> <span class="cf">function</span>(outcome_col, w) {</span>
+</div>
+</div>
+<p>加上 stratified p value：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>get_p <span class="ot">&lt;-</span> <span class="cf">function</span>(outcome_col, w) {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (w <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">return</span>(<span class="cn">NA_real_</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cmh_test_at_week</span>(fu_with_strata, outcome_col, w),</span>
@@ -1115,10 +583,9 @@ common odds ratio
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">week =</span> wk)</span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>p_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-            </div>
-            <div class="cell-output cell-output-stdout">
-              <pre><code># A tibble: 9 × 3
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>p_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 3
   outcome   week        p
   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 1 abs_irf      4 0.00634 
@@ -1128,49 +595,21 @@ common odds ratio
 5 abs_srf      8 0.0708  
 6 abs_both     8 0.0208  
 # ℹ 3 more rows</code></pre>
-            </div>
-          </div>
-          <hr />
-        </section>
-        <section
-          id="任務-20畫-figure-2-三個-panel"
-          class="level2"
-          data-number="4.6"
-        >
-          <h2
-            data-number="4.6"
-            class="anchored"
-            data-anchor-id="任務-20畫-figure-2-三個-panel"
-          >
-            <span class="header-section-number">4.6</span> 任務 20：畫 Figure 2
-            — 三個 panel
-          </h2>
-          <p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
-          <blockquote class="blockquote">
-            <p>
-              我有 <code>all_results</code> (outcome, week, arm, p_hat, lower,
-              upper) 與 <code>p_table</code> (outcome, week, p)。請用 ggplot2 +
-              patchwork 畫三個 panel： 1. (A) Absence of IRF and SRF 2. (B)
-              Absence of IRF 3. (C) Absence of SRF
-            </p>
-            <p>
-              每個 panel 是 grouped bar chart（fill by arm，position dodge），y
-              軸 0–100%、加 error bar、p &lt; 0.05 的 visit 加星號。
-            </p>
-          </blockquote>
-          <section id="參考程式碼-2" class="level3" data-number="4.6.1">
-            <h3
-              data-number="4.6.1"
-              class="anchored"
-              data-anchor-id="參考程式碼-2"
-            >
-              <span class="header-section-number">4.6.1</span> 參考程式碼
-            </h3>
-            <div class="cell">
-              <div class="sourceCode cell-code" id="cb10">
-                <pre
-                  class="sourceCode r code-with-copy"
-                ><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>make_panel <span class="ot">&lt;-</span> <span class="cf">function</span>(outcome_col, panel_title) {</span>
+</div>
+</div>
+<hr>
+</section>
+<section id="任務-20畫-figure-2-三個-panel" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="任務-20畫-figure-2-三個-panel"><span class="header-section-number">4.6</span> 任務 20：畫 Figure 2 — 三個 panel</h2>
+<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<blockquote class="blockquote">
+<p>我有 <code>all_results</code> (outcome, week, arm, p_hat, lower, upper) 與 <code>p_table</code> (outcome, week, p)。請用 ggplot2 + patchwork 畫三個 panel： 1. (A) Absence of IRF and SRF 2. (B) Absence of IRF 3. (C) Absence of SRF</p>
+<p>每個 panel 是 grouped bar chart（fill by arm，position dodge），y 軸 0–100%、加 error bar、p &lt; 0.05 的 visit 加星號。</p>
+</blockquote>
+<section id="參考程式碼-2" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="參考程式碼-2"><span class="header-section-number">4.6.1</span> 參考程式碼</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>make_panel <span class="ot">&lt;-</span> <span class="cf">function</span>(outcome_col, panel_title) {</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> all_results <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(outcome <span class="sc">==</span> outcome_col) <span class="sc">|&gt;</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">arm_lbl =</span> <span class="fu">factor</span>(arm,</span>
@@ -1205,753 +644,544 @@ common odds ratio
 <span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>p_irf_srf <span class="ot">&lt;-</span> <span class="fu">make_panel</span>(<span class="st">"abs_both"</span>, <span class="st">"(A) Absence of IRF and SRF"</span>)</span>
 <span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>p_irf     <span class="ot">&lt;-</span> <span class="fu">make_panel</span>(<span class="st">"abs_irf"</span>,  <span class="st">"(B) Absence of IRF"</span>)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>p_srf     <span class="ot">&lt;-</span> <span class="fu">make_panel</span>(<span class="st">"abs_srf"</span>,  <span class="st">"(C) Absence of SRF"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-              </div>
-            </div>
-            <div class="cell">
-              <div class="sourceCode cell-code" id="cb11">
-                <pre
-                  class="sourceCode r code-with-copy"
-                ><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(p_irf_srf <span class="sc">|</span> p_irf <span class="sc">|</span> p_srf) <span class="sc">+</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>p_srf     <span class="ot">&lt;-</span> <span class="fu">make_panel</span>(<span class="st">"abs_srf"</span>,  <span class="st">"(C) Absence of SRF"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(p_irf_srf <span class="sc">|</span> p_irf <span class="sc">|</span> p_srf) <span class="sc">+</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre>
-              </div>
-              <div class="cell-output-display">
-                <div class="quarto-figure quarto-figure-center">
-                  <figure class="figure">
-                    <p>
-                      <img
-                        src="part4_files/figure-html/fig2-combined-1.png"
-                        class="img-fluid figure-img"
-                        width="1800"
-                      />
-                    </p>
-                    <figcaption>
-                      Figure 2. Reproduced — Proportion of patients with absence
-                      of retinal fluid by treatment arm and visit. *Nominal P
-                      &lt; 0.05 (Cochran-Mantel-Haenszel).
-                    </figcaption>
-                  </figure>
-                </div>
-              </div>
-            </div>
-            <div
-              class="callout callout-style-default callout-tip callout-titled"
-              title="🎯 對得起 paper 嗎？"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">
-                  🎯 對得起 paper 嗎？
-                </div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <p>
-                  看 week 12： - 你的圖：IRF+SRF absence faricimab ~80% vs
-                  aflibercept ~68% - paper：IRF+SRF absence faricimab 77% vs
-                  aflibercept 67% - 都顯示 faricimab 顯著高，差約 10 pp ✅
-                </p>
-              </div>
-            </div>
-            <hr />
-            <div
-              class="callout callout-style-default callout-note callout-titled"
-              title="本章重點"
-            >
-              <div class="callout-header d-flex align-content-center">
-                <div class="callout-icon-container">
-                  <i class="callout-icon"></i>
-                </div>
-                <div class="callout-title-container flex-fill">本章重點</div>
-              </div>
-              <div class="callout-body-container callout-body">
-                <ol type="1">
-                  <li>比例的「stratified analysis」= CMH weighted average</li>
-                  <li>
-                    base R <code>mantelhaen.test()</code> 給 p value；自寫
-                    helper 給 weighted proportion + 95% CI
-                  </li>
-                  <li>
-                    同樣的 pipeline 可以用在任何二元 outcome（responder rate、AE
-                    rate、≥15 letter gain）
-                  </li>
-                  <li>
-                    院內資料 stratum 太空時，函數會 drop 掉，proportion 仍可估
-                  </li>
-                </ol>
-              </div>
-            </div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="part4_files/figure-html/fig2-combined-1.png" class="img-fluid figure-img" width="1800"></p>
+<figcaption>Figure 2. Reproduced — Proportion of patients with absence of retinal fluid by treatment arm and visit. *Nominal P &lt; 0.05 (Cochran-Mantel-Haenszel).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="🎯 對得起 paper 嗎？">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🎯 對得起 paper 嗎？
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>看 week 12： - 你的圖：IRF+SRF absence faricimab ~80% vs aflibercept ~68% - paper：IRF+SRF absence faricimab 77% vs aflibercept 67% - 都顯示 faricimab 顯著高，差約 10 pp ✅</p>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled" title="本章重點">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+本章重點
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>比例的「stratified analysis」= CMH weighted average</li>
+<li>base R <code>mantelhaen.test()</code> 給 p value；自寫 helper 給 weighted proportion + 95% CI</li>
+<li>同樣的 pipeline 可以用在任何二元 outcome（responder rate、AE rate、≥15 letter gain）</li>
+<li>院內資料 stratum 太空時，函數會 drop 掉，proportion 仍可估</li>
+</ol>
+</div>
+</div>
 
-            <!-- -->
 
-            <div id="refs" class="references csl-bib-body" role="list">
-              <div id="ref-cmh1959" class="csl-entry" role="listitem">
-                <div class="csl-left-margin">1.</div>
-                <div class="csl-right-inline">
-                  Mantel N, Haenszel W. Statistical aspects of the analysis of
-                  data from retrospective studies of disease.
-                  <em>Journal of the National Cancer Institute</em>.
-                  1959;22(4):719-748.
-                </div>
-              </div>
-              <div id="ref-greenland1985mh" class="csl-entry" role="listitem">
-                <div class="csl-left-margin">2.</div>
-                <div class="csl-right-inline">
-                  Greenland S, Robins JM. Estimation of a common effect
-                  parameter from sparse follow-up data. <em>Biometrics</em>.
-                  1985;41(1):55-68. doi:<a
-                    href="https://doi.org/10.2307/2530643"
-                    >10.2307/2530643</a
-                  >
-                </div>
-              </div>
-              <div id="ref-qiu2025mhrole" class="csl-entry" role="listitem">
-                <div class="csl-left-margin">3.</div>
-                <div class="csl-right-inline">
-                  Qiu X, Qian Y, Yi J, et al. Clarifying the role of the
-                  <span>Mantel–Haenszel</span> risk difference estimator in
-                  randomized clinical trials. <em>Biometrics</em>.
-                  2025;81(4):ujaf142. doi:<a
-                    href="https://doi.org/10.1093/biomtc/ujaf142"
-                    >10.1093/biomtc/ujaf142</a
-                  >
-                </div>
-              </div>
-              <div
-                id="ref-mehrotra2000minrisk"
-                class="csl-entry"
-                role="listitem"
-              >
-                <div class="csl-left-margin">4.</div>
-                <div class="csl-right-inline">
-                  Mehrotra DV, Railkar R. Minimum risk weights for comparing
-                  treatments in stratified binomial trials.
-                  <em>Statistics in Medicine</em>. 2000;19(6):811-825. doi:<a
-                    href="https://doi.org/10.1002/(SICI)1097-0258(20000330)19:6<811::AID-SIM390>3.0.CO;2-Z"
-                    >10.1002/(SICI)1097-0258(20000330)19:6&lt;811::AID-SIM390&gt;3.0.CO;2-Z</a
-                  >
-                </div>
-              </div>
-              <div
-                id="ref-kahan2013adjusting"
-                class="csl-entry"
-                role="listitem"
-              >
-                <div class="csl-left-margin">5.</div>
-                <div class="csl-right-inline">
-                  Kahan BC, Morris TP. Adjusting for multiple prognostic factors
-                  in the analysis of randomised trials.
-                  <em>BMC Medical Research Methodology</em>. 2013;13:99. doi:<a
-                    href="https://doi.org/10.1186/1471-2288-13-99"
-                    >10.1186/1471-2288-13-99</a
-                  >
-                </div>
-              </div>
-              <div
-                id="ref-agoritsas2017adjusted"
-                class="csl-entry"
-                role="listitem"
-              >
-                <div class="csl-left-margin">6.</div>
-                <div class="csl-right-inline">
-                  Agoritsas T, Merglen A, Shah ND, O’Donnell M, Guyatt GH.
-                  Adjusted analyses in studies addressing therapy and harm:
-                  Users’ guides to the medical literature. <em>JAMA</em>.
-                  2017;317(7):748-759. doi:<a
-                    href="https://doi.org/10.1001/jama.2016.20029"
-                    >10.1001/jama.2016.20029</a
-                  >
-                </div>
-              </div>
-            </div>
-          </section>
-        </section>
-      </main>
-      <!-- /main -->
-      <script id="quarto-html-after-body" type="application/javascript">
-        window.document.addEventListener("DOMContentLoaded", function (event) {
-          const icon = "";
-          const anchorJS = new window.AnchorJS();
-          anchorJS.options = {
-            placement: "right",
-            icon: icon,
-          };
-          anchorJS.add(".anchored");
-          const isCodeAnnotation = (el) => {
-            for (const clz of el.classList) {
-              if (clz.startsWith("code-annotation-")) {
-                return true;
-              }
-            }
-            return false;
-          };
-          const onCopySuccess = function (e) {
-            // button target
-            const button = e.trigger;
-            // don't keep focus
-            button.blur();
-            // flash "checked"
-            button.classList.add("code-copy-button-checked");
-            var currentTitle = button.getAttribute("title");
-            button.setAttribute("title", "Copied!");
-            let tooltip;
-            if (window.bootstrap) {
-              button.setAttribute("data-bs-toggle", "tooltip");
-              button.setAttribute("data-bs-placement", "left");
-              button.setAttribute("data-bs-title", "Copied!");
-              tooltip = new bootstrap.Tooltip(button, {
-                trigger: "manual",
-                customClass: "code-copy-button-tooltip",
-                offset: [0, -8],
-              });
-              tooltip.show();
-            }
-            setTimeout(function () {
-              if (tooltip) {
-                tooltip.hide();
-                button.removeAttribute("data-bs-title");
-                button.removeAttribute("data-bs-toggle");
-                button.removeAttribute("data-bs-placement");
-              }
-              button.setAttribute("title", currentTitle);
-              button.classList.remove("code-copy-button-checked");
-            }, 1000);
-            // clear code selection
-            e.clearSelection();
-          };
-          const getTextToCopy = function (trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
-            }
-            return codeEl.innerText;
-          };
-          const clipboard = new window.ClipboardJS(
-            ".code-copy-button:not([data-in-quarto-modal])",
-            {
-              text: getTextToCopy,
-            },
-          );
-          clipboard.on("success", onCopySuccess);
-          if (
-            window.document.getElementById("quarto-embedded-source-code-modal")
-          ) {
-            const clipboardModal = new window.ClipboardJS(
-              ".code-copy-button[data-in-quarto-modal]",
-              {
-                text: getTextToCopy,
-                container: window.document.getElementById(
-                  "quarto-embedded-source-code-modal",
-                ),
-              },
-            );
-            clipboardModal.on("success", onCopySuccess);
+<!-- -->
+
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-cmh1959" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Mantel N, Haenszel W. Statistical aspects of the analysis of data from retrospective studies of disease. <em>Journal of the National Cancer Institute</em>. 1959;22(4):719-748.</div>
+</div>
+<div id="ref-greenland1985mh" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Greenland S, Robins JM. Estimation of a common effect parameter from sparse follow-up data. <em>Biometrics</em>. 1985;41(1):55-68. doi:<a href="https://doi.org/10.2307/2530643">10.2307/2530643</a></div>
+</div>
+<div id="ref-qiu2025mhrole" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Qiu X, Qian Y, Yi J, et al. Clarifying the role of the <span>Mantel–Haenszel</span> risk difference estimator in randomized clinical trials. <em>Biometrics</em>. 2025;81(4):ujaf142. doi:<a href="https://doi.org/10.1093/biomtc/ujaf142">10.1093/biomtc/ujaf142</a></div>
+</div>
+<div id="ref-mehrotra2000minrisk" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Mehrotra DV, Railkar R. Minimum risk weights for comparing treatments in stratified binomial trials. <em>Statistics in Medicine</em>. 2000;19(6):811-825. doi:<a href="https://doi.org/10.1002/(SICI)1097-0258(20000330)19:6<811::AID-SIM390>3.0.CO;2-Z">10.1002/(SICI)1097-0258(20000330)19:6&lt;811::AID-SIM390&gt;3.0.CO;2-Z</a></div>
+</div>
+<div id="ref-kahan2013adjusting" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Kahan BC, Morris TP. Adjusting for multiple prognostic factors in the analysis of randomised trials. <em>BMC Medical Research Methodology</em>. 2013;13:99. doi:<a href="https://doi.org/10.1186/1471-2288-13-99">10.1186/1471-2288-13-99</a></div>
+</div>
+<div id="ref-agoritsas2017adjusted" class="csl-entry" role="listitem">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Agoritsas T, Merglen A, Shah ND, O’Donnell M, Guyatt GH. Adjusted analyses in studies addressing therapy and harm: Users’ guides to the medical literature. <em>JAMA</em>. 2017;317(7):748-759. doi:<a href="https://doi.org/10.1001/jama.2016.20029">10.1001/jama.2016.20029</a></div>
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
-          const viewSource =
-            window.document.getElementById("quarto-view-source") ||
-            window.document.getElementById("quarto-code-tools-source");
-          if (viewSource) {
-            const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-            viewSource.addEventListener("click", function (e) {
-              if (sourceUrl) {
-                // rstudio viewer pane
-                if (/\bcapabilities=\b/.test(window.location)) {
-                  window.open(sourceUrl);
-                } else {
-                  window.location.href = sourceUrl;
-                }
-              } else {
-                const modal = new bootstrap.Modal(
-                  document.getElementById("quarto-embedded-source-code-modal"),
-                );
-                modal.show();
-              }
-              return false;
-            });
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
           }
-          function toggleCodeHandler(show) {
-            return function (e) {
-              const detailsSrc = window.document.querySelectorAll(
-                ".cell > details > .sourceCode",
-              );
-              for (let i = 0; i < detailsSrc.length; i++) {
-                const details = detailsSrc[i].parentElement;
-                if (show) {
-                  details.open = true;
-                } else {
-                  details.removeAttribute("open");
-                }
-              }
-              const cellCodeDivs = window.document.querySelectorAll(
-                ".cell > .sourceCode",
-              );
-              const fromCls = show ? "hidden" : "unhidden";
-              const toCls = show ? "unhidden" : "hidden";
-              for (let i = 0; i < cellCodeDivs.length; i++) {
-                const codeDiv = cellCodeDivs[i];
-                if (codeDiv.classList.contains(fromCls)) {
-                  codeDiv.classList.remove(fromCls);
-                  codeDiv.classList.add(toCls);
-                }
-              }
-              return false;
-            };
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
           }
-          const hideAllCode = window.document.getElementById(
-            "quarto-hide-all-code",
-          );
-          if (hideAllCode) {
-            hideAllCode.addEventListener("click", toggleCodeHandler(false));
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
-          const showAllCode = window.document.getElementById(
-            "quarto-show-all-code",
-          );
-          if (showAllCode) {
-            showAllCode.addEventListener("click", toggleCodeHandler(true));
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
           }
-          var localhostRegex = new RegExp(
-            /^(?:http|https):\/\/localhost\:?[0-9]*\//,
-          );
-          var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("/" + window.location.host + "/");
-          var isInternal = (href) => {
-            return (
-              filterRegex.test(href) ||
-              localhostRegex.test(href) ||
-              mailtoRegex.test(href)
-            );
-          };
-          // Inspect non-navigation links and adorn them if external
-          var links = window.document.querySelectorAll(
-            "a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)",
-          );
-          for (var i = 0; i < links.length; i++) {
-            const link = links[i];
-            if (!isInternal(link.href)) {
-              // undo the damage that might have been done by quarto-nav.js in the case of
-              // links that we want to consider external
-              if (link.dataset.originalHref !== undefined) {
-                link.href = link.dataset.originalHref;
-              }
-            }
-          }
-          function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-            const config = {
-              allowHTML: true,
-              maxWidth: 500,
-              delay: 100,
-              arrow: false,
-              appendTo: function (el) {
-                return el.parentElement;
-              },
-              interactive: true,
-              interactiveBorder: 10,
-              theme: "quarto",
-              placement: "bottom-start",
-            };
-            if (contentFn) {
-              config.content = contentFn;
-            }
-            if (onTriggerFn) {
-              config.onTrigger = onTriggerFn;
-            }
-            if (onUntriggerFn) {
-              config.onUntrigger = onUntriggerFn;
-            }
-            window.tippy(el, config);
-          }
-          const noterefs = window.document.querySelectorAll(
-            'a[role="doc-noteref"]',
-          );
-          for (var i = 0; i < noterefs.length; i++) {
-            const ref = noterefs[i];
-            tippyHover(ref, function () {
-              // use id or data attribute instead here
-              let href =
-                ref.getAttribute("data-footnote-href") ||
-                ref.getAttribute("href");
-              try {
-                href = new URL(href).hash;
-              } catch {}
-              const id = href.replace(/^#\/?/, "");
-              const note = window.document.getElementById(id);
-              if (note) {
-                return note.innerHTML;
-              } else {
-                return "";
-              }
-            });
-          }
-          const xrefs = window.document.querySelectorAll("a.quarto-xref");
-          const processXRef = (id, note) => {
-            // Strip column container classes
-            const stripColumnClz = (el) => {
-              el.classList.remove("page-full", "page-columns");
-              if (el.children) {
-                for (const child of el.children) {
-                  stripColumnClz(child);
-                }
-              }
-            };
-            stripColumnClz(note);
-            if (id === null || id.startsWith("sec-")) {
-              // Special case sections, only their first couple elements
-              const container = document.createElement("div");
-              if (note.children && note.children.length > 2) {
-                container.appendChild(note.children[0].cloneNode(true));
-                for (let i = 1; i < note.children.length; i++) {
-                  const child = note.children[i];
-                  if (child.tagName === "P" && child.innerText === "") {
-                    continue;
-                  } else {
-                    container.appendChild(child.cloneNode(true));
-                    break;
-                  }
-                }
-                if (window.Quarto?.typesetMath) {
-                  window.Quarto.typesetMath(container);
-                }
-                return container.innerHTML;
-              } else {
-                if (window.Quarto?.typesetMath) {
-                  window.Quarto.typesetMath(note);
-                }
-                return note.innerHTML;
-              }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
             } else {
-              // Remove any anchor links if they are present
-              const anchorLink = note.querySelector("a.anchorjs-link");
-              if (anchorLink) {
-                anchorLink.remove();
-              }
-              if (window.Quarto?.typesetMath) {
-                window.Quarto.typesetMath(note);
-              }
-              if (note.classList.contains("callout")) {
-                return note.outerHTML;
-              } else {
-                return note.innerHTML;
-              }
+              container.appendChild(child.cloneNode(true));
+              break;
             }
-          };
-          for (var i = 0; i < xrefs.length; i++) {
-            const xref = xrefs[i];
-            tippyHover(
-              xref,
-              undefined,
-              function (instance) {
-                instance.disable();
-                let url = xref.getAttribute("href");
-                let hash = undefined;
-                if (url.startsWith("#")) {
-                  hash = url;
-                } else {
-                  try {
-                    hash = new URL(url).hash;
-                  } catch {}
-                }
-                if (hash) {
-                  const id = hash.replace(/^#\/?/, "");
-                  const note = window.document.getElementById(id);
-                  if (note !== null) {
-                    try {
-                      const html = processXRef(id, note.cloneNode(true));
-                      instance.setContent(html);
-                    } finally {
-                      instance.enable();
-                      instance.show();
-                    }
-                  } else {
-                    // See if we can fetch this
-                    fetch(url.split("#")[0])
-                      .then((res) => res.text())
-                      .then((html) => {
-                        const parser = new DOMParser();
-                        const htmlDoc = parser.parseFromString(
-                          html,
-                          "text/html",
-                        );
-                        const note = htmlDoc.getElementById(id);
-                        if (note !== null) {
-                          const html = processXRef(id, note);
-                          instance.setContent(html);
-                        }
-                      })
-                      .finally(() => {
-                        instance.enable();
-                        instance.show();
-                      });
-                  }
-                } else {
-                  // See if we can fetch a full url (with no hash to target)
-                  // This is a special case and we should probably do some content thinning / targeting
-                  fetch(url)
-                    .then((res) => res.text())
-                    .then((html) => {
-                      const parser = new DOMParser();
-                      const htmlDoc = parser.parseFromString(html, "text/html");
-                      const note = htmlDoc.querySelector("main.content");
-                      if (note !== null) {
-                        // This should only happen for chapter cross references
-                        // (since there is no id in the URL)
-                        // remove the first header
-                        if (
-                          note.children.length > 0 &&
-                          note.children[0].tagName === "HEADER"
-                        ) {
-                          note.children[0].remove();
-                        }
-                        const html = processXRef(null, note);
-                        instance.setContent(html);
-                      }
-                    })
-                    .finally(() => {
-                      instance.enable();
-                      instance.show();
-                    });
-                }
-              },
-              function (instance) {},
-            );
           }
-          let selectedAnnoteEl;
-          const selectorForAnnotation = (cell, annotation) => {
-            let cellAttr = 'data-code-cell="' + cell + '"';
-            let lineAttr = 'data-code-annotation="' + annotation + '"';
-            const selector = "span[" + cellAttr + "][" + lineAttr + "]";
-            return selector;
-          };
-          const selectCodeLines = (annoteEl) => {
-            const doc = window.document;
-            const targetCell = annoteEl.getAttribute("data-target-cell");
-            const targetAnnotation = annoteEl.getAttribute(
-              "data-target-annotation",
-            );
-            const annoteSpan = window.document.querySelector(
-              selectorForAnnotation(targetCell, targetAnnotation),
-            );
-            const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-            const lineIds = lines.map((line) => {
-              return targetCell + "-" + line;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
             });
-            let top = null;
-            let height = null;
-            let parent = null;
-            if (lineIds.length > 0) {
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
               //compute the position of the single el (top and bottom and make a div)
               const el = window.document.getElementById(lineIds[0]);
               top = el.offsetTop;
               height = el.offsetHeight;
               parent = el.parentElement.parentElement;
-              if (lineIds.length > 1) {
-                const lastEl = window.document.getElementById(
-                  lineIds[lineIds.length - 1],
-                );
-                const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-                height = bottom - top;
-              }
-              if (top !== null && height !== null && parent !== null) {
-                // cook up a div (if necessary) and position it
-                let div = window.document.getElementById(
-                  "code-annotation-line-highlight",
-                );
-                if (div === null) {
-                  div = window.document.createElement("div");
-                  div.setAttribute("id", "code-annotation-line-highlight");
-                  div.style.position = "absolute";
-                  parent.appendChild(div);
-                }
-                div.style.top = top - 2 + "px";
-                div.style.height = height + 4 + "px";
-                div.style.left = 0;
-                let gutterDiv = window.document.getElementById(
-                  "code-annotation-line-highlight-gutter",
-                );
-                if (gutterDiv === null) {
-                  gutterDiv = window.document.createElement("div");
-                  gutterDiv.setAttribute(
-                    "id",
-                    "code-annotation-line-highlight-gutter",
-                  );
-                  gutterDiv.style.position = "absolute";
-                  const codeCell = window.document.getElementById(targetCell);
-                  const gutter = codeCell.querySelector(
-                    ".code-annotation-gutter",
-                  );
-                  gutter.appendChild(gutterDiv);
-                }
-                gutterDiv.style.top = top - 2 + "px";
-                gutterDiv.style.height = height + 4 + "px";
-              }
-              selectedAnnoteEl = annoteEl;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
             }
-          };
-          const unselectCodeLines = () => {
-            const elementsIds = [
-              "code-annotation-line-highlight",
-              "code-annotation-line-highlight-gutter",
-            ];
-            elementsIds.forEach((elId) => {
-              const div = window.document.getElementById(elId);
-              if (div) {
-                div.remove();
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
               }
-            });
-            selectedAnnoteEl = undefined;
-          };
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
           // Handle positioning of the toggle
-          window.addEventListener(
-            "resize",
-            throttle(() => {
-              elRect = undefined;
-              if (selectedAnnoteEl) {
-                selectCodeLines(selectedAnnoteEl);
-              }
-            }, 10),
-          );
-          function throttle(fn, ms) {
-            let throttle = false;
-            let timer;
-            return (...args) => {
-              if (!throttle) {
-                // first call gets through
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
                 fn.apply(this, args);
-                throttle = true;
-              } else {
-                // all the others get throttled
-                if (timer) clearTimeout(timer); // cancel #2
-                timer = setTimeout(() => {
-                  fn.apply(this, args);
-                  timer = throttle = false;
-                }, ms);
-              }
-            };
+                timer = throttle = false;
+              }, ms);
           }
-          // Attach click handler to the DT
-          const annoteDls = window.document.querySelectorAll(
-            "dt[data-target-cell]",
-          );
-          for (const annoteDlNode of annoteDls) {
-            annoteDlNode.addEventListener("click", (event) => {
-              const clickedEl = event.target;
-              if (clickedEl !== selectedAnnoteEl) {
-                unselectCodeLines();
-                const activeEl = window.document.querySelector(
-                  "dt[data-target-cell].code-annotation-active",
-                );
-                if (activeEl) {
-                  activeEl.classList.remove("code-annotation-active");
-                }
-                selectCodeLines(clickedEl);
-                clickedEl.classList.add("code-annotation-active");
-              } else {
-                // Unselect the line
-                unselectCodeLines();
-                clickedEl.classList.remove("code-annotation-active");
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
               }
-            });
-          }
-          const findCites = (el) => {
-            const parentEl = el.parentElement;
-            if (parentEl) {
-              const cites = parentEl.dataset.cites;
-              if (cites) {
-                return {
-                  el,
-                  cites: cites.split(" "),
-                };
-              } else {
-                return findCites(el.parentElement);
-              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
             } else {
-              return undefined;
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
             }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
           };
-          var bibliorefs = window.document.querySelectorAll(
-            'a[role="doc-biblioref"]',
-          );
-          for (var i = 0; i < bibliorefs.length; i++) {
-            const ref = bibliorefs[i];
-            const citeInfo = findCites(ref);
-            if (citeInfo) {
-              tippyHover(citeInfo.el, function () {
-                var popup = window.document.createElement("div");
-                citeInfo.cites.forEach(function (cite) {
-                  var citeDiv = window.document.createElement("div");
-                  citeDiv.classList.add("hanging-indent");
-                  citeDiv.classList.add("csl-entry");
-                  var biblioDiv = window.document.getElementById("ref-" + cite);
-                  if (biblioDiv) {
-                    citeDiv.innerHTML = biblioDiv.innerHTML;
-                  }
-                  popup.appendChild(citeDiv);
-                });
-                return popup.innerHTML;
-              });
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
             }
-          }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
         });
-      </script>
-      <nav class="page-navigation">
-        <div class="nav-page nav-page-previous">
-          <a
-            href="./part3.html"
-            class="pagination-link"
-            aria-label="Part 3：Figure 1 — MMRM 跑 BCVA + CST"
-          >
-            <i class="bi bi-arrow-left-short"></i>
-            <span class="nav-page-text"
-              ><span class="chapter-number">3</span>&nbsp;
-              <span class="chapter-title"
-                >Part 3：Figure 1 — MMRM 跑 BCVA + CST</span
-              ></span
-            >
-          </a>
-        </div>
-        <div class="nav-page nav-page-next">
-          <a
-            href="./part5.html"
-            class="pagination-link"
-            aria-label="Part 5：換你院內資料（含 PSM + ASMD）"
-          >
-            <span class="nav-page-text"
-              ><span class="chapter-number">5</span>&nbsp;
-              <span class="chapter-title"
-                >Part 5：換你院內資料（含 PSM + ASMD）</span
-              ></span
-            >
-            <i class="bi bi-arrow-right-short"></i>
-          </a>
-        </div>
-      </nav>
-      <div
-        class="modal fade"
-        id="quarto-embedded-source-code-modal"
-        tabindex="-1"
-        aria-labelledby="quarto-embedded-source-code-modal-label"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5
-                class="modal-title"
-                id="quarto-embedded-source-code-modal-label"
-              >
-                Source Code
-              </h5>
-              <button class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <div class="">
-                <div class="sourceCode" id="cb12" data-shortcodes="false">
-                  <pre
-                    class="sourceCode markdown code-with-copy"
-                  ><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 4：Figure 2 — CMH-weighted absence proportions</span></span>
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part3.html" class="pagination-link" aria-label="Part 3：Figure 1 — MMRM 跑 BCVA + CST">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part5.html" class="pagination-link" aria-label="Part 5：換你院內資料（含 PSM + ASMD）">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Part 5：換你院內資料（含 PSM + ASMD）</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Part 4：Figure 2 — CMH-weighted absence proportions</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-part4</span></span>
@@ -2294,27 +1524,24 @@ common odds ratio
 <span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>同樣的 pipeline 可以用在任何二元 outcome（responder rate、AE rate、≥15 letter gain）</span>
 <span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>院內資料 stratum 太空時，函數會 drop 掉，proportion 仍可估</span>
 <span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 林協霆、邵時傑 · 教材授權 CC BY 4.0 · 主辦單位：羅氏大藥廠</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
     </div>
-    <!-- /content -->
-    <footer class="footer">
-      <div class="nav-footer">
-        <div class="nav-footer-left">
-          <p>
-            © 2026 林協霆、邵時傑 · 教材授權 CC BY 4.0 · 主辦單位：羅氏大藥廠
-          </p>
-        </div>
-        <div class="nav-footer-center">&nbsp;</div>
-        <div class="nav-footer-right">
-          <p>Built with <a href="https://quarto.org/">Quarto</a></p>
-        </div>
-      </div>
-    </footer>
-  </body>
-</html>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

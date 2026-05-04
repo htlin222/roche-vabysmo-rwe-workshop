@@ -1,6 +1,6 @@
-# 讓你的 Faricimab RWE 長得像 Ophthalmology 論文
+# 羅氏眼科研究賦能工作坊教材
 
-> 羅氏眼科研究賦能工作坊教材（5/30）
+> 副標：讓你的 Faricimab RWE 長得像 Ophthalmology 論文（5/30）
 > 主辦單位：羅氏大藥廠（Roche Products Ltd. Taiwan）
 > 作者：和信治癌中心醫院 林協霆醫師 × 羅氏大藥廠 邵時傑博士
 
