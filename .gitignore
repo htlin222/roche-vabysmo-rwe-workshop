@@ -13,8 +13,7 @@ _freeze/
 .DS_Store
 Thumbs.db
 
-# _book/ 是這次 deliverable；明確 unignore 蓋過 user 全域 ~/.gitignore_global 的 _book/
-!_book/
-!_book/**
+# Quarto render output — 不 commit；PDF 用 GitHub Release asset 散布，HTML 用本地 / Posit Cloud
+_book/
 
 /.quarto/

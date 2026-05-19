@@ -51,3 +51,38 @@ format:
     code-tools: true
     code-copy: true
     css: styles.css
+  pdf:
+    documentclass: scrbook
+    pdf-engine: xelatex
+    papersize: a4
+    fontsize: 11pt
+    geometry:
+      - top=25mm
+      - bottom=25mm
+      - left=22mm
+      - right=22mm
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+    linkcolor: NavyBlue
+    urlcolor: NavyBlue
+    citecolor: NavyBlue
+    mainfont: "Helvetica Neue"
+    sansfont: "Helvetica Neue"
+    monofont: "Menlo"
+    CJKmainfont: "Noto Serif CJK TC"
+    CJKsansfont: "Noto Sans CJK TC"
+    CJKmonofont: "Noto Sans CJK TC"
+    code-block-bg: "#f7f7f7"
+    code-overflow: wrap
+    fig-pos: "H"
+    include-in-header:
+      text: |
+        \usepackage{xeCJK}
+        \setCJKmainfont[BoldFont={Noto Sans CJK TC Bold}]{Noto Serif CJK TC}
+        \XeTeXlinebreaklocale "zh"
+        \XeTeXlinebreakskip = 0pt plus 1pt
+        \usepackage{float}
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
