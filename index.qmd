@@ -6,6 +6,12 @@
 source("_common.R")
 ```
 
+::: {.callout-important title="Disclaimer / 免責聲明"}
+The Information is designed and provided to HCP with scientific, non-promotional information solely for the scientific and educational purposes, without any intent to promote or exchange for recommending, prescribing, dispensing, purchasing, supplying, selling, administering, referring, arranging for, or ordering any pharmaceutical products in the future.
+
+The information may contain off-label or pre-approval information of certain pharmaceutical products whose efficacy and safety are still under investigation. Regulatory approval is dependent on the completion of investigation and review by local regulatory authorities. Such off-label or pre-approval information is presented only for purposes of providing an overview of clinical data. It should not replace your independent professional judgment, and should not be construed as a recommendation for use of any product for unapproved uses. Roche does not endorse or approve, and assumes no responsibility for the content, accuracy or completeness of this Information presented.
+:::
+
 歡迎來到「**羅氏眼科研究賦能工作坊**」——副標：「讓你的 Faricimab RWE 長得像 Ophthalmology 論文」。
 
 這份教材的目標**不是**讓你學會 R，也不是讓你學會 MMRM 或 CMH 的數學原理。

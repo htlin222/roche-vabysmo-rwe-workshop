@@ -26,29 +26,30 @@ reproduce TENAYA/LUCERNE paper 的 Figure 1（MMRM）與 Figure 2（CMH-weighted
   - [`docs/internal-notes.md`](docs/internal-notes.md) — 對口 / 信件 / 行事曆
 - **非眼科背景請先讀**：書內 Primer 章節（眼科解剖 / nAMD / OCT / faricimab 機轉 30 分鐘速懂）
 
-### 更新流程：本機 render，release 觸發部署
+### 更新流程：本機 render → publish gh-pages → release 附 PDF
+
+`_book/`（HTML + PDF）已 gitignore，**不進版控**。HTML 用本機 `quarto publish gh-pages`
+直接推到 `gh-pages` branch（GitHub 內建的 *pages build and deployment* 會自動上線），
+PDF 則用 GitHub Release asset 散布給學員下載。CI **不裝 R、不 render**。
 
 ```bash
 # 1. 編輯內容（qmd / data / scripts）
-# 2. 本機 render
+# 2. 本機 render（HTML + PDF）
 quarto render
-# 3. commit 包含 _book/
+# 3. commit 原始檔（_book/ 已 gitignore，不會進 commit）
 git add -A && git commit -m "..." && git push
-# 4. 發 release，CI 自動把 _book/ 推到 gh-pages（~30 秒）
-gh release create v0.2.0 --generate-notes
+# 4. 部署 HTML 到 GitHub Pages（本機推 gh-pages branch）
+quarto publish gh-pages --no-render --no-browser
+# 5. 發 release，附上 PDF 給學員下載
+gh release create v0.2.4 \
+  "_book/羅氏眼科研究賦能工作坊教材.pdf" \
+  --generate-notes
 ```
 
-> 為什麼 CI 不自己 render？R packages install 在 CI 上要 5–10 min。
-> 教材是「人類在桌前改完才發版」的 cadence，本機 render 已成品；CI 只負責 publish，
-> 跑一次 release 平均 < 1 分鐘。
-
-如果想跳過 release tag、直接手動部署：
-
-```bash
-quarto publish gh-pages --no-browser
-# 或
-gh workflow run deploy-book.yml
-```
+> 為什麼 CI 不自己 render？R packages install 在 CI 上要 5–10 min，
+> 而教材是「人類在桌前改完才發版」的 cadence——本機 render 已成品。
+> 部署交給 `quarto publish gh-pages`（本機）+ GitHub 內建 Pages pipeline（自動），
+> 不再維護自訂 deploy workflow。
 
 ---
 
@@ -112,7 +113,7 @@ open _book/index.html
 ├── refs/                      # 參考論文（TENAYA/LUCERNE PDF）
 ├── emails/                    # Shao 對課的原文
 ├── docs/                      # 內部筆記
-└── _book/                     # 渲染輸出（git 追蹤，可直接放 GitHub Pages）
+└── _book/                     # 渲染輸出（gitignore；HTML→gh-pages、PDF→Release asset）
 ```
 
 ---
