@@ -115,3 +115,4 @@ plt <- (make_panel("abs_both","(A) IRF and SRF") |
 
 ggsave("output/figure2_standalone.png", plt, width = 12, height = 5, dpi = 150)
 cat("\n[OK] Figure 2 saved to output/figure2_standalone.png\n")
+print(plt)  # preview in RStudio Plot pane

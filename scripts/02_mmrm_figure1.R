@@ -72,10 +72,11 @@ p_c <- ggplot(baseline_zero(emm_c),
   theme_minimal() + theme(legend.position = "bottom")
 
 dir.create("output", showWarnings = FALSE)
-ggsave("output/figure1_standalone.png",
-       p_b + p_c + plot_layout(guides = "collect") &
-         theme(legend.position = "bottom"),
+fig1 <- p_b + p_c + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+ggsave("output/figure1_standalone.png", fig1,
        width = 11, height = 5, dpi = 150)
 
 cat("\n[OK] Figure 1 saved to output/figure1_standalone.png\n")
+print(fig1)  # preview in RStudio Plot pane
 print(emm_b); print(emm_c)

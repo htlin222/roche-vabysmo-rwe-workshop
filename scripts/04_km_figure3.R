@@ -66,3 +66,4 @@ print(plt)
 dev.off()
 
 cat("\n[OK] Figure 3 saved to output/figure3_standalone.png\n")
+print(plt)  # preview in RStudio Plot pane

@@ -85,6 +85,7 @@ love_plot <- love.plot(
 ggsave("output/love_plot_standalone.png", love_plot,
        width = 8, height = 5, dpi = 150)
 cat("\n[OK] Love plot saved to output/love_plot_standalone.png\n")
+print(love_plot)  # preview in RStudio Plot pane
 
 # ---------------------------------------------------------------------------
 # 5. Matched cohort 上的 Figure 1（MMRM）
@@ -154,11 +155,12 @@ p_c <- ggplot(baseline_zero(emm_c),
        x = "Time (Weeks)", y = "Adj. Mean Change (μm)") +
   theme_minimal() + theme(legend.position = "bottom")
 
-ggsave("output/figure1_my_hospital_standalone.png",
-       p_b + p_c + plot_layout(guides = "collect") &
-         theme(legend.position = "bottom"),
+fig1_mh <- p_b + p_c + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+ggsave("output/figure1_my_hospital_standalone.png", fig1_mh,
        width = 11, height = 5, dpi = 150)
 cat("\n[OK] Figure 1 (matched) saved to output/figure1_my_hospital_standalone.png\n")
+print(fig1_mh)  # preview in RStudio Plot pane
 
 # ---------------------------------------------------------------------------
 # 6. Matched cohort 上的 Figure 2（CMH）
@@ -261,6 +263,7 @@ plt2 <- (make_panel("abs_both","(A) IRF and SRF") |
 ggsave("output/figure2_my_hospital_standalone.png", plt2,
        width = 12, height = 5, dpi = 150)
 cat("\n[OK] Figure 2 (matched) saved to output/figure2_my_hospital_standalone.png\n")
+print(plt2)  # preview in RStudio Plot pane
 
 cat("\n========== 全部完成 ==========\n")
 cat("輸出檔案：\n")
