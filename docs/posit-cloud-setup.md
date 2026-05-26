@@ -67,6 +67,31 @@ source("setup/install.r")
 - **i18n / 字型**：showtext, sysfonts
 - **Render**：rmarkdown, quarto
 
+### Step 2.5 — （建議）確認都走 binary + 鎖版本
+
+`install.r` 已會依平台自動選 repo：**Posit.Cloud = Ubuntu Noble → PPM binary repo**，正常情況下不會有任何套件「從原始碼編譯」(慢、吃 RAM、噴一堆 C++ 警告)。要在安裝前**預覽安裝計畫**、確認沒人要 build，在乾淨 Console 跑：
+
+```r
+options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
+pkgs <- c("tidyverse","readr","gtsummary","gt","knitr","mmrm","emmeans",
+          "broom","broom.mixed","DescTools","MatchIt","cobalt","survival",
+          "survminer","ggplot2","patchwork","ggsci","scales","showtext",
+          "sysfonts","rmarkdown","quarto")
+pak::pkg_install(pkgs, dry_run = TRUE)   # 不實際安裝，只印計畫
+```
+
+- 輸出裡每個套件會標示用 **binary**（下載即用）還是 **build**（要編譯）。理想全部 binary。
+- 若極少數標 `bld`（PPM 對該套件沒出 Noble binary），那就是唯一會吃編譯時間的，通常無妨；其餘照舊秒裝。
+
+**鎖版本（reproducible）**：第一次在 cloud 跑 `source("setup/install.r")` 時，因為還沒有 lockfile，會在裝完後**自動產生 `setup/pak.lock`**。把它 commit 進 repo：
+
+```r
+file.exists("setup/pak.lock")   # TRUE 後就 commit setup/pak.lock
+```
+
+之後每位學員 / 助教再跑 `install.r`，偵測到 `setup/pak.lock` 就改走 `lockfile_install`，**所有人裝到完全相同的版本**。
+重點：**lockfile 一定要在 Posit.Cloud（Noble）上產生**，才會鎖到 Linux binary 的解析結果；別在本機 macOS 產生後 commit。
+
 ### Step 3 — 預跑一次 render（充快取）
 
 ```r
@@ -136,7 +161,7 @@ Rscript scripts/05_psm_my_hospital.R     # → output/ Love plot + matched fig 1
 | 症狀                                     | 原因                                       | 解法                                                            |
 | ---------------------------------------- | ------------------------------------------ | --------------------------------------------------------------- |
 | 「Project not found」                    | 連結 typo / project access 沒設 Public     | 重貼連結，檢查 Settings → Access                                |
-| Console 跑 `install.r` 跑到一半就斷      | 免費 tier 1 GB RAM 編譯到 mmrm 時撐不住    | 重跑 `source("setup/install.r")`，pak 會跳過已裝好的            |
+| Console 跑 `install.r` 跑到一半就斷      | 多半是還在「從原始碼編譯」吃滿 1 GB RAM    | 確認用 Noble binary repo（見 Step 2.5，install.r 已自動設）；真斷了重跑 `source("setup/install.r")`，pak 會跳過已裝好的 |
 | `Save a Permanent Copy` 灰色按不下去     | 學員還沒登入                               | 點右上人頭 → Sign In                                            |
 | 課堂 25 hr/月用完了                      | 免費 tier 限制                             | 升級 Cloud Plus（$5/月）或匯出 zip 本機跑                       |
 | Part 5 跑到 `library(MatchIt)` 跳錯      | 預烤 project 是 v0.1 時做的、沒裝 PSM 套件 | Console 跑 `pak::pak(c("MatchIt","cobalt"))` 補裝；或重做 setup |
