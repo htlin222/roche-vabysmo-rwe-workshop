@@ -46,10 +46,20 @@ if (file.exists(lock)) {
   cat(sprintf("[lock] 偵測到 %s → 依鎖定版本安裝\n", lock))
   pak::lockfile_install(lock)
 } else {
-  cat("[lock] 無 lockfile → 安裝最新版，完成後產生 setup/pak.lock\n")
+  cat("[lock] 無 lockfile → 安裝最新版，完成後嘗試產生 setup/pak.lock\n")
   pak::pak(required_pkgs, ask = FALSE)
-  pak::lockfile_create(required_pkgs, lockfile = lock, dependencies = TRUE)
-  cat(sprintf("[lock] 已建立 %s — 請 commit 進 repo，之後所有人就裝同一版本。\n", lock))
+  # 只鎖硬相依（Depends/Imports/LinkingTo）；不碰 Suggests，
+  # 否則會去解 glmmADMB / RDCOMClient / gurobi 這些非 CRAN、裝不了的選用套件而失敗。
+  # 包 tryCatch：lockfile 是 bonus，就算失敗也不該讓「套件已裝好」變成紅字。
+  ok <- tryCatch({
+    pak::lockfile_create(required_pkgs, lockfile = lock,
+                         dependencies = c("Depends", "Imports", "LinkingTo"))
+    TRUE
+  }, error = function(e) {
+    message("[lock] 略過 lockfile（不影響套件安裝）：", conditionMessage(e))
+    FALSE
+  })
+  if (ok) cat(sprintf("[lock] 已建立 %s — 請 commit 進 repo，之後所有人就裝同一版本。\n", lock))
 }
 
 cat("\n[OK] 套件安裝完成。\n")
