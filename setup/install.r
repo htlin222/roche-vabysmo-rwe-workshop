@@ -4,29 +4,13 @@
 #   source("setup/install.r")     # 在 RStudio Console
 #   或 Rscript setup/install.r    # 在 terminal
 
-# 自動選 repo：
-#   Linux（含 Posit.Cloud）→ PPM binary repo，免從原始碼編譯（省時間、無 C++ 警告）
-#   macOS / Windows        → CRAN-style latest 本身已是 binary
-ppm_repo <- local({
-  if (Sys.info()[["sysname"]] == "Linux" && file.exists("/etc/os-release")) {
-    os <- readLines("/etc/os-release", warn = FALSE)
-    line <- grep("^VERSION_CODENAME=", os, value = TRUE)
-    codename <- if (length(line)) gsub('^VERSION_CODENAME=|"', "", line[1]) else ""
-    if (is.na(codename) || codename == "") codename <- "noble"  # Posit.Cloud = Ubuntu 24.04 fallback
-    sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", codename)
-  } else {
-    "https://packagemanager.posit.co/cran/latest"
-  }
-})
-options(repos = c(CRAN = ppm_repo))
-
-# 讓 PPM 依 R 版本回傳正確的 Linux binary（pak 多半會自動帶，這裡保險起見明示）
-options(HTTPUserAgent = sprintf(
-  "R/%s R (%s)", getRversion(),
-  paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])
-))
-
-cat(sprintf("[repo] %s\n", ppm_repo))
+# repo + UA 設定（與 .Rprofile 共用同一份，確保所有安裝走 binary）
+if (file.exists("setup/_repos.R")) {
+  source("setup/_repos.R")
+} else {
+  # 萬一不在專案根目錄被呼叫的保險
+  options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/noble/latest"))
+}
 
 if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
