@@ -15,7 +15,7 @@ execute:
   freeze: auto
 
 book:
-  title: "羅氏眼科研究賦能工作坊教材"
+  title: "羅氏眼科臨床研究賦能工作坊教材"
   subtitle: "讓你的 Faricimab RWE 長得像 Ophthalmology 論文"
   author:
     - "和信治癌中心醫院 林協霆醫師"
@@ -86,3 +86,8 @@ format:
         \usepackage{float}
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \usepackage[headsepline]{scrlayer-scrpage}
+        \clearpairofpagestyles
+        \ohead[\small Document Number: M-TW-00008758]{\small Document Number: M-TW-00008758}
+        \cfoot[\pagemark]{\pagemark}
+        \pagestyle{scrheadings}

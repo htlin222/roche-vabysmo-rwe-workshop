@@ -1,10 +1,10 @@
-# 羅氏眼科研究賦能工作坊教材
+# 羅氏眼科臨床研究賦能工作坊教材
 
 > 副標：讓你的 Faricimab RWE 長得像 Ophthalmology 論文（5/30）
 > 主辦單位：羅氏大藥廠（Roche Products Ltd. Taiwan）
 > 作者：和信治癌中心醫院 林協霆醫師 × 羅氏大藥廠 邵時傑博士
 
-這是一本 Quarto book，教眼科醫師用 AI + R 把院內 faricimab cohort 資料做成可投 *Ophthalmology* 的圖表，
+這是一本 Quarto book，教眼科醫師用 AI + R 把院內 faricimab cohort 資料做成可投 _Ophthalmology_ 的圖表，
 reproduce TENAYA/LUCERNE paper 的 Figure 1（MMRM）與 Figure 2（CMH-weighted），並示範院內 RWE 必備的 PSM + ASMD 工作流。
 **學員不需要會 R**，照著「📋 複製這段話貼給 AI」操作即可。
 
@@ -29,7 +29,7 @@ reproduce TENAYA/LUCERNE paper 的 Figure 1（MMRM）與 Figure 2（CMH-weighted
 ### 更新流程：本機 render → publish gh-pages → release 附 PDF
 
 `_book/`（HTML + PDF）已 gitignore，**不進版控**。HTML 用本機 `quarto publish gh-pages`
-直接推到 `gh-pages` branch（GitHub 內建的 *pages build and deployment* 會自動上線），
+直接推到 `gh-pages` branch（GitHub 內建的 _pages build and deployment_ 會自動上線），
 PDF 則用 GitHub Release asset 散布給學員下載。CI **不裝 R、不 render**。
 
 ```bash
@@ -42,7 +42,7 @@ git add -A && git commit -m "..." && git push
 quarto publish gh-pages --no-render --no-browser
 # 5. 發 release，附上 PDF 給學員下載
 gh release create v0.2.4 \
-  "_book/羅氏眼科研究賦能工作坊教材.pdf" \
+  "_book/羅氏眼科臨床研究賦能工作坊教材.pdf" \
   --generate-notes
 ```
 
@@ -55,11 +55,11 @@ gh release create v0.2.4 \
 
 ## 學員開始：三層 fallback
 
-| 層 | 怎麼進 | 體驗 | 適合 |
-|---|---|---|---|
-| 🥇 **預烤 Posit.Cloud 連結** | <https://posit.cloud/content/12416569> → Save a Permanent Copy | 30 秒進 RStudio，**套件已裝好** | 全部學員（推薦） |
-| 🥈 **GitHub fork** | Posit.Cloud → New Project from Git Repository → 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop` → Console 跑 `source("install.r")` | 5–10 分鐘安裝後可跑 code | 預烤連結掛了 / 想保留自己版本 |
-| 🥉 **純讀網頁版** | <https://htlin222.github.io/roche-vabysmo-rwe-workshop/> | 0 安裝、純閱讀 | 環境完全裝不起來 |
+| 層                           | 怎麼進                                                                                                                                         | 體驗                            | 適合                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ----------------------------- |
+| 🥇 **預烤 Posit.Cloud 連結** | <https://posit.cloud/content/12416569> → Save a Permanent Copy                                                                                 | 30 秒進 RStudio，**套件已裝好** | 全部學員（推薦）              |
+| 🥈 **GitHub fork**           | Posit.Cloud → New Project from Git Repository → 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop` → Console 跑 `source("install.r")` | 5–10 分鐘安裝後可跑 code        | 預烤連結掛了 / 想保留自己版本 |
+| 🥉 **純讀網頁版**            | <https://htlin222.github.io/roche-vabysmo-rwe-workshop/>                                                                                       | 0 安裝、純閱讀                  | 環境完全裝不起來              |
 
 > 老師：工作坊前一晚請看 [`docs/posit-cloud-setup.md`](docs/posit-cloud-setup.md) 預烤 🥇 連結。
 
@@ -120,15 +120,15 @@ open _book/index.html
 
 ## 工作坊章節速覽
 
-| 章節 | 主題 | 預計時間 | 學員會做出 |
-|---|---|---|---|
-| Part 1 | 認識 paper + 認識資料 | 30–40 min | Posit.Cloud 開好、看到欄位 |
-| Part 2 | Table 1 baseline | 20 min | gtsummary 跑出論文等級 Table 1 |
-| Part 3 | Figure 1（MMRM） | 40 min | BCVA + CST 兩張曲線 |
-| Part 4 | Figure 2（CMH） | 30 min | IRF/SRF/both 三張 absence bar |
-| Part 5 | 換你院內資料（含 PSM + ASMD） | 30 min | PSM 配對 + matched cohort 上跑出 n≈100 院內版 |
-| Part 6 | Bonus：KM + Cox | 20 min | Time-to-event 曲線 + HR |
-| Appendix | 回院 checklist | — | 院內 csv schema |
+| 章節     | 主題                          | 預計時間  | 學員會做出                                    |
+| -------- | ----------------------------- | --------- | --------------------------------------------- |
+| Part 1   | 認識 paper + 認識資料         | 30–40 min | Posit.Cloud 開好、看到欄位                    |
+| Part 2   | Table 1 baseline              | 20 min    | gtsummary 跑出論文等級 Table 1                |
+| Part 3   | Figure 1（MMRM）              | 40 min    | BCVA + CST 兩張曲線                           |
+| Part 4   | Figure 2（CMH）               | 30 min    | IRF/SRF/both 三張 absence bar                 |
+| Part 5   | 換你院內資料（含 PSM + ASMD） | 30 min    | PSM 配對 + matched cohort 上跑出 n≈100 院內版 |
+| Part 6   | Bonus：KM + Cox               | 20 min    | Time-to-event 曲線 + HR                       |
+| Appendix | 回院 checklist                | —         | 院內 csv schema                               |
 
 ---
 
@@ -154,7 +154,7 @@ TENAYA/LUCERNE raw data 不公開（Roche 內部）。我們從 paper 的 summar
 教材本身：CC BY 4.0
 參考論文：
 
-> Cheung CMG, Lim JI, Priglinger S, et al. **Anatomic Outcomes with Faricimab vs Aflibercept in Head-to-Head Dosing Phase of the TENAYA/LUCERNE Trials in Neovascular Age-related Macular Degeneration.** *Ophthalmology*. 2025;132(5):519-526. (CC BY)
+> Cheung CMG, Lim JI, Priglinger S, et al. **Anatomic Outcomes with Faricimab vs Aflibercept in Head-to-Head Dosing Phase of the TENAYA/LUCERNE Trials in Neovascular Age-related Macular Degeneration.** _Ophthalmology_. 2025;132(5):519-526. (CC BY)
 
 ---
 
