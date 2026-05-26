@@ -34,3 +34,11 @@ h2 {
   padding-bottom: 0.3em;
   margin-top: 2em;
 }
+
+/* 文件編號（右上、灰、小字） */
+.document-number {
+  text-align: right;
+  color: #888;
+  font-size: 0.8em;
+  margin-bottom: 0.5em;
+}

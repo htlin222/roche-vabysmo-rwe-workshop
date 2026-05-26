@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "羅氏眼科研究賦能工作坊教材",
+    "title": "羅氏眼科臨床研究賦能工作坊教材",
     "section": "",
-    "text": "前言\n歡迎來到「羅氏眼科研究賦能工作坊」——副標：「讓你的 Faricimab RWE 長得像 Ophthalmology 論文」。\n這份教材的目標不是讓你學會 R，也不是讓你學會 MMRM 或 CMH 的數學原理。 是讓你下課後做得到這件事：",
+    "text": "前言\n歡迎來到「羅氏眼科臨床研究賦能工作坊」——副標：「讓你的 Faricimab RWE 長得像 Ophthalmology 論文」。\n這份教材的目標不是讓你學會 R，也不是讓你學會 MMRM 或 CMH 的數學原理。 是讓你下課後做得到這件事：",
     "crumbs": [
       "前言"
     ]
@@ -12,9 +12,9 @@
   {
     "objectID": "index.html#重要連結書籤起來",
     "href": "index.html#重要連結書籤起來",
-    "title": "羅氏眼科研究賦能工作坊教材",
+    "title": "羅氏眼科臨床研究賦能工作坊教材",
     "section": "🔗 重要連結（書籤起來）",
-    "text": "🔗 重要連結（書籤起來）\n\n\n\n\n\n\n📌 跑這本書 / 跑這課\n\n\n\n\n\n\n用途\n連結\n\n\n\n\n📖 線上書（這本，可分享）\nhttps://htlin222.github.io/roche-vabysmo-rwe-workshop/\n\n\n📦 程式碼 repo（給 Posit.Cloud fork）\nhttps://github.com/htlin222/roche-vabysmo-rwe-workshop\n\n\n🧪 Posit.Cloud（瀏覽器跑 RStudio）\nhttps://posit.cloud/\n\n\n🎁 老師預烤 Posit.Cloud project（🥇 建議路線，套件已裝好）\nhttps://posit.cloud/content/12416569\n\n\n\n\n\n\n\n\n\n\n\n🤖 AI 助手（free-tier 都可以）\n\n\n\n\n\n\n工具\n連結\n\n\n\n\nChatGPT\nhttps://chat.openai.com/\n\n\nGoogle Gemini\nhttps://gemini.google.com/\n\n\nClaude\nhttps://claude.ai/\n\n\n\n3 選 1 即可，本書的 📋 prompt 在哪一個都跑得出 R code。\n\n\n\n\n\n\n\n\n📑 參考材料 / 速查\n\n\n\n\n\n\n用途\n連結\n\n\n\n\n原始論文（CC BY 全文）\nCheung 2025 Ophthalmology — DOI\n\n\n院內 csv schema\ndata/data_dictionary.md\n\n\n模擬資料下載\ndata/ 全部 csv\n\n\n課堂 FAQ（29 Q&A）\ndocs/faq.md\n\n\n名詞 / 縮寫速查\nAppendix G\n\n\n統計 / 程式 ELI5\nAppendix E、F\n\n\n\n\n\n\n\n\n\n\n\n🎓 給老師、助教（學員可略過）\n\n\n\n\n\n\n\n\n用途\n連結\n\n\n\n\nTA 工作手冊\ndocs/ta-handbook.md\n\n\n老師課前預烤 SOP\ndocs/posit-cloud-setup.md\n\n\n對口 / 內部行事曆\ndocs/internal-notes.md\n\n\nIssues / 教材 bug 回報\nhttps://github.com/htlin222/roche-vabysmo-rwe-workshop/issues",
+    "text": "🔗 重要連結（書籤起來）\n\n\n\n\n\n\n📌 跑這本書 / 跑這課\n\n\n\n\n\n\n用途\n連結\n\n\n\n\n📖 線上書（這本，可分享）\nhttps://htlin222.github.io/roche-vabysmo-rwe-workshop/\n\n\n📦 程式碼 repo（給 Posit.Cloud fork）\nhttps://github.com/htlin222/roche-vabysmo-rwe-workshop\n\n\n🧪 Posit.Cloud（瀏覽器跑 RStudio）\nhttps://posit.cloud/\n\n\n🎁 老師預烤 Posit.Cloud project（🥇 建議路線，套件已裝好）\nhttps://posit.cloud/content/12416569\n\n\n\n\n\n\n\n\n\n\n\n🤖 AI 助手（free-tier 都可以）\n\n\n\n\n\n\n工具\n連結\n\n\n\n\nChatGPT\nhttps://chat.openai.com/\n\n\nGoogle Gemini\nhttps://gemini.google.com/\n\n\nClaude\nhttps://claude.ai/\n\n\n\n3 選 1 即可，本書的 📋 prompt 在哪一個都跑得出 R code。\n\n\n\n\n\n\n\n\n📑 參考材料 / 速查\n\n\n\n\n\n\n用途\n連結\n\n\n\n\n原始論文（CC BY 全文）\nCheung 2025 Ophthalmology — DOI\n\n\n院內 csv schema\ndata/data_dictionary.md\n\n\n模擬資料下載\ndata/ 全部 csv\n\n\n課堂 FAQ（29 Q&A）\ndocs/faq.md\n\n\n名詞 / 縮寫速查\nAppendix G\n\n\n統計 / 程式 ELI5\nAppendix E、F",
     "crumbs": [
       "前言"
     ]
@@ -22,7 +22,7 @@
   {
     "objectID": "index.html#課程目標",
     "href": "index.html#課程目標",
-    "title": "羅氏眼科研究賦能工作坊教材",
+    "title": "羅氏眼科臨床研究賦能工作坊教材",
     "section": "課程目標",
     "text": "課程目標\n今天結束時，你應該可以：\n\n✅ 看懂一篇眼科 RWE paper 的圖表是用什麼方法跑出來的\n✅ 把問題講清楚，讓 AI 幫你寫 R 程式碼\n✅ 在 Posit.Cloud 上跑出 Table 1 + Figure 1（MMRM）+ Figure 2（CMH）\n✅ 把同一份 code 套到「你院內的 csv」，看圖換掉\n✅ 知道你回院後要請 IT 撈什麼樣的資料",
     "crumbs": [
@@ -32,7 +32,7 @@
   {
     "objectID": "index.html#這堂課的玩法",
     "href": "index.html#這堂課的玩法",
-    "title": "羅氏眼科研究賦能工作坊教材",
+    "title": "羅氏眼科臨床研究賦能工作坊教材",
     "section": "這堂課的玩法",
     "text": "這堂課的玩法\n\n\n\n步驟\n你做的事\n\n\n\n\n1\n複製本書的「📋 prompt」\n\n\n2\n貼給 AI（ChatGPT / Gemini / Claude，free-tier 即可）\n\n\n3\nAI 給你 R code\n\n\n4\n貼到 Posit.Cloud 跑\n\n\n5\n看結果、聽我們解釋\n\n\n\n你的工作是「問對問題」、「看懂結果」，不是「寫對程式」。\n\n\n\n\n\n\n⚠️ AI 給的 code 跟教材不同？以教材為準\n\n\n\n為了讓全班跑出一致的結果，每個任務後面都附「參考程式碼」一欄。 - 學員與 AI 對話只是在練「拆需求 / 看懂程式」，AI 的版本可能用不同套件、不同命名、不同預設參數。 - 真正下指令跑的時候，請統一複製教材的「參考程式碼」——這樣老師、助教、同學的圖才會對得上。 - AI 對於「眼科專業內容」與「統計細節」仍有可能出錯：碰到 reviewer 才會在意的細節（例如 random effect 結構、CMH 權重公式、PSM caliper 設定），請以教材中標註 ref 的內容為準，並自行驗證。\n\n\n\n\n\n\n\n\n🚀 完全不想看 code？6 支腳本一行跑完\n\n\n\n打開 Terminal，確認 CWD 在專案根目錄，依序：\nRscript install.r                       # 第一次裝套件\nRscript scripts/01_table1.R             # Part 2\nRscript scripts/02_mmrm_figure1.R       # Part 3\nRscript scripts/03_cmh_figure2.R        # Part 4\nRscript scripts/04_km_figure3.R         # Part 6\nRscript scripts/06_psm_my_hospital.R    # Part 5（PSM + matched MMRM/CMH）\n完整對應表與前提條件見附錄頂端「🚀 完全不會寫程式：6 支腳本一行跑完」。\n\n\n\n\n\n\n\n\n🔖 看到陌生縮寫不要慌\n\n\n\n本書最後的 Appendix G「名詞速查表」 整理了眼科、試驗、統計、工具的所有縮寫。 看到 BCVA / CST / MMRM / CMH / PSM / ASMD / Q4W 等不認得 → 翻 appendix G.1–G.5。 看到方法概念不懂（什麼是 random intercept、censoring、propensity score）→ 翻 appendix E、F 的 ELI5。",
     "crumbs": [
@@ -42,7 +42,7 @@
   {
     "objectID": "index.html#tenaya-lucerne我們今天要-reproduce-的-paper",
     "href": "index.html#tenaya-lucerne我們今天要-reproduce-的-paper",
-    "title": "羅氏眼科研究賦能工作坊教材",
+    "title": "羅氏眼科臨床研究賦能工作坊教材",
     "section": "TENAYA / LUCERNE：我們今天要 reproduce 的 paper",
     "text": "TENAYA / LUCERNE：我們今天要 reproduce 的 paper\n\nCheung CMG, Lim JI, Priglinger S, et al. Anatomic Outcomes with Faricimab vs Aflibercept in Head-to-Head Dosing Phase of the TENAYA/LUCERNE Trials in Neovascular Age-related Macular Degeneration. Ophthalmology. 2025;132(5):519-526.1\n\n一頁懶人包：\n\n\n\n\n\n\n\n項目\n內容\n\n\n\n\n設計\nTENAYA + LUCERNE 兩個 phase 3 RCT 的 pooled post-hoc analysis\n\n\nN\n1329 病人（faricimab 665 vs aflibercept 664）\n\n\n時間窗\n前 12 週 head-to-head dosing phase（兩臂都打同 3 針 Q4W）\n\n\noutcomes\nBCVA、CST、IRF/SRF absence proportion、time to first absence\n\n\nstatistical methods\nMMRM（連續變項）+ CMH-weighted（二元變項）+ Kaplan–Meier（time-to-event）\n\n\n結論\nfaricimab 在 anatomic outcomes（CST、SRF absence）優於 aflibercept，BCVA 接近\n\n\n\n\n\n\n\n\n\n📖 outcomes 名詞速解\n\n\n\n\nBCVA = best-corrected visual acuity，最佳矯正視力，用 ETDRS letters 計分（0–100，越高越好）\nCST = central subfield thickness，OCT 量到的中央視網膜厚度（單位 μm）\nIRF / SRF = intraretinal / subretinal fluid，視網膜內 / 下液（OCT 看得到的積水）\nabsence proportion = 看不到 fluid 的病人比例（治療目標：把這個比例做高）\nhead-to-head = 兩藥同期同 dose 直接對打（前 12 週兩臂都是 Q4W 三針）\n\n\n\n\n\n\n\n\n\n📖 method 名詞速解\n\n\n\n\nMMRM = mixed model for repeated measures，「同一隻眼睛被量很多次」的迴歸\nCMH-weighted = Cochran-Mantel-Haenszel 加權；先在每個分層算差異、再加權平均\nKaplan–Meier = 「時間到事件」的階梯狀曲線（如多久才把 fluid 擠光）\n\n完整 ELI5 在 Appendix E。\n\n\n\n📄 完整 PDF 在 refs/tenaya-lucerne-paper.pdf（CC BY 授權，可下載）。",
     "crumbs": [
@@ -52,7 +52,7 @@
   {
     "objectID": "index.html#工作坊全圖",
     "href": "index.html#工作坊全圖",
-    "title": "羅氏眼科研究賦能工作坊教材",
+    "title": "羅氏眼科臨床研究賦能工作坊教材",
     "section": "工作坊全圖",
     "text": "工作坊全圖\n\n\n\n\n\n\n\n\n\n章節\n主題\n預計時間\n你會做出\n\n\n\n\nPart 1\n認識 paper + 認識資料\n30–40 min\nPosit.Cloud 開好、看到模擬資料的欄位\n\n\nPart 2\nTable 1 baseline characteristics\n20 min\n一張對得起 paper 的 Table 1\n\n\nPart 3\nFigure 1：MMRM 跑 BCVA + CST\n40 min\n兩張隨時間變化的曲線圖\n\n\nPart 4\nFigure 2：CMH 跑 IRF/SRF/both\n30 min\n三張 absence proportion bar chart\n\n\nPart 5\n換你院內資料\n30 min\n同一份 code、跑出「假裝是你院內」的 paper draft\n\n\nPart 6\n(bonus) Figure 3：KM + Cox\n20 min\n一張 time-to-event 曲線\n\n\nAppendix\n你回院之後要做的事\n—\n院內 csv schema、AI 對話技巧、常見錯誤",
     "crumbs": [
@@ -62,7 +62,7 @@
   {
     "objectID": "index.html#一個重要的觀念",
     "href": "index.html#一個重要的觀念",
-    "title": "羅氏眼科研究賦能工作坊教材",
+    "title": "羅氏眼科臨床研究賦能工作坊教材",
     "section": "一個重要的觀念",
     "text": "一個重要的觀念\n\n\n\n\n\n\n\n\n\nRCT 是「用 1329 個病人證明藥的效果」；RWE 是「用你院內 100–200 個病人展示同一個方法在你的人群跑出什麼樣」。 方法不變，能講的故事略小——這就是為什麼你今天學的 code 可以直接搬。\n\n\n\n\n\n\n\n老師快速指引\n\n\n\n\n沒看過 R 也沒關係，跟著「📋 複製這段話貼給 AI」就好\n卡住舉手，助教會來看\n結束時你會帶走：一個 Posit.Cloud project + 這本書的 PDF + 院內 csv schema\n\n\n\n\n\n\n\n\n\n1. Cheung CMG, Lim JI, Priglinger S, et al. Anatomic outcomes with faricimab vs aflibercept in head-to-head dosing phase of the TENAYA/LUCERNE trials in neovascular age-related macular degeneration. Ophthalmology. 2025;132(5):519-526. doi:10.1016/j.ophtha.2024.11.023",
     "crumbs": [
