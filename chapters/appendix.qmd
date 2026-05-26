@@ -8,14 +8,14 @@ source("_common.R")
 
 ---
 
-## 🩺 環境健檢：`validate_env.R`
+## 🩺 環境健檢：`setup/validate_env.R`
 
 開課前 / 卡關時，跑一次：
 
 ```r
-source("validate_env.R")     # RStudio Console
+source("setup/validate_env.R")     # RStudio Console
 # 或
-# Rscript validate_env.R     # terminal
+# Rscript setup/validate_env.R     # terminal
 ```
 
 30 秒內檢查 5 件事：
@@ -36,7 +36,7 @@ source("validate_env.R")     # RStudio Console
 
 ```bash
 # 第一次需要裝套件（5–10 分鐘）；之後省略
-Rscript install.r
+Rscript setup/install.r
 
 # 跟著順序跑，每支都會輸出對應檔案到 output/
 Rscript scripts/01_table1.R              # → output/table1_standalone.html
@@ -63,7 +63,7 @@ Rscript scripts/99_render_report_for_my_data.R
 
 ::: {.callout-warning title="⚠️ 三個必須先確認的前提"}
 1. **CWD 在專案根目錄**：腳本用 `data/...` 相對路徑，`cd scripts/` 後跑會找不到資料。
-2. **套件已裝**：`Rscript install.r` 一次裝齊 14 個套件（含 PSM 用的 `MatchIt` + `cobalt`）。
+2. **套件已裝**：`Rscript setup/install.r` 一次裝齊 14 個套件（含 PSM 用的 `MatchIt` + `cobalt`）。
 3. **資料檔在 `data/`**：`faricimab_baseline.csv`、`faricimab_followup.csv`、`faricimab_my_hospital_baseline.csv`、`faricimab_my_hospital_followup.csv`，缺一支對應腳本就跑不起來。
 :::
 
@@ -212,7 +212,7 @@ ggplot(followup, aes(x = week, y = bcva, colour = arm)) ...
 ```bash
 git clone <this repo>
 cd roche-vabysmo-rwe-workshop
-Rscript install.r
+Rscript setup/install.r
 # 把你的 csv 放進 data/
 quarto render
 open _book/index.html

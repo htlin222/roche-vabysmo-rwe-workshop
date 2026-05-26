@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # scripts/01_table1.R
-# Reproduces Table 1 (baseline characteristics) from part2.qmd, standalone.
+# Reproduces Table 1 (baseline characteristics) from chapters/part2.qmd, standalone.
 #
 # Run from project root:
 #   Rscript scripts/01_table1.R

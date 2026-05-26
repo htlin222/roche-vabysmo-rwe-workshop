@@ -42,7 +42,7 @@ source("_common.R")
 **Plan B（自己 fork）**：
 1. Posit.Cloud → **New Project** → **New Project from Git Repository**
 2. 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop`
-3. RStudio 開起來，Console 跑 `source("install.r")`，等 5–10 分鐘
+3. RStudio 開起來，Console 跑 `source("setup/install.r")`，等 5–10 分鐘
 4. 之後跟 Plan A 一樣
 
 **Plan C（完全沒 R 環境）**：
@@ -70,7 +70,7 @@ source("_common.R")
 #| label: install-pkgs
 #| eval: false
 
-source("install.r")
+source("setup/install.r")
 # 或者直接：
 # options(repos = c(CRAN = "https://packagemanager.posit.co/cran/latest"))
 # install.packages("pak")

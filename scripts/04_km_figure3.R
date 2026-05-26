@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # scripts/04_km_figure3.R
-# Reproduces Figure 3 (KM time-to-first-absence) from part6.qmd, standalone.
+# Reproduces Figure 3 (KM time-to-first-absence) from chapters/part6.qmd, standalone.
 
 suppressPackageStartupMessages({
   library(readr); library(dplyr)

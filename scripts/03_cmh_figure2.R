@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # scripts/03_cmh_figure2.R
-# Reproduces Figure 2 (CMH-weighted absence proportions) from part4.qmd, standalone.
+# Reproduces Figure 2 (CMH-weighted absence proportions) from chapters/part4.qmd, standalone.
 
 suppressPackageStartupMessages({
   library(readr); library(dplyr); library(tidyr)

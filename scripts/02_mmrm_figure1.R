@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # scripts/02_mmrm_figure1.R
-# Reproduces Figure 1 (MMRM on BCVA + CST) from part3.qmd, standalone.
+# Reproduces Figure 1 (MMRM on BCVA + CST) from chapters/part3.qmd, standalone.
 
 suppressPackageStartupMessages({
   library(readr); library(dplyr); library(tidyr)

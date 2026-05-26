@@ -2,24 +2,24 @@
 
 > 給講師（你）— 學員不必看這份。
 >
-> 對齊版本：教材 v0.2.x（2026-05 改版後，含 PSM/ASMD、faricimab_*.csv、6 支 standalone scripts）
+> 對齊版本：教材 v0.2.x（2026-05 改版後，含 PSM/ASMD、faricimab\_\*.csv、6 支 standalone scripts）
 
 ## TL;DR
 
 ```text
 你（老師）做一次：
   1. Posit.Cloud → New Project from Git Repository → 貼 repo URL
-  2. Console: source("install.r")          # 5–10 分鐘，22 個套件含 MatchIt/cobalt
+  2. Console: source("setup/install.r")          # 5–10 分鐘，22 個套件含 MatchIt/cobalt
   3. Console: quarto::quarto_render()      # 2–3 分鐘，充滿 _freeze/ cache
-  4. Console: source("validate_env.R")     # 30 秒環境健檢，全綠就 OK
+  4. Console: source("setup/validate_env.R")     # 30 秒環境健檢，全綠就 OK
   5. Project 三點 → Access → Everyone + Allow Permanent Copies
   6. 複製 project URL，工作坊當天發給學員
 
 學員每人做一次（< 30 秒）：
   1. 點老師的連結（Google 登入 Posit.Cloud）
   2. 右上 Save a Permanent Copy
-  3. 雙擊 part1.qmd → Render → 開做
-  · 卡關時：source("validate_env.R") 看哪一項紅 ❌
+  3. 雙擊 chapters/part1.qmd → Render → 開做
+  · 卡關時：source("setup/validate_env.R") 看哪一項紅 ❌
 ```
 
 完整版 SOP 與 fallback 在下面。
@@ -31,7 +31,7 @@
 
 ::: {.callout-important}
 **v0.2 教材改版（2026-05）後 install.r 套件清單已擴充至 14 個**，新增 `MatchIt`、`cobalt` 給 Part 5 的 PSM/ASMD 工作流。
-若你的預烤 project 是 v0.1 時做的，**請重新 `source("install.r")` 一次**，否則學員跑 Part 5 會缺套件。
+若你的預烤 project 是 v0.1 時做的，**請重新 `source("setup/install.r")` 一次**，否則學員跑 Part 5 會缺套件。
 :::
 
 ---
@@ -50,12 +50,13 @@
 在 Console 跑：
 
 ```r
-source("install.r")
+source("setup/install.r")
 ```
 
 會跑 5–10 分鐘，泡杯咖啡。看到 `[OK] 套件安裝完成` 就好。
 
 清單（給你心裡有底）：
+
 - **資料**：tidyverse, readr
 - **表格**：gtsummary, gt, knitr
 - **MMRM**：mmrm, emmeans, broom, broom.mixed
@@ -108,7 +109,7 @@ Rscript scripts/05_psm_my_hospital.R     # → output/ Love plot + matched fig 1
 
 > 1. 點：[預烤好的 Posit.Cloud project 連結，貼這裡]
 > 2. 右上 **Save a Permanent Copy**（要先註冊 Posit.Cloud 免費帳號，用 Google 登入即可）
-> 3. RStudio 跳出來後，點 `part1.qmd`，按 Render → 開始跟著做
+> 3. RStudio 跳出來後，點 `chapters/part1.qmd`，按 Render → 開始跟著做
 
 **整個過程 < 30 秒**，因為套件已經幫他們裝過了。
 
@@ -120,11 +121,11 @@ Rscript scripts/05_psm_my_hospital.R     # → output/ Love plot + matched fig 1
 
 ## 三層 fallback
 
-| 層 | 給誰 | 體驗 | 限制 |
-|---|---|---|---|
-| **🥇 預烤連結（推薦）** | 全部學員 | 30 秒進到完整 RStudio | 老師要前一晚做一次 setup |
-| **🥈 自己從 GitHub fork** | 預烤連結掛了 / 學員想存自己版本 | 5–10 分鐘等 install | 偶有網路 / 版本問題 |
-| **🥉 純讀網頁版** | 環境完全裝不起來的學員 | 0 安裝、能讀但不能跑 | 看不到自己改 csv 的效果 |
+| 層                        | 給誰                            | 體驗                  | 限制                     |
+| ------------------------- | ------------------------------- | --------------------- | ------------------------ |
+| **🥇 預烤連結（推薦）**   | 全部學員                        | 30 秒進到完整 RStudio | 老師要前一晚做一次 setup |
+| **🥈 自己從 GitHub fork** | 預烤連結掛了 / 學員想存自己版本 | 5–10 分鐘等 install   | 偶有網路 / 版本問題      |
+| **🥉 純讀網頁版**         | 環境完全裝不起來的學員          | 0 安裝、能讀但不能跑  | 看不到自己改 csv 的效果  |
 
 學員只要有其中一層活，就能跟得上工作坊。**至少永遠有 🥉**（GH Pages 24/7 在），所以「我裝不起來」的學員不會被卡到動彈不得。
 
@@ -132,14 +133,14 @@ Rscript scripts/05_psm_my_hospital.R     # → output/ Love plot + matched fig 1
 
 ## 一些常見的 Posit.Cloud 坑
 
-| 症狀 | 原因 | 解法 |
-|---|---|---|
-| 「Project not found」 | 連結 typo / project access 沒設 Public | 重貼連結，檢查 Settings → Access |
-| Console 跑 `install.r` 跑到一半就斷 | 免費 tier 1 GB RAM 編譯到 mmrm 時撐不住 | 重跑 `source("install.r")`，pak 會跳過已裝好的 |
-| `Save a Permanent Copy` 灰色按不下去 | 學員還沒登入 | 點右上人頭 → Sign In |
-| 課堂 25 hr/月用完了 | 免費 tier 限制 | 升級 Cloud Plus（$5/月）或匯出 zip 本機跑 |
-| Part 5 跑到 `library(MatchIt)` 跳錯 | 預烤 project 是 v0.1 時做的、沒裝 PSM 套件 | Console 跑 `pak::pak(c("MatchIt","cobalt"))` 補裝；或重做 setup |
-| 「找不到 `data/faricimab_baseline.csv`」 | 預烤 project 還是舊檔名 `vabysmo_*.csv` | 重新 `git pull`、或重做 New Project from Git |
+| 症狀                                     | 原因                                       | 解法                                                            |
+| ---------------------------------------- | ------------------------------------------ | --------------------------------------------------------------- |
+| 「Project not found」                    | 連結 typo / project access 沒設 Public     | 重貼連結，檢查 Settings → Access                                |
+| Console 跑 `install.r` 跑到一半就斷      | 免費 tier 1 GB RAM 編譯到 mmrm 時撐不住    | 重跑 `source("setup/install.r")`，pak 會跳過已裝好的            |
+| `Save a Permanent Copy` 灰色按不下去     | 學員還沒登入                               | 點右上人頭 → Sign In                                            |
+| 課堂 25 hr/月用完了                      | 免費 tier 限制                             | 升級 Cloud Plus（$5/月）或匯出 zip 本機跑                       |
+| Part 5 跑到 `library(MatchIt)` 跳錯      | 預烤 project 是 v0.1 時做的、沒裝 PSM 套件 | Console 跑 `pak::pak(c("MatchIt","cobalt"))` 補裝；或重做 setup |
+| 「找不到 `data/faricimab_baseline.csv`」 | 預烤 project 還是舊檔名 `vabysmo_*.csv`    | 重新 `git pull`、或重做 New Project from Git                    |
 
 ---
 
@@ -160,11 +161,11 @@ Rscript scripts/05_psm_my_hospital.R     # → output/ Love plot + matched fig 1
 
 ## 為什麼不是 Docker / Binder / WebR？
 
-| 方案 | 不適合的原因 |
-|---|---|
-| Docker | 學員是眼科醫師，不會 docker run |
-| MyBinder + Quarto | 沒有 RStudio UI，學員會迷路 |
+| 方案               | 不適合的原因                                |
+| ------------------ | ------------------------------------------- |
+| Docker             | 學員是眼科醫師，不會 docker run             |
+| MyBinder + Quarto  | 沒有 RStudio UI，學員會迷路                 |
 | WebR / Quarto live | mmrm 這個 C++/TMB 套件不能在 WebAssembly 跑 |
-| 教室機房預裝 | 跨醫院統一機房不存在 |
+| 教室機房預裝       | 跨醫院統一機房不存在                        |
 
 Posit.Cloud + 預烤 project 是「眼科醫師可以接受的最低摩擦解」。

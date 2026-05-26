@@ -24,18 +24,18 @@ Roche / Shao Shih-Chieh 邀請的眼科醫師研究工作坊（原訂 5/16，現
 
 ## Constraints / Decisions（已和 user 確認）
 
-| 軸 | 選擇 | 理由 |
-|---|---|---|
-| 學員程度 | D 偏 A（Excel-many） | 整本書 happy path = 「複製 prompt → 貼給 AI → 拿 code → 貼 Posit.Cloud 跑」，不要求學員自己寫 R |
-| 工具 | Posit.Cloud + R + Quarto book | Roche RWE 圈的 native stack，比 Colab 對眼科醫師友善（一鍵 fork、環境齊全） |
-| 敘事 | A. Reproduce-the-paper | 有具體 target，MMRM/CMH 自然 fall out |
-| 「換院內資料」深度 | 中度 | 下半場 30–60 min 換 csv 重 render，學員身體記憶「換 csv = 換 paper input」 |
-| 上下半場 | 上 Part 1–4 reproduce paper / 下 Part 5–6 換資料 + bonus | |
-| Reproduce 範圍 | Table 1 + Figure 1A/B（MMRM）+ Figure 2（CMH）；Figure 3（KM）為 bonus | Shao spec 只列 MMRM + CMH，KM 雖在 paper 但不是要求 |
-| AI tier | **Free-tier ChatGPT / Gemini / Claude** | Email 8293：「沒辦法去安裝或是花錢訂閱」 |
-| 教學風格 | 沿用 [`htlin222/learn-r-with-ai`](https://github.com/htlin222/learn-r-with-ai) 的 DNA | 已驗證可行，user 自己的另一本書 |
-| 寫作語言 | 內文 zh-TW、code/identifier 英文 | 與 learn-r-with-ai 一致 |
-| 工作坊長度 | 預設 3 小時（modular，可壓到 90 min） | README 說「待確認時間」，三小時是常見邀約 default |
+| 軸                 | 選擇                                                                                  | 理由                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| 學員程度           | D 偏 A（Excel-many）                                                                  | 整本書 happy path = 「複製 prompt → 貼給 AI → 拿 code → 貼 Posit.Cloud 跑」，不要求學員自己寫 R |
+| 工具               | Posit.Cloud + R + Quarto book                                                         | Roche RWE 圈的 native stack，比 Colab 對眼科醫師友善（一鍵 fork、環境齊全）                     |
+| 敘事               | A. Reproduce-the-paper                                                                | 有具體 target，MMRM/CMH 自然 fall out                                                           |
+| 「換院內資料」深度 | 中度                                                                                  | 下半場 30–60 min 換 csv 重 render，學員身體記憶「換 csv = 換 paper input」                      |
+| 上下半場           | 上 Part 1–4 reproduce paper / 下 Part 5–6 換資料 + bonus                              |                                                                                                 |
+| Reproduce 範圍     | Table 1 + Figure 1A/B（MMRM）+ Figure 2（CMH）；Figure 3（KM）為 bonus                | Shao spec 只列 MMRM + CMH，KM 雖在 paper 但不是要求                                             |
+| AI tier            | **Free-tier ChatGPT / Gemini / Claude**                                               | Email 8293：「沒辦法去安裝或是花錢訂閱」                                                        |
+| 教學風格           | 沿用 [`htlin222/learn-r-with-ai`](https://github.com/htlin222/learn-r-with-ai) 的 DNA | 已驗證可行，user 自己的另一本書                                                                 |
+| 寫作語言           | 內文 zh-TW、code/identifier 英文                                                      | 與 learn-r-with-ai 一致                                                                         |
+| 工作坊長度         | 預設 3 小時（modular，可壓到 90 min）                                                 | README 說「待確認時間」，三小時是常見邀約 default                                               |
 
 ## Repo 骨架（建立後）
 
@@ -164,7 +164,7 @@ P_MISSING_W12 <- 0.06
 2. **生 follow-up** (`followup` data frame，1329 × 3 = 3987 列前提，扣除 missing)：
    - 對每位病人，在 week ∈ {4, 8, 12}：
      - `bcva` = `bcva_baseline` + (group_mean[week] + subject_random_intercept + visit_residual)
-     - `cst`  = `cst_baseline`  + (group_mean[week] + subject_random_intercept + visit_residual)
+     - `cst` = `cst_baseline` + (group_mean[week] + subject_random_intercept + visit_residual)
      - `irf`：以 `1 - ABSENCE_IRF_*[week]` 為機率（注意 baseline 沒 IRF 的人 follow-up 也 0；有 IRF 的人按比例消失）。簡化規則：以 marginal probability 直接 Bernoulli 即可（learner 不會檢查 monotonicity）
      - `srf`：同上
      - 隨 week 增加 missing 機率，整列（bcva, cst, irf, srf）一起 NA — 模擬病人沒回診
@@ -289,6 +289,7 @@ options(dplyr.print_min = 6, dplyr.print_max = 6)
 ## §E. 章節內容規格（任務級別）
 
 每章按 `learn-r-with-ai` 的 DNA：
+
 - 開頭 callout-note collapse=true「一鍵 Prompt：整章一次跑完」
 - 接著一連串「任務 N」，每個任務有：
   1. 📋 **複製這段話，貼給 AI** — 學員 copy 的 prompt 原文（zh-TW，自然語言）
@@ -313,7 +314,7 @@ options(dplyr.print_min = 6, dplyr.print_max = 6)
 預計 30–40 分鐘。
 
 - **任務 1**：開 Posit.Cloud → New Project from Git Repository → 貼 URL → 等到 RStudio 跳出來
-- **任務 2**：在 Console 跑 `source("install.r")`（或第一次 render qmd 時自動裝）
+- **任務 2**：在 Console 跑 `source("setup/install.r")`（或第一次 render qmd 時自動裝）
 - **任務 3**：用 AI 解釋這篇 paper 在做什麼（給學員模板 prompt：「這是 TENAYA/LUCERNE 的 paper abstract，請用 100 字告訴我它在比較什麼藥、為什麼比較、結論是什麼」）
 - **任務 4**：用 `readr::read_csv()` 讀 `data/vabysmo_baseline.csv` 和 `data/vabysmo_followup.csv`，用 `dplyr::glimpse()` 看欄位
 - **任務 5**：用 AI 解釋 long format vs wide format（為什麼 followup 要 long）
@@ -392,7 +393,7 @@ options(dplyr.print_min = 6, dplyr.print_max = 6)
 
 短，給學員與未來訪客的入口。
 
-```markdown
+````markdown
 # 讓你的 Vabysmo RWE 長得像 Ophthalmology 論文
 
 5/30 眼科醫師研究工作坊教材。
@@ -415,11 +416,12 @@ options(dplyr.print_min = 6, dplyr.print_max = 6)
 ```bash
 git clone <repo>
 cd roche-vabysmo-rwe-workshop
-Rscript install.r
+Rscript setup/install.r
 Rscript R/simulate_vabysmo.R   # 重生模擬資料（可選）
 quarto render
 open _book/index.html
 ```
+````
 
 ## 結構
 
@@ -428,6 +430,7 @@ open _book/index.html
 ## 對口
 
 Shao, Shih-Chieh (邵時傑) / 林協霆
+
 ```
 
 > 既存 `README.md` 含「對口」「素材」「任務」等 Shao-給的 context，那份留給 user 自己內部用。**新的 `README.md` 把那些當作 internal note，搬到本 plan 開頭已經 cover；GitHub-facing README 改寫成 student/visitor 版**。但 user 的舊 README 內容不能丟，移到 `docs/internal-notes.md` 保留。
@@ -435,15 +438,17 @@ Shao, Shih-Chieh (邵時傑) / 林協霆
 ## §H. `.gitignore`
 
 ```
-_book/
-_freeze/
+
+\_book/
+\_freeze/
 .Rproj.user/
 .Rhistory
 .RData
-*.html
+\*.html
 !references.bib
 .DS_Store
 .quarto/
+
 ```
 
 > 注意：`_book/` 通常會 git-ignore。但**這次要 commit `_book/`**，因為 deliverable 是 user 醒來能看到 build 結果。改：先 build → `_book/` 加進 git → 之後 push GitHub Pages 就能用。所以 `.gitignore` 不要 ignore `_book/`，改 ignore `_freeze/` 和 `.quarto/` 即可。
@@ -512,3 +517,4 @@ _freeze/
 - 真正的院內 EHR ETL
 - 上 Posit.Cloud 後的權限 / 帳號管理
 - 投影片 (`.Rmd` presentation) — 不在這次 deliverable，等內容定型後另出
+```

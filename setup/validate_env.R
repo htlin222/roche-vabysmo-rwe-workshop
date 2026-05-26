@@ -3,8 +3,8 @@
 # validate_env.R — 工作坊環境健檢
 #
 # 用法（任一）：
-#   Rscript validate_env.R                    # terminal
-#   source("validate_env.R")                  # RStudio Console
+#   Rscript setup/validate_env.R                    # terminal
+#   source("setup/validate_env.R")                  # RStudio Console
 #
 # 設計：完全 self-contained，不需要任何套件就能跑（base R 即可）。
 # 檢查點：
@@ -95,7 +95,7 @@ if (length(missing) == 0L) {
 } else {
   bad(sprintf("缺 %d 個套件：%s",
               length(missing), paste(missing, collapse = ", ")))
-  cat("\n  \U0001F4A1 解法：在 Console 跑 source(\"install.r\")\n")
+  cat("\n  \U0001F4A1 解法：在 Console 跑 source(\"setup/install.r\")\n")
 }
 
 # 重點套件 load 測試（容易因為 system dep 漏裝而 install 成功但 load 失敗）
@@ -220,8 +220,8 @@ cat("========================================\n\n")
 
 # 給 teacher 用的小提示
 if (interactive() || identical(commandArgs(trailingOnly = TRUE), character(0))) {
-  cat("· 老師：跑 source(\"install.r\") + quarto::quarto_render() + Posit.Cloud Access 設 public\n")
-  cat("· 學員：點老師連結 → Save a Permanent Copy → 開 part1.qmd\n")
+  cat("· 老師：跑 source(\"setup/install.r\") + quarto::quarto_render() + Posit.Cloud Access 設 public\n")
+  cat("· 學員：點老師連結 → Save a Permanent Copy → 開 chapters/part1.qmd\n")
   cat("· 不寫 code 的學員：Rscript scripts/0[1-6]_*.R 一行跑完\n\n")
 }
 

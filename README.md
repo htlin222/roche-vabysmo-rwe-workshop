@@ -58,7 +58,7 @@ gh release create v0.2.4 \
 | 層                           | 怎麼進                                                                                                                                         | 體驗                            | 適合                          |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ----------------------------- |
 | 🥇 **預烤 Posit.Cloud 連結** | <https://posit.cloud/content/12416569> → Save a Permanent Copy                                                                                 | 30 秒進 RStudio，**套件已裝好** | 全部學員（推薦）              |
-| 🥈 **GitHub fork**           | Posit.Cloud → New Project from Git Repository → 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop` → Console 跑 `source("install.r")` | 5–10 分鐘安裝後可跑 code        | 預烤連結掛了 / 想保留自己版本 |
+| 🥈 **GitHub fork**           | Posit.Cloud → New Project from Git Repository → 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop` → Console 跑 `source("setup/install.r")` | 5–10 分鐘安裝後可跑 code        | 預烤連結掛了 / 想保留自己版本 |
 | 🥉 **純讀網頁版**            | <https://htlin222.github.io/roche-vabysmo-rwe-workshop/>                                                                                       | 0 安裝、純閱讀                  | 環境完全裝不起來              |
 
 > 老師：工作坊前一晚請看 [`docs/posit-cloud-setup.md`](docs/posit-cloud-setup.md) 預烤 🥇 連結。
@@ -74,7 +74,7 @@ git clone <this repo>
 cd roche-vabysmo-rwe-workshop
 
 # 一鍵安裝套件
-Rscript install.r
+Rscript setup/install.r
 
 # 重生模擬資料（可選，repo 已含 csv）
 Rscript R/simulate_faricimab.R
@@ -93,27 +93,29 @@ open _book/index.html
 ```
 .
 ├── README.md                  # 本文件
-├── plan.md                    # 給未來自己的 build plan（含 design rationale）
-├── _quarto.yml                # Quarto book 設定
-├── _common.R                  # 字型 / theme / knitr 全域
-├── install.r                  # 一鍵安裝套件
+├── _quarto.yml                # Quarto book 設定（execute-dir: project）
+├── _common.R                  # 字型 / theme / knitr 全域（每章 source 它）
+├── index.qmd                  # 前言（書封面頁，Quarto 要求留在根目錄）
 │
-├── index.qmd                  # 前言
-├── part1.qmd                  # Part 1 認識 paper + 資料
-├── part2.qmd                  # Part 2 Table 1
-├── part3.qmd                  # Part 3 Figure 1：MMRM
-├── part4.qmd                  # Part 4 Figure 2：CMH
-├── part5.qmd                  # Part 5 換你院內資料 ← 真正 deliverable
-├── part6.qmd                  # Part 6 Bonus：KM + Cox
-├── appendix.qmd               # 院內 csv schema + 常見錯誤 + AI 對話技巧
+├── chapters/                  # 各章 qmd
+│   ├── primer.qmd             # 暖身
+│   ├── part1.qmd              # Part 1 認識 paper + 資料
+│   ├── part2.qmd              # Part 2 Table 1
+│   ├── part3.qmd              # Part 3 Figure 1：MMRM
+│   ├── part4.qmd              # Part 4 Figure 2：CMH
+│   ├── part5.qmd              # Part 5 換你院內資料 ← 真正 deliverable
+│   ├── part6.qmd              # Part 6 Bonus：KM + Cox
+│   └── appendix.qmd           # 院內 csv schema + 常見錯誤 + AI 對話技巧
 │
-├── data/                      # 三份模擬 csv + data dictionary
-├── scripts/                   # 5 支 standalone R script
+├── assets/                    # references.bib / .csl / styles.css（_quarto.yml 引用）
+├── setup/                     # install.r 裝套件、validate_env.R 環境健檢
+├── data/                      # 模擬 csv + data dictionary
+├── scripts/                   # standalone R scripts（01–05 → output/、99 → _book/）
 ├── R/simulate_faricimab.R    # 可重現的模擬資料生成腳本
 ├── refs/                      # 參考論文（TENAYA/LUCERNE PDF）
-├── emails/                    # Shao 對課的原文
-├── docs/                      # 內部筆記
-└── _book/                     # 渲染輸出（gitignore；HTML→gh-pages、PDF→Release asset）
+├── docs/                      # 內部筆記（含 plan.md build plan、posit-cloud-setup、faq）
+├── output/                    # standalone scripts 圖表輸出（gitignore）
+└── _book/                     # Quarto 渲染輸出（gitignore；HTML→gh-pages、PDF→Release asset）
 ```
 
 ---
@@ -145,7 +147,7 @@ RWE / regulatory 圈的 lingua franca 是 R + Quarto；`mmrm` 套件本來就是
 TENAYA/LUCERNE raw data 不公開（Roche 內部）。我們從 paper 的 summary statistics 反推、
 重生統計特性接近的 1329 筆資料，用 `R/simulate_faricimab.R` 完全 reproducible（fixed seed）。
 
-詳細設計討論看 [`plan.md`](plan.md)。
+詳細設計討論看 [`docs/plan.md`](docs/plan.md)。
 
 ---
 

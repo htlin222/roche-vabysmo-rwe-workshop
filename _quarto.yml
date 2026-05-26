@@ -1,6 +1,9 @@
 project:
   type: book
   output-dir: _book
+  # 章節移到 chapters/ 後，讓所有 code chunk 都從專案根目錄執行，
+  # source("_common.R") 與 read_csv("data/...") 才能維持相對路徑不變。
+  execute-dir: project
 
 knitr:
   opts_chunk:
@@ -29,17 +32,17 @@ book:
       Built with [Quarto](https://quarto.org/)
   chapters:
     - index.qmd
-    - primer.qmd
-    - part1.qmd
-    - part2.qmd
-    - part3.qmd
-    - part4.qmd
-    - part5.qmd
-    - part6.qmd
-    - appendix.qmd
+    - chapters/primer.qmd
+    - chapters/part1.qmd
+    - chapters/part2.qmd
+    - chapters/part3.qmd
+    - chapters/part4.qmd
+    - chapters/part5.qmd
+    - chapters/part6.qmd
+    - chapters/appendix.qmd
 
-bibliography: references.bib
-csl: american-medical-association.csl
+bibliography: assets/references.bib
+csl: assets/american-medical-association.csl
 
 format:
   html:
@@ -50,7 +53,7 @@ format:
     code-fold: false
     code-tools: true
     code-copy: true
-    css: styles.css
+    css: assets/styles.css
   pdf:
     documentclass: scrbook
     pdf-engine: xelatex
