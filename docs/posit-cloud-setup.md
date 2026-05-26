@@ -77,15 +77,15 @@ quarto::quarto_render()
 
 ### Step 3.5 — （可選）預跑 6 支 standalone scripts
 
-讓你自己心裡有把握、`_book/` 內也存有現成的標準輸出可以對學員圖：
+讓你自己心裡有把握、`output/` 內也存有現成的標準輸出可以對學員圖：
 
 ```r
 # 在 RStudio Terminal（注意是 terminal、不是 Console）
-Rscript scripts/01_table1.R              # → _book/table1_standalone.html
-Rscript scripts/02_mmrm_figure1.R        # → _book/figure1_standalone.png
-Rscript scripts/03_cmh_figure2.R         # → _book/figure2_standalone.png
-Rscript scripts/04_km_figure3.R          # → _book/figure3_standalone.png
-Rscript scripts/06_psm_my_hospital.R     # → Love plot + matched fig 1/2
+Rscript scripts/01_table1.R              # → output/table1_standalone.html
+Rscript scripts/02_mmrm_figure1.R        # → output/figure1_standalone.png
+Rscript scripts/03_cmh_figure2.R         # → output/figure2_standalone.png
+Rscript scripts/04_km_figure3.R          # → output/figure3_standalone.png
+Rscript scripts/05_psm_my_hospital.R     # → output/ Love plot + matched fig 1/2
 ```
 
 這些 `*_standalone.*` 檔可以給「完全不寫 code」的學員直接 `Rscript scripts/0X_xxx.R` 重跑。
@@ -113,7 +113,7 @@ Rscript scripts/06_psm_my_hospital.R     # → Love plot + matched fig 1/2
 **整個過程 < 30 秒**，因為套件已經幫他們裝過了。
 
 ::: {.callout-tip title="完全不寫 code 的學員"}
-若有學員只想看圖、不想跟 prompt：直接打開 RStudio Terminal、依序 `Rscript scripts/01_table1.R` ~ `06_psm_my_hospital.R`，每支 30 秒內輸出對應 `_book/*_standalone.*`。書內 appendix 開頭有完整對應表。
+若有學員只想看圖、不想跟 prompt：直接打開 RStudio Terminal、依序 `Rscript scripts/01_table1.R` ~ `05_psm_my_hospital.R`，每支 30 秒內輸出對應 `output/*_standalone.*`；想要整本書 HTML 再跑 `99_render_report_for_my_data.R`（輸出到 `_book/`）。書內 appendix 開頭有完整對應表。
 :::
 
 ---

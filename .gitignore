@@ -16,4 +16,7 @@ Thumbs.db
 # Quarto render output — 不 commit；PDF 用 GitHub Release asset 散布，HTML 用本地 / Posit Cloud
 _book/
 
+# Standalone scripts（01–05）的輸出圖表 / HTML — generated，不 commit
+output/
+
 /.quarto/

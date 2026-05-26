@@ -190,8 +190,8 @@ expected_scripts <- c(
   "scripts/02_mmrm_figure1.R",
   "scripts/03_cmh_figure2.R",
   "scripts/04_km_figure3.R",
-  "scripts/05_render_report_for_my_data.R",
-  "scripts/06_psm_my_hospital.R"
+  "scripts/05_psm_my_hospital.R",
+  "scripts/99_render_report_for_my_data.R"
 )
 
 n_present <- sum(file.exists(expected_scripts))

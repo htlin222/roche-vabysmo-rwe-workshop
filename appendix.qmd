@@ -38,15 +38,15 @@ source("validate_env.R")     # RStudio Console
 # 第一次需要裝套件（5–10 分鐘）；之後省略
 Rscript install.r
 
-# 跟著順序跑，每支都會輸出對應檔案到 _book/
-Rscript scripts/01_table1.R              # → table1_standalone.html
-Rscript scripts/02_mmrm_figure1.R        # → figure1_standalone.png  (BCVA + CST)
-Rscript scripts/03_cmh_figure2.R         # → figure2_standalone.png  (IRF/SRF)
-Rscript scripts/04_km_figure3.R          # → figure3_standalone.png  (KM + Cox)
-Rscript scripts/06_psm_my_hospital.R     # → love_plot + figure1/2_my_hospital  (PSM 流程)
+# 跟著順序跑，每支都會輸出對應檔案到 output/
+Rscript scripts/01_table1.R              # → output/table1_standalone.html
+Rscript scripts/02_mmrm_figure1.R        # → output/figure1_standalone.png  (BCVA + CST)
+Rscript scripts/03_cmh_figure2.R         # → output/figure2_standalone.png  (IRF/SRF)
+Rscript scripts/04_km_figure3.R          # → output/figure3_standalone.png  (KM + Cox)
+Rscript scripts/05_psm_my_hospital.R     # → output/love_plot + figure1/2_my_hospital  (PSM 流程)
 
 # 想把整本書（含 Part 5 的 PSM 教學）render 成可瀏覽 HTML：
-Rscript scripts/05_render_report_for_my_data.R
+Rscript scripts/99_render_report_for_my_data.R
 # → _book/index.html
 ```
 
@@ -57,8 +57,8 @@ Rscript scripts/05_render_report_for_my_data.R
 | `02_mmrm_figure1.R` | Part 3 | Figure 1：BCVA + CST 隨時間變化 |
 | `03_cmh_figure2.R` | Part 4 | Figure 2：IRF / SRF / 兩者皆無 三 panel |
 | `04_km_figure3.R` | Part 6 | Figure 3：KM 曲線 + Cox HR |
-| `06_psm_my_hospital.R` | **Part 5** | Love plot（ASMD 前後）+ matched cohort 上的 Fig 1/2 |
-| `05_render_report_for_my_data.R` | 全書 | 整本書 render 成 HTML |
+| `05_psm_my_hospital.R` | **Part 5** | Love plot（ASMD 前後）+ matched cohort 上的 Fig 1/2 |
+| `99_render_report_for_my_data.R` | 全書 | 整本書 render 成 HTML（輸出到 `_book/`） |
 :::
 
 ::: {.callout-warning title="⚠️ 三個必須先確認的前提"}

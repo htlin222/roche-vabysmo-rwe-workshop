@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# scripts/05_render_report_for_my_data.R
+# scripts/99_render_report_for_my_data.R
 # 把整本 Quarto book 用「你的院內 csv」重 render 一次。
 #
 # 用法：
@@ -9,7 +9,7 @@
 #        - faricimab_my_hospital_baseline.csv
 #        - faricimab_my_hospital_followup.csv
 #      （或是改 _quarto.yml 與各 qmd 中的檔名）
-#   2. 跑 Rscript scripts/05_render_report_for_my_data.R
+#   2. 跑 Rscript scripts/99_render_report_for_my_data.R
 
 suppressPackageStartupMessages({
   library(quarto)

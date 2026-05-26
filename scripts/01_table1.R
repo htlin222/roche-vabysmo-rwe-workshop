@@ -40,7 +40,7 @@ t1 <- baseline |>
 print(t1)
 
 # 存成 HTML
-out <- "_book/table1_standalone.html"
+out <- "output/table1_standalone.html"
 dir.create(dirname(out), showWarnings = FALSE, recursive = TRUE)
 t1 |> as_gt() |> gt::gtsave(filename = out)
 cat("\n[OK] saved:", out, "\n")

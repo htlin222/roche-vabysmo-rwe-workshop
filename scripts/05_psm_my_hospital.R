@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
-# scripts/06_psm_my_hospital.R
+# scripts/05_psm_my_hospital.R
 # Reproduces Part 5: 院內 cohort PSM + ASMD + matched MMRM/CMH，standalone。
 #
 # 從專案根目錄執行：
-#   Rscript scripts/06_psm_my_hospital.R
+#   Rscript scripts/05_psm_my_hospital.R
 
 suppressPackageStartupMessages({
   library(readr); library(dplyr); library(tidyr)
@@ -72,7 +72,7 @@ mh_matched_followup <- mh_followup |>
 cat("\n=== PSM 後 ASMD ===\n")
 print(bal.tab(m_out, thresholds = c(m = 0.1), un = TRUE))
 
-dir.create("_book", showWarnings = FALSE)
+dir.create("output", showWarnings = FALSE)
 love_plot <- love.plot(
   m_out, binary = "std", threshold = 0.1, abs = TRUE,
   var.order = "unadjusted",
@@ -82,9 +82,9 @@ love_plot <- love.plot(
   title = "ASMD: Before vs After 1:1 PSM"
 ) + theme(legend.position = "bottom")
 
-ggsave("_book/love_plot_standalone.png", love_plot,
+ggsave("output/love_plot_standalone.png", love_plot,
        width = 8, height = 5, dpi = 150)
-cat("\n[OK] Love plot saved to _book/love_plot_standalone.png\n")
+cat("\n[OK] Love plot saved to output/love_plot_standalone.png\n")
 
 # ---------------------------------------------------------------------------
 # 5. Matched cohort 上的 Figure 1（MMRM）
@@ -154,11 +154,11 @@ p_c <- ggplot(baseline_zero(emm_c),
        x = "Time (Weeks)", y = "Adj. Mean Change (μm)") +
   theme_minimal() + theme(legend.position = "bottom")
 
-ggsave("_book/figure1_my_hospital_standalone.png",
+ggsave("output/figure1_my_hospital_standalone.png",
        p_b + p_c + plot_layout(guides = "collect") &
          theme(legend.position = "bottom"),
        width = 11, height = 5, dpi = 150)
-cat("\n[OK] Figure 1 (matched) saved to _book/figure1_my_hospital_standalone.png\n")
+cat("\n[OK] Figure 1 (matched) saved to output/figure1_my_hospital_standalone.png\n")
 
 # ---------------------------------------------------------------------------
 # 6. Matched cohort 上的 Figure 2（CMH）
@@ -258,12 +258,12 @@ plt2 <- (make_panel("abs_both","(A) IRF and SRF") |
   plot_layout(guides = "collect") &
   theme(legend.position = "bottom")
 
-ggsave("_book/figure2_my_hospital_standalone.png", plt2,
+ggsave("output/figure2_my_hospital_standalone.png", plt2,
        width = 12, height = 5, dpi = 150)
-cat("\n[OK] Figure 2 (matched) saved to _book/figure2_my_hospital_standalone.png\n")
+cat("\n[OK] Figure 2 (matched) saved to output/figure2_my_hospital_standalone.png\n")
 
 cat("\n========== 全部完成 ==========\n")
 cat("輸出檔案：\n")
-cat("  _book/love_plot_standalone.png            — PSM 前後 ASMD 對比\n")
-cat("  _book/figure1_my_hospital_standalone.png  — matched cohort 上的 BCVA + CST MMRM\n")
-cat("  _book/figure2_my_hospital_standalone.png  — matched cohort 上的 CMH 三 panel\n")
+cat("  output/love_plot_standalone.png            — PSM 前後 ASMD 對比\n")
+cat("  output/figure1_my_hospital_standalone.png  — matched cohort 上的 BCVA + CST MMRM\n")
+cat("  output/figure2_my_hospital_standalone.png  — matched cohort 上的 CMH 三 panel\n")

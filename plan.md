@@ -65,7 +65,8 @@ roche-vabysmo-rwe-workshop/
 │   ├── 02_mmrm_figure1.R
 │   ├── 03_cmh_figure2.R
 │   ├── 04_km_figure3.R
-│   └── 05_render_report_for_my_data.R
+│   ├── 05_psm_my_hospital.R
+│   └── 99_render_report_for_my_data.R
 │
 ├── R/
 │   └── simulate_vabysmo.R              # 模擬資料生成（reproducibility，set.seed(20260516)）
@@ -385,7 +386,7 @@ options(dplyr.print_min = 6, dplyr.print_max = 6)
 
 ## §F. `scripts/*.R`（給有底子的人）
 
-每支獨立可跑，不依賴 qmd。內容是 qmd 中對應 part 的「參考程式碼」整理版。命名同前面骨架。`05_render_report_for_my_data.R` 用 `quarto::quarto_render()` 觸發整本重新渲染。
+每支獨立可跑，不依賴 qmd。內容是 qmd 中對應 part 的「參考程式碼」整理版。命名同前面骨架。`99_render_report_for_my_data.R` 用 `quarto::quarto_render()` 觸發整本重新渲染。
 
 ## §G. `README.md`（GitHub 入口）
 

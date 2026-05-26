@@ -110,7 +110,7 @@ Rscript scripts/01_table1.R             # Part 2
 Rscript scripts/02_mmrm_figure1.R       # Part 3
 Rscript scripts/03_cmh_figure2.R        # Part 4
 Rscript scripts/04_km_figure3.R         # Part 6
-Rscript scripts/06_psm_my_hospital.R    # Part 5（PSM + matched MMRM/CMH）
+Rscript scripts/05_psm_my_hospital.R    # Part 5（PSM + matched MMRM/CMH）
 ```
 完整對應表與前提條件見附錄頂端「🚀 完全不會寫程式：6 支腳本一行跑完」。
 :::

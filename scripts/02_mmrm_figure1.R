@@ -71,11 +71,11 @@ p_c <- ggplot(baseline_zero(emm_c),
        y = "Adj. Mean Change (μm)") +
   theme_minimal() + theme(legend.position = "bottom")
 
-dir.create("_book", showWarnings = FALSE)
-ggsave("_book/figure1_standalone.png",
+dir.create("output", showWarnings = FALSE)
+ggsave("output/figure1_standalone.png",
        p_b + p_c + plot_layout(guides = "collect") &
          theme(legend.position = "bottom"),
        width = 11, height = 5, dpi = 150)
 
-cat("\n[OK] Figure 1 saved to _book/figure1_standalone.png\n")
+cat("\n[OK] Figure 1 saved to output/figure1_standalone.png\n")
 print(emm_b); print(emm_c)

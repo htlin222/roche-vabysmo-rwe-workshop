@@ -106,12 +106,12 @@ make_panel <- function(out_col, ttl) {
     theme_minimal() + theme(legend.position = "bottom")
 }
 
-dir.create("_book", showWarnings = FALSE)
+dir.create("output", showWarnings = FALSE)
 plt <- (make_panel("abs_both","(A) IRF and SRF") |
           make_panel("abs_irf","(B) IRF") |
           make_panel("abs_srf","(C) SRF")) +
   plot_layout(guides = "collect") &
   theme(legend.position = "bottom")
 
-ggsave("_book/figure2_standalone.png", plt, width = 12, height = 5, dpi = 150)
-cat("\n[OK] Figure 2 saved to _book/figure2_standalone.png\n")
+ggsave("output/figure2_standalone.png", plt, width = 12, height = 5, dpi = 150)
+cat("\n[OK] Figure 2 saved to output/figure2_standalone.png\n")

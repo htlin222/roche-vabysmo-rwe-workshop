@@ -51,7 +51,7 @@ tidy(m_cox, exponentiate = TRUE, conf.int = TRUE) |>
   filter(grepl("^arm", term)) |>
   print()
 
-dir.create("_book", showWarnings = FALSE)
+dir.create("output", showWarnings = FALSE)
 plt <- ggsurvplot(
   fit_km, data = tte, fun = "event",
   conf.int = TRUE, risk.table = TRUE, risk.table.height = 0.25,
@@ -61,8 +61,8 @@ plt <- ggsurvplot(
   break.time.by = 4
 )
 
-png("_book/figure3_standalone.png", width = 8 * 150, height = 6 * 150, res = 150)
+png("output/figure3_standalone.png", width = 8 * 150, height = 6 * 150, res = 150)
 print(plt)
 dev.off()
 
-cat("\n[OK] Figure 3 saved to _book/figure3_standalone.png\n")
+cat("\n[OK] Figure 3 saved to output/figure3_standalone.png\n")
