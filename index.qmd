@@ -105,7 +105,7 @@ The information may contain off-label or pre-approval information of certain pha
 ::: {.callout-tip title="🚀 完全不想看 code？6 支腳本一行跑完"}
 打開 Terminal，確認 CWD 在專案根目錄，依序：
 ```bash
-Rscript setup/install.r                       # 第一次裝套件
+Rscript START.R                               # 第一次裝套件（一鍵入口，內部呼叫 setup/install.r）
 Rscript scripts/01_table1.R             # Part 2
 Rscript scripts/02_mmrm_figure1.R       # Part 3
 Rscript scripts/03_cmh_figure2.R        # Part 4

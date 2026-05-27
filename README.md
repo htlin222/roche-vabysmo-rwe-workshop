@@ -58,7 +58,7 @@ gh release create v0.2.4 \
 | 層                           | 怎麼進                                                                                                                                         | 體驗                            | 適合                          |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ----------------------------- |
 | 🥇 **預烤 Posit.Cloud 連結** | <https://posit.cloud/content/12416569> → Save a Permanent Copy                                                                                 | 30 秒進 RStudio，**套件已裝好** | 全部學員（推薦）              |
-| 🥈 **GitHub fork**           | Posit.Cloud → New Project from Git Repository → 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop` → Console 跑 `source("setup/install.r")` | 5–10 分鐘安裝後可跑 code        | 預烤連結掛了 / 想保留自己版本 |
+| 🥈 **GitHub fork**           | Posit.Cloud → New Project from Git Repository → 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop` → Console 跑 `source("START.R")` | 5–10 分鐘安裝後可跑 code        | 預烤連結掛了 / 想保留自己版本 |
 | 🥉 **純讀網頁版**            | <https://htlin222.github.io/roche-vabysmo-rwe-workshop/>                                                                                       | 0 安裝、純閱讀                  | 環境完全裝不起來              |
 
 > 老師：工作坊前一晚請看 [`docs/posit-cloud-setup.md`](docs/posit-cloud-setup.md) 預烤 🥇 連結。
@@ -73,8 +73,8 @@ gh release create v0.2.4 \
 git clone <this repo>
 cd roche-vabysmo-rwe-workshop
 
-# 一鍵安裝套件
-Rscript setup/install.r
+# 一鍵安裝套件（START.R 內部呼叫 setup/install.r）
+Rscript START.R
 
 # 重生模擬資料（可選，repo 已含 csv）
 Rscript R/simulate_faricimab.R
@@ -93,6 +93,7 @@ open _book/index.html
 ```
 .
 ├── README.md                  # 本文件
+├── START.R                     # 一鍵入口：source("START.R") 裝好所有套件（內部呼叫 setup/install.r）
 ├── _quarto.yml                # Quarto book 設定（execute-dir: project）
 ├── _common.R                  # 字型 / theme / knitr 全域（每章 source 它）
 ├── index.qmd                  # 前言（書封面頁，Quarto 要求留在根目錄）

@@ -29,7 +29,7 @@
 
 1. Posit.Cloud → New Project → New Project from Git Repository
 2. 貼 `https://github.com/htlin222/roche-vabysmo-rwe-workshop`
-3. Console 跑 `source("setup/install.r")`，等 5–10 分鐘
+3. Console 跑 `source("START.R")`，等 5–10 分鐘
 4. 然後跟原本流程一樣
 
 ### Q5. 我完全沒辦法弄 Posit.Cloud（網路 / 帳號 / 公司擋）

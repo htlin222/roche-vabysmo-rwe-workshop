@@ -9,7 +9,7 @@
 ```text
 你（老師）做一次：
   1. Posit.Cloud → New Project from Git Repository → 貼 repo URL
-  2. Console: source("setup/install.r")          # 5–10 分鐘，22 個套件含 MatchIt/cobalt
+  2. Console: source("START.R")                  # 一鍵入口（內部呼叫 setup/install.r），5–10 分鐘，22 個套件含 MatchIt/cobalt
   3. Console: quarto::quarto_render()      # 2–3 分鐘，充滿 _freeze/ cache
   4. Console: source("setup/validate_env.R")     # 30 秒環境健檢，全綠就 OK
   5. Project 三點 → Access → Everyone + Allow Permanent Copies
@@ -31,7 +31,7 @@
 
 ::: {.callout-important}
 **v0.2 教材改版（2026-05）後 install.r 套件清單已擴充至 14 個**，新增 `MatchIt`、`cobalt` 給 Part 5 的 PSM/ASMD 工作流。
-若你的預烤 project 是 v0.1 時做的，**請重新 `source("setup/install.r")` 一次**，否則學員跑 Part 5 會缺套件。
+若你的預烤 project 是 v0.1 時做的，**請重新 `source("START.R")` 一次**，否則學員跑 Part 5 會缺套件。
 :::
 
 ---
@@ -50,9 +50,10 @@
 在 Console 跑：
 
 ```r
-source("setup/install.r")
+source("START.R")
 ```
 
+`START.R` 是放在專案根目錄的一鍵入口，內部就是呼叫 `setup/install.r`；要直接呼叫安裝腳本也可以（`source("setup/install.r")`）。
 會跑 5–10 分鐘，泡杯咖啡。看到 `[OK] 套件安裝完成` 就好。
 
 清單（給你心裡有底）：
@@ -161,7 +162,7 @@ Rscript scripts/05_psm_my_hospital.R     # → output/ Love plot + matched fig 1
 | 症狀                                     | 原因                                       | 解法                                                            |
 | ---------------------------------------- | ------------------------------------------ | --------------------------------------------------------------- |
 | 「Project not found」                    | 連結 typo / project access 沒設 Public     | 重貼連結，檢查 Settings → Access                                |
-| Console 跑 `install.r` 跑到一半就斷      | 多半是還在「從原始碼編譯」吃滿 1 GB RAM    | 確認用 Noble binary repo（見 Step 2.5，install.r 已自動設）；真斷了重跑 `source("setup/install.r")`，pak 會跳過已裝好的 |
+| Console 跑 `install.r` 跑到一半就斷      | 多半是還在「從原始碼編譯」吃滿 1 GB RAM    | 確認用 Noble binary repo（見 Step 2.5，install.r 已自動設）；真斷了重跑 `source("START.R")`，pak 會跳過已裝好的 |
 | `Save a Permanent Copy` 灰色按不下去     | 學員還沒登入                               | 點右上人頭 → Sign In                                            |
 | 課堂 25 hr/月用完了                      | 免費 tier 限制                             | 升級 Cloud Plus（$5/月）或匯出 zip 本機跑                       |
 | Part 5 跑到 `library(MatchIt)` 跳錯      | 預烤 project 是 v0.1 時做的、沒裝 PSM 套件 | Console 跑 `pak::pak(c("MatchIt","cobalt"))` 補裝；或重做 setup |
