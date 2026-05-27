@@ -87,7 +87,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./primer.html" rel="next">
+<link href="./chapters/primer.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -127,7 +127,7 @@ div.csl-indent {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="assets/styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -179,49 +179,49 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./primer.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/primer.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Primer：給非眼科醫師的背景補充</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part1.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/part1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Part 1：認識 paper + 認識資料</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part2.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/part2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 2：Table 1 — Baseline characteristics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part3.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/part3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part4.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/part4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part5.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/part5.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Part 5：換你院內資料（含 PSM + ASMD）</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part6.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/part6.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Part 6（Bonus）：Figure 3 — Time to first absence of fluid</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapters/appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">附錄：回院之後的事</span></span></a>
   </div>
 </li>
@@ -438,11 +438,11 @@ Disclaimer / 免責聲明
 </tr>
 <tr class="odd">
 <td>名詞 / 縮寫速查</td>
-<td><a href="appendix.html">Appendix G</a></td>
+<td><a href="./chapters/appendix.html">Appendix G</a></td>
 </tr>
 <tr class="even">
 <td>統計 / 程式 ELI5</td>
-<td><a href="appendix.html">Appendix E、F</a></td>
+<td><a href="./chapters/appendix.html">Appendix E、F</a></td>
 </tr>
 </tbody>
 </table>
@@ -518,12 +518,12 @@ Disclaimer / 免責聲明
 </div>
 <div class="callout-body-container callout-body">
 <p>打開 Terminal，確認 CWD 在專案根目錄，依序：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> install.r                       <span class="co"># 第一次裝套件</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> START.R                               <span class="co"># 第一次裝套件（一鍵入口，內部呼叫 setup/install.r）</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/01_table1.R             <span class="co"># Part 2</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/02_mmrm_figure1.R       <span class="co"># Part 3</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/03_cmh_figure2.R        <span class="co"># Part 4</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/04_km_figure3.R         <span class="co"># Part 6</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/06_psm_my_hospital.R    <span class="co"># Part 5（PSM + matched MMRM/CMH）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/05_psm_my_hospital.R    <span class="co"># Part 5（PSM + matched MMRM/CMH）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>完整對應表與前提條件見附錄頂端「🚀 完全不會寫程式：6 支腳本一行跑完」。</p>
 </div>
 </div>
@@ -1189,7 +1189,7 @@ Disclaimer / 免責聲明
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./primer.html" class="pagination-link" aria-label="Primer：給非眼科醫師的背景補充">
+      <a href="./chapters/primer.html" class="pagination-link" aria-label="Primer：給非眼科醫師的背景補充">
         <span class="nav-page-text">Primer：給非眼科醫師的背景補充</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1262,8 +1262,8 @@ Disclaimer / 免責聲明
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 院內 csv schema <span class="pp">|</span> <span class="co">[</span><span class="ot">`data/data_dictionary.md`</span><span class="co">](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/data/data_dictionary.md)</span> <span class="pp">|</span></span>
 <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 模擬資料下載 <span class="pp">|</span> <span class="co">[</span><span class="ot">`data/` 全部 csv</span><span class="co">](https://github.com/htlin222/roche-vabysmo-rwe-workshop/tree/main/data)</span> <span class="pp">|</span></span>
 <span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 課堂 FAQ（29 Q&amp;A） <span class="pp">|</span> <span class="co">[</span><span class="ot">`docs/faq.md`</span><span class="co">](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/docs/faq.md)</span> <span class="pp">|</span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 名詞 / 縮寫速查 <span class="pp">|</span> <span class="co">[</span><span class="ot">Appendix G</span><span class="co">](appendix.html)</span> <span class="pp">|</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 統計 / 程式 ELI5 <span class="pp">|</span> <span class="co">[</span><span class="ot">Appendix E、F</span><span class="co">](appendix.html)</span> <span class="pp">|</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 名詞 / 縮寫速查 <span class="pp">|</span> <span class="co">[</span><span class="ot">Appendix G</span><span class="co">](chapters/appendix.qmd)</span> <span class="pp">|</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 統計 / 程式 ELI5 <span class="pp">|</span> <span class="co">[</span><span class="ot">Appendix E、F</span><span class="co">](chapters/appendix.qmd)</span> <span class="pp">|</span></span>
 <span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
@@ -1301,12 +1301,12 @@ Disclaimer / 免責聲明
 <span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="🚀 完全不想看 code？6 支腳本一行跑完"}</span>
 <span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>打開 Terminal，確認 CWD 在專案根目錄，依序：</span>
 <span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> install.r                       <span class="co"># 第一次裝套件</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> START.R                               <span class="co"># 第一次裝套件（一鍵入口，內部呼叫 setup/install.r）</span></span>
 <span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/01_table1.R             <span class="co"># Part 2</span></span>
 <span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/02_mmrm_figure1.R       <span class="co"># Part 3</span></span>
 <span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/03_cmh_figure2.R        <span class="co"># Part 4</span></span>
 <span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/04_km_figure3.R         <span class="co"># Part 6</span></span>
-<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/06_psm_my_hospital.R    <span class="co"># Part 5（PSM + matched MMRM/CMH）</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/05_psm_my_hospital.R    <span class="co"># Part 5（PSM + matched MMRM/CMH）</span></span>
 <span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>完整對應表與前提條件見附錄頂端「🚀 完全不會寫程式：6 支腳本一行跑完」。</span>
 <span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>:::</span>
