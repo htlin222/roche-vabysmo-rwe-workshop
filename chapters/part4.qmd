@@ -42,7 +42,7 @@ followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 ## 任務 16：什麼是 stratified analysis？為什麼要 weight？
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 請用「給沒學過統計的眼科醫師聽」的方式，100 字內解釋：
 > 1. 什麼是 stratified analysis？
@@ -70,6 +70,12 @@ followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 ```{r}
 #| label: build-cmh-data
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 fu_with_strata <- followup |>
   left_join(
     baseline |> select(patient_id, arm, study, bcva_strat, lld_strat, region,
@@ -107,7 +113,7 @@ fu_with_strata <- bind_rows(
 
 ## 任務 18：先用 base R 的 `mantelhaen.test()` 看一下整體 p value
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 用 R 內建 `mantelhaen.test()` 對 week 12 的「IRF and SRF both absent」outcome 做 stratified test：兩 arm 的差異，stratified by study × bcva_strat × lld_strat × region。
 
@@ -115,6 +121,13 @@ fu_with_strata <- bind_rows(
 
 ```{r}
 #| label: cmh-base
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：fu_with_strata（請先跑完任務17，本段不重算）
 cmh_test_at_week <- function(data, outcome_col, week_val) {
   d <- data |>
     filter(week == week_val) |>
@@ -141,7 +154,7 @@ cmh_test_at_week(fu_with_strata, "abs_both", 12)
 
 ## 任務 19：寫 helper 算 CMH-weighted proportion 與 95% CI
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 請給我一個 R 函數 `cmh_weighted_proportion(data, outcome_col, arm_col, strata_cols)`：
 > 1. 對每個 (stratum × arm)，算 proportion (events / n)
@@ -155,6 +168,13 @@ cmh_test_at_week(fu_with_strata, "abs_both", 12)
 
 ```{r}
 #| label: cmh-weighted-fn
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：fu_with_strata（請先跑完任務17，本段不重算）
 cmh_weighted_proportion <- function(data, outcome_col,
                                     arm_col = "arm",
                                     strata_cols = c("study","bcva_strat","lld_strat","region")) {
@@ -213,6 +233,13 @@ cmh_weighted_proportion(
 
 ```{r}
 #| label: cmh-all
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：fu_with_strata、cmh_weighted_proportion（請先跑完任務17、19，本段不重算）
 all_results <- expand.grid(
   outcome = c("abs_irf", "abs_srf", "abs_both"),
   wk      = c(0, 4, 8, 12),
@@ -264,7 +291,7 @@ p_table
 
 ## 任務 20：畫 Figure 2 — 三個 panel
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 我有 `all_results` (outcome, week, arm, p_hat, lower, upper) 與 `p_table` (outcome, week, p)。請用 ggplot2 + patchwork 畫三個 panel：
 > 1. (A) Absence of IRF and SRF
@@ -277,6 +304,13 @@ p_table
 
 ```{r}
 #| label: fig2-builder
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：all_results、p_table（請先跑完前面所有任務，本段不重算）
 make_panel <- function(outcome_col, panel_title) {
   dat <- all_results |>
     filter(outcome == outcome_col) |>

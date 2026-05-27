@@ -42,7 +42,7 @@ library(patchwork)
 我們準備了一份 `faricimab_my_hospital.csv`，n = 180（faricimab 100 / aflibercept 80），region 全部 = `Asia-Pacific`。
 **schema 跟 trial 資料一模一樣。**
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 請用 `readr::read_csv()` 讀 `data/faricimab_my_hospital_baseline.csv` 和 `data/faricimab_my_hospital_followup.csv`，看欄位是否跟 trial 資料一致。
 >
@@ -50,6 +50,8 @@ library(patchwork)
 
 ```{r}
 #| label: load-mh
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr)
 mh_baseline <- read_csv("data/faricimab_my_hospital_baseline.csv",
                         show_col_types = FALSE)
 mh_followup <- read_csv("data/faricimab_my_hospital_followup.csv",
@@ -68,7 +70,7 @@ glimpse(mh_followup)
 mh_baseline |> count(arm)
 ```
 
-> 詳細欄位定義在 [`data/data_dictionary.md`](data/data_dictionary.md)。
+> 詳細欄位定義在 [`data/data_dictionary.md`](https://github.com/htlin222/roche-vabysmo-rwe-workshop/blob/main/data/data_dictionary.md)。
 > **想做你自己的院內 cohort？把資料整成這個 schema、放進 `data/`、改下面的檔名就好。**
 
 ---
@@ -96,7 +98,7 @@ mh_baseline |> count(arm)
 
 ## 任務 22：診斷 baseline 不平衡（PSM 前的 ASMD）
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 我有一個 R data frame `mh_baseline`，欄位 patient_id, arm (faricimab/aflibercept), age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat。請用 `cobalt::bal.tab()` 算每個共變項的 absolute standardized mean difference (ASMD)，threshold = 0.1，並幫我解讀哪些變項不平衡。
 
@@ -104,7 +106,11 @@ mh_baseline |> count(arm)
 
 ```{r}
 #| label: psm-pre-asmd
-mh_baseline <- mh_baseline |>
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(cobalt)
+# treat / factor 一起在讀檔時建好，往後每段沿用同一份 mh_baseline
+mh_baseline <- read_csv("data/faricimab_my_hospital_baseline.csv",
+                        show_col_types = FALSE) |>
   mutate(
     treat = if_else(arm == "faricimab", 1L, 0L),
     sex   = factor(sex),
@@ -137,7 +143,7 @@ bal_pre
 
 ## 任務 23：跑 1:1 nearest neighbor PSM
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 請用 `MatchIt::matchit()` 做 1:1 nearest neighbor PSM，treatment 是 faricimab vs aflibercept，共變項 age, sex, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, bcva_strat, lld_strat，distance 用 logistic regression、caliper = 0.2、ratio = 1。配對完拿 `match.data()`。
 
@@ -145,6 +151,15 @@ bal_pre
 
 ```{r}
 #| label: psm-fit
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(MatchIt)
+mh_baseline <- read_csv("data/faricimab_my_hospital_baseline.csv",
+                        show_col_types = FALSE) |>
+  mutate(treat = if_else(arm == "faricimab", 1L, 0L),
+         sex = factor(sex), bcva_strat = factor(bcva_strat),
+         lld_strat = factor(lld_strat))
+mh_followup <- read_csv("data/faricimab_my_hospital_followup.csv",
+                        show_col_types = FALSE)
 set.seed(20260530)
 
 m_out <- matchit(
@@ -181,7 +196,7 @@ cat("配對後 follow-up rows：", nrow(mh_matched_followup), "\n")
 
 ## 任務 24：配對後重算 ASMD + Love plot
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 請用 `cobalt::bal.tab()` 算配對後的 ASMD，並用 `cobalt::love.plot()` 畫前後對比的 Love plot（threshold 線 0.1）。
 
@@ -189,6 +204,9 @@ cat("配對後 follow-up rows：", nrow(mh_matched_followup), "\n")
 
 ```{r}
 #| label: psm-post-asmd
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(cobalt)
+# ⚠️ 沿用前面任務的物件：m_out（請先跑完任務23，本段不重算）
 bal_post <- bal.tab(m_out, thresholds = c(m = 0.1), un = TRUE)
 bal_post
 ```
@@ -232,6 +250,10 @@ love.plot(
 
 ```{r}
 #| label: mh-table1
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(gtsummary)
+mh_baseline <- read_csv("data/faricimab_my_hospital_baseline.csv",
+                        show_col_types = FALSE)
 mh_baseline |>
   select(arm, age, sex, region, bcva_baseline, cst_baseline,
          irf_baseline, srf_baseline, study, bcva_strat, lld_strat) |>
@@ -253,6 +275,11 @@ mh_baseline |>
 #| fig-width: 11
 #| fig-height: 5
 
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(dplyr); library(tidyr); library(mmrm); library(emmeans)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+# ⚠️ 沿用前面任務的物件：mh_matched、mh_matched_followup（請先跑完任務23，本段不重算）
 mh_fu_long <- mh_matched_followup |>
   left_join(
     mh_matched |> select(patient_id, arm, study, region,
@@ -338,6 +365,10 @@ p_b + p_c + plot_layout(guides = "collect") &
 #| fig-width: 12
 #| fig-height: 5
 
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(dplyr); library(tidyr); library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+# ⚠️ 沿用前面任務的物件：mh_matched、mh_matched_followup（請先跑完任務23，本段不重算）
 cmh_weighted_proportion <- function(data, outcome_col,
                                     arm_col = "arm",
                                     strata_cols = c("bcva_strat", "lld_strat")) {
@@ -442,7 +473,7 @@ make_mh_panel <- function(out_col, ttl) {
 
 ## 任務 26：討論 — 你院內資料的 paper 該怎麼寫？
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 我用 n=180 的院內 cohort、配對後做 1:1 PSM 跑出和 TENAYA/LUCERNE 同方向的結果，但 95% CI 寬很多。如果我要把這個結果投 Ophthalmology 這類期刊，我應該：（1）強調什麼？（2）reviewer 會質疑什麼？（3）下一步該怎麼處理 limitation？請給我 3 段建議文字。
 >

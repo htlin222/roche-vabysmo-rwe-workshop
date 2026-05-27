@@ -43,7 +43,7 @@ baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
 
 ## 任務 6：第一張 Table 1
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 請用 R 套件 `gtsummary` 的 `tbl_summary()` 做一張 Table 1，by `arm` 分組，包含這些變項：age, sex, region, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, study, bcva_strat, lld_strat。連續變項顯示 mean (SD)，二元 irf_baseline 和 srf_baseline 顯示 n (%)。
 
@@ -51,6 +51,9 @@ baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
 
 ```{r}
 #| label: tbl1-basic
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(gtsummary); library(gt)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
 t1_basic <- baseline |>
   select(arm, age, sex, region, bcva_baseline, cst_baseline,
          irf_baseline, srf_baseline, study, bcva_strat, lld_strat) |>
@@ -98,7 +101,7 @@ CST 兩臂都接近 357 (SD ~120)。
 
 ## 任務 7：加 overall 與 p value
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 在剛剛那張 Table 1 上加：
 > 1. `add_overall()` 多一欄「Total」
@@ -109,6 +112,10 @@ CST 兩臂都接近 357 (SD ~120)。
 
 ```{r}
 #| label: tbl1-with-p
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(gtsummary); library(gt)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：t1_basic（請先跑完任務6，本段不重算）
 t1 <- t1_basic |>
   add_overall() |>
   add_p() |>
@@ -129,7 +136,7 @@ t1
 
 ## 任務 8：存成檔案
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 請告訴我怎麼把這張 `gtsummary` table 存成 (a) html (b) docx，給共同作者看。
 
@@ -138,6 +145,10 @@ t1
 ```{r}
 #| label: tbl1-save
 #| eval: false
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(gtsummary); library(gt)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：t1（請先跑完任務6、7，本段不重算）
 # 存 HTML（瀏覽器打開）
 t1 |>
   as_gt() |>
@@ -153,7 +164,7 @@ t1 |>
 
 ## 任務 9：怎麼讀 Table 1 判斷「兩組是否平衡」
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 在 RCT paper 裡，Table 1 通常用來說明兩組基線特性平衡。請用繁體中文告訴我：
 > 1. 看哪些 row？

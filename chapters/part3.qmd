@@ -49,7 +49,7 @@ followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 ## 任務 10：什麼是 MMRM？
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 請用 100 字以下、不用數學公式，跟一個沒學過統計的眼科醫師解釋：什麼是 mixed model for repeated measures (MMRM)？為什麼眼科 longitudinal trial 都用 MMRM 而不是 paired t-test 或 ANOVA？「unstructured covariance」是什麼意思？
 
@@ -64,7 +64,7 @@ followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 ## 任務 11：把 baseline 與 followup 接起來
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 我有兩個 R data frame：`baseline`（一筆病人一列，欄位 patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat 等）和 `followup`（long format，欄位 patient_id, week, bcva, cst, irf, srf）。請給我 R code：用 `dplyr::left_join()` 把 baseline 的 arm、bcva_baseline、cst_baseline、study、bcva_strat、lld_strat、region 加到 followup 上，並算 bcva_change = bcva - bcva_baseline、cst_change = cst - cst_baseline。
 
@@ -72,6 +72,13 @@ followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 ```{r}
 #| label: merge-data
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(mmrm); library(emmeans)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 fu_long <- followup |>
   left_join(
     baseline |>
@@ -111,7 +118,7 @@ glimpse(fu_long)
 
 ## 任務 12：跑 MMRM — BCVA
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 請用 R 套件 `mmrm` 跑這個模型：
 >
@@ -128,6 +135,14 @@ glimpse(fu_long)
 
 ```{r}
 #| label: mmrm-bcva
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(mmrm); library(emmeans)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：fu_long（請先跑完任務11，本段不重算）
 m_bcva <- mmrm(
   formula = bcva_change ~ arm + visit + arm:visit +
     study + bcva_strat + lld_strat + region +
@@ -155,7 +170,7 @@ summary(m_bcva)
 
 ## 任務 13：取 adjusted means
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 用 `emmeans::emmeans()` 從上面的 mmrm model 取出每個 arm 在每個 visit 的 adjusted mean change from baseline，加上 95% CI。然後算每個 visit 兩 arm 的差異（faricimab − aflibercept）。
 
@@ -163,6 +178,14 @@ summary(m_bcva)
 
 ```{r}
 #| label: emmeans-bcva
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(mmrm); library(emmeans)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：m_bcva（請先跑完任務11、12，本段不重算）
 emm_bcva <- emmeans(m_bcva, ~ arm | visit)
 emm_bcva
 ```
@@ -179,7 +202,7 @@ contrast(emm_bcva, method = "revpairwise") |>
 
 ## 任務 14：畫 Figure 1A — BCVA
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 深藍 #1F5C8B、aflibercept 赭橙 #C75D38）、加 error bar (95% CI)、加 point。標題 "(A) BCVA change from baseline"，y 軸 label "Adjusted Mean BCVA Change (Letters)"。
 
@@ -188,6 +211,14 @@ contrast(emm_bcva, method = "revpairwise") |>
 ```{r}
 #| label: fig1a-bcva
 #| fig-cap: "Figure 1A. Adjusted mean change from baseline in BCVA over 12-week head-to-head dosing phase."
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(mmrm); library(emmeans)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：emm_bcva（請先跑完任務11~13，本段不重算）
 
 emm_bcva_df <- as.data.frame(emm_bcva) |>
   mutate(week = as.numeric(as.character(visit)))
@@ -223,7 +254,7 @@ p_bcva
 
 ## 任務 15：複製整段，跑 CST → Figure 1B
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 把上面 BCVA 那段 mmrm + emmeans + ggplot 完整 code 複製一份，但 outcome 換成 `cst_change`。最後用 `patchwork` 套件把 Figure 1A (BCVA) 與 Figure 1B (CST) 並排成 2 panel，模仿 paper Fig 1。
 
@@ -231,6 +262,14 @@ p_bcva
 
 ```{r}
 #| label: mmrm-cst
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(mmrm); library(emmeans)
+library(ggplot2); library(patchwork)
+arm_colours <- c("faricimab" = "#1F5C8B", "aflibercept" = "#C75D38")
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：fu_long（請先跑完任務11，本段不重算）
 m_cst <- mmrm(
   formula = cst_change ~ arm + visit + arm:visit +
     study + bcva_strat + lld_strat + region +

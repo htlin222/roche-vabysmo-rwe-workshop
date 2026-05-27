@@ -42,7 +42,7 @@ followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 
 ## 任務 25：什麼是 time-to-event analysis？
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 用「給沒學過統計的眼科醫師聽得懂」的方式 100 字內解釋：
 > 1. 什麼是 time-to-event？
@@ -77,6 +77,11 @@ Cox model 假設：「兩 arm 的 hazard 比值在整段時間都一樣」[@hess
 
 ```{r}
 #| label: build-tte
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(survival); library(survminer); library(broom)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
 # Cohort：baseline 有 IRF 或 SRF 的病人（per paper：n_fari=581, n_afli=591）
 elig <- baseline |>
   filter(irf_baseline == 1 | srf_baseline == 1) |>
@@ -116,7 +121,7 @@ head(tte)
 
 ## 任務 27：畫 KM curve（cumulative incidence 形式）
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 用 `survminer::ggsurvplot()` 畫 cumulative incidence（fun="event"），by arm。x 從 0 到 12 週。
 > faricimab 深藍 #1F5C8B、aflibercept 赭橙 #C75D38。
@@ -125,6 +130,12 @@ head(tte)
 
 ```{r}
 #| label: km-fit
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(survival); library(survminer); library(broom)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：tte（請先跑完任務26，本段不重算）
 fit_km <- survfit(Surv(time, event) ~ arm, data = tte)
 fit_km
 ```
@@ -157,7 +168,7 @@ plot_km
 
 ## 任務 28：Cox 回歸 — Hazard ratio
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（↩️ 續前對話）：
 
 > 用 `survival::coxph(Surv(time, event) ~ arm + study + bcva_strat + lld_strat + region, data = tte)` 算 stratified Cox model。回傳 hazard ratio + 95% CI + log-rank p。
 
@@ -165,6 +176,12 @@ plot_km
 
 ```{r}
 #| label: cox-model
+# ── 前置（可單獨執行）：套件 + 資料 ──
+library(readr); library(dplyr); library(tidyr)
+library(survival); library(survminer); library(broom)
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+followup <- read_csv("data/faricimab_followup.csv", show_col_types = FALSE)
+# ⚠️ 沿用前面任務的物件：tte（請先跑完任務26，本段不重算）
 tte_full <- tte |>
   left_join(
     baseline |> select(patient_id, study, bcva_strat, lld_strat, region),

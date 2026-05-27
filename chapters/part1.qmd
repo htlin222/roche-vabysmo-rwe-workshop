@@ -58,9 +58,18 @@ source("_common.R")
 
 ---
 
+::: {.callout-important title="🧠 對話管理：🆕 開新對話 vs ↩️ 續前對話"}
+每個「📋 複製這段話，貼給 AI」都標了該 **開新對話** 還是 **接續上一個**——這是用免費版 AI 的關鍵習慣：
+
+- **🆕 開新對話**：開一個全新 chat。用在「概念問答」或「某個新主題的第一個 code 任務」。免費版 AI 的上下文（記憶）長度有限，把無關內容塞進同一個對話會讓它變慢、變鈍、甚至忘記前面的設定。概念問答問完可直接關掉；若這是一段 code 流程的起點，**請留著這個對話**給接下來的 ↩️ 續前對話 用。
+- **↩️ 續前對話**：在「剛剛那個對話」裡繼續問。用在「改剛剛那段 code」「把剛剛的表存檔」「沿用剛剛建好的 model / 變數」——AI 需要記得前面產出的內容才接得下去。
+
+小訣竅：每開一個新對話，第一句先貼 `glimpse(df)` 的輸出，AI 才不會幻想欄位名（見 Appendix C）。
+:::
+
 ## 任務 2：第一次安裝套件
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 我在 Posit.Cloud 上的 RStudio，請給我一段 R code 安裝這些套件：tidyverse, gtsummary, mmrm, emmeans, broom, broom.mixed, survival, survminer, gt, patchwork, ggsci。請用 pak 套件，repo 設成 Posit Public Package Manager 來加快下載。
 
@@ -89,7 +98,7 @@ source("START.R")
 
 ## 任務 3：讓 AI 用 100 字摘要這篇 paper
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 下面是一篇 Ophthalmology 期刊的 abstract，請用繁體中文 100 字內告訴我：（1）它在比較哪兩個藥；（2）為什麼比較；（3）主要結論；（4）用了什麼統計方法。
 >
@@ -106,7 +115,7 @@ source("START.R")
 我們已經幫你準備好兩個 csv（在 `data/` 資料夾下）。
 這份資料**不是真的病人資料**，是用 R 模擬出來的，但統計特性接近 TENAYA/LUCERNE paper。
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 請給我 R code，用 `readr::read_csv()` 讀入 `data/faricimab_baseline.csv` 和 `data/faricimab_followup.csv`，然後用 `dplyr::glimpse()` 看欄位。請加中文註解。
 
@@ -152,7 +161,7 @@ followup |>
 
 ## 任務 5：long format vs wide format
 
-📋 **複製這段話，貼給 AI**：
+📋 **複製這段話，貼給 AI**（🆕 開新對話）：
 
 > 請用「給小學生聽得懂」的方式，告訴我什麼是 long format（長表格）跟 wide format（寬表格）。為什麼 longitudinal data（同一個病人測多次）通常存成 long format？
 
