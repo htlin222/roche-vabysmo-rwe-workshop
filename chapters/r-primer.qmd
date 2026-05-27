@@ -1,0 +1,295 @@
+# 附錄 3：R 語言入門（給完全沒寫過程式的人） {.unnumbered}
+
+```{r}
+#| label: setup-rprimer
+#| include: false
+source("_common.R")
+```
+
+::: {.callout-tip}
+**已經會寫 R 的人可以跳過這章。** 這是給「這輩子沒打過一行 code」的醫師、研究助理的 30 分鐘暖身。
+讀完你不會變成工程師，但**看得懂本書每一段 `參考程式碼` 在做什麼、知道要改哪個參數**——這就夠了。
+
+想要「一頁速查」而不是教學？看 [附錄 1 的 §F「ELI5：R / 程式」](appendix.qmd)。
+:::
+
+這堂工作坊的核心心法是：**你不需要「會寫」R，只需要「看懂 + 改參數」。**
+真正的 code 教材都幫你準備好了（每個任務的「參考程式碼」），你的工作是讀懂它、必要時改個檔名或欄位名。這章就是讓你具備「讀懂」的最低門檻。
+
+---
+
+## 1. RStudio 長什麼樣：四個區塊
+
+打開 RStudio（或 Posit.Cloud），畫面通常切成四塊：
+
+| 區塊 | 位置 | 做什麼 |
+|---|---|---|
+| **Source（編輯器）** | 左上 | 寫、存 `.R` / `.qmd` 檔的地方（像 Word 的內文） |
+| **Console（主控台）** | 左下 | 打一行、按 Enter、馬上看到結果（像計算機） |
+| **Environment** | 右上 | 列出你現在手上有哪些「變數 / 資料」 |
+| **Files / Plots / Help** | 右下 | 檔案總管、畫出來的圖、說明文件 |
+
+::: {.callout-note}
+**最重要的觀念**：你在 Console 打的東西「按 Enter 就執行」；在 Source 編輯器裡的 code 要**選起來按 `Ctrl/Cmd + Enter`** 才會送到 Console 執行。本書「參考程式碼」就是讓你複製到 Console（或 chunk）跑。
+:::
+
+---
+
+## 2. 第一行 code：Console 當計算機 + 用 `<-` 把結果存起來
+
+在 Console 打 `1 + 1` 按 Enter：
+
+```{r}
+#| label: rp-calc
+1 + 1
+3 * (4 + 5)
+```
+
+左邊那個 `[1]` 不用管它，是「這是第 1 個結果」的意思。
+
+要把一個結果「存起來等下用」，用 **`<-`（指派符號，唸 gets）**。把它想成「把右邊的東西，裝進左邊的盒子」：
+
+```{r}
+#| label: rp-assign
+n <- 1329          # 把數字 1329 裝進名叫 n 的盒子
+n                  # 打盒子的名字 → 看裡面裝什麼
+
+drug <- "faricimab"   # 文字要用引號 " " 包起來
+drug
+```
+
+::: {.callout-tip}
+`<-` 在 RStudio 有快速鍵：**`Alt/Option + -`**（自動補空白）。用 `=` 也行，但 R 社群習慣 `<-`。
+:::
+
+---
+
+## 3. 資料的四種基本長相
+
+| 型別 | 長什麼樣 | 例子 |
+|---|---|---|
+| **數字 numeric** | 就是數字 | `62`、`3.14`、`-5` |
+| **文字 character** | 一定要 `" "` 包住 | `"faricimab"`、`"PT-001"` |
+| **邏輯 logical** | 只有兩種 | `TRUE` / `FALSE` |
+| **缺失值 `NA`** | 「這格沒資料」 | `NA` |
+
+`NA` 很重要：真實病人資料一定有缺漏（病人沒回診、沒做 OCT）。R 用 `NA` 表示，而且**對 `NA` 很敏感**：
+
+```{r}
+#| label: rp-na
+mean(c(60, 62, NA))               # 只要有一個 NA，結果就是 NA
+mean(c(60, 62, NA), na.rm = TRUE) # 加 na.rm = TRUE：先把 NA 拿掉再算
+```
+
+---
+
+## 4. 一串資料：vector 與 `c()`
+
+`c()` 是「把好幾個東西**串成一串**」（c = combine）。臨床上你天天遇到「一串數字」（某病人的多次視力）：
+
+```{r}
+#| label: rp-vector
+bcva <- c(60, 64, 68, 70)   # 一位病人第 0/4/8/12 週的視力
+length(bcva)                # 幾個數字？
+mean(bcva)                  # 平均
+max(bcva) - bcva[1]         # 最大值 減 第 1 個值（bcva[1] = 取第 1 個）
+```
+
+`bcva[1]` 的中括號是「**取第幾個**」。`bcva[1]` 是第一個（60）。
+
+---
+
+## 5. 函數（function）與引數（argument）
+
+**函數 = 一台機器：吃材料、吐結果。** 寫法是 `機器名稱(材料)`：
+
+```{r}
+#| label: rp-function
+round(3.14159)               # 四捨五入
+round(3.14159, digits = 2)   # digits = 2 是「具名引數」：要幾位小數
+```
+
+- 括號裡餵進去的東西叫 **引數（argument）**。
+- `digits = 2` 這種「名字 = 值」是 **具名引數**——你不用背順序，寫名字最清楚。
+- 不確定一個函數有哪些引數？打 **`?round`** 按 Enter，右下角 Help 會跳出說明。
+
+---
+
+## 6. 套件（package）：別人寫好的工具箱
+
+R 本身只有基本功能。強大的功能（畫圖、跑模型）放在**套件**裡。兩個動作別搞混：
+
+```r
+install.packages("ggplot2")   # 安裝：一台電腦只要做「一次」（像下載 App）
+library(ggplot2)              # 載入：每次新開 R session 都要做（像打開 App）
+```
+
+::: {.callout-note}
+本書要用的 20 多個套件，**一行就能全裝好**——在 Console 跑 `source("START.R")`（見 Part 1）。
+裝過之後，每章開頭的 `library(...)` 負責「打開」它們。
+:::
+
+「could not find function」這個錯誤，九成是**忘了 `library()`**——機器還沒打開就想用。
+
+---
+
+## 7. Data frame：R 裡的 Excel 表格
+
+臨床資料就是表格：每**列（row）**一筆觀察、每**欄（column）**一個變項。R 把它叫 **data frame**（tidyverse 的加強版叫 **tibble**）。
+
+我們直接讀本書的真實模擬資料（CSV 檔）來看：
+
+```{r}
+#| label: rp-readcsv
+library(readr)    # read_csv 在這個套件裡
+library(dplyr)    # glimpse / 等下的動詞在這裡
+baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
+
+glimpse(baseline)   # 看有哪些欄位、型別、前幾筆值
+```
+
+幾個天天用的「看一眼」函數：
+
+```{r}
+#| label: rp-peek
+head(baseline, 3)        # 前 3 列
+nrow(baseline)           # 幾列（幾個病人）
+names(baseline)          # 有哪些欄位名
+baseline$age             # 用 $ 取「某一欄」→ 這裡取出 age 那一整欄
+```
+
+**`$` 是「取某一欄」**：`baseline$age` 就是 age 那一整串數字。
+
+---
+
+## 8. 管線 `|>`：把左邊餵給右邊
+
+`|>`（pipe，管線）是 tidyverse 的靈魂。它把「左邊的東西，餵進右邊的函數」。
+好處：code 從**左讀到右、由上往下**，就是動作發生的順序。
+
+```{r}
+#| label: rp-pipe
+baseline$age |> mean() |> round(1)
+# 讀法：拿 age 這一欄，然後算平均，然後四捨五入到 1 位
+```
+
+沒有 pipe 你得從裡往外讀 `round(mean(baseline$age), 1)`——一旦動作多就頭暈。pipe 讓它變一句話。
+
+::: {.callout-tip}
+RStudio 快速鍵：**`Ctrl/Cmd + Shift + M`** 自動打出 `|>`。
+:::
+
+---
+
+## 9. dplyr 五大動詞：操作表格的瑞士刀
+
+幾乎所有「整理資料」都是這五個動詞的組合，全部都用 `|>` 串起來：
+
+| 動詞 | 做什麼 | 白話 |
+|---|---|---|
+| `filter()` | 留下**某些列** | 篩病人 |
+| `select()` | 留下**某些欄** | 選欄位 |
+| `mutate()` | **新增/修改一欄** | 算新變項 |
+| `summarise()` | 把多列**收成一個摘要** | 算總結 |
+| `group_by()` | **分組**（搭配上面用） | 分兩臂各算各的 |
+
+```{r}
+#| label: rp-dplyr
+baseline |>
+  filter(arm == "faricimab") |>          # 只留 faricimab 組（== 是「等於」的比較）
+  summarise(n = n(),                      # 算這組幾人
+            mean_bcva = mean(bcva_baseline))   # 算平均 baseline 視力
+```
+
+分兩組各算一次，只要多一行 `group_by()`：
+
+```{r}
+#| label: rp-groupby
+baseline |>
+  group_by(arm) |>
+  summarise(n = n(), mean_age = mean(age))
+```
+
+::: {.callout-warning}
+注意 `==`（兩個等號）是「**比較**是否相等」，`=`（一個等號）是「設定引數」。
+`filter(arm == "faricimab")` 用兩個等號，別寫成一個。
+:::
+
+---
+
+## 10. Factor：有限選項的「類別」變項
+
+`arm` 只可能是 `faricimab` 或 `aflibercept`——這種「選項固定」的變項，R 有專門型別叫 **factor**。
+跑統計模型時很關鍵：R 會把 factor 的**第一個 level 當「比較基準（reference）」**。
+
+```{r}
+#| label: rp-factor
+arm_f <- factor(baseline$arm, levels = c("aflibercept", "faricimab"))
+levels(arm_f)   # 第一個（aflibercept）= reference
+```
+
+把 `aflibercept` 排第一，模型跑出來的數字就會是「**faricimab 比 aflibercept** 多/少多少」，方向最直覺。本書 Part 3 起會一直看到這個寫法。
+
+---
+
+## 11. 畫第一張圖：ggplot 三件套
+
+`ggplot2` 畫圖像「疊圖層」，記住三件套就好：
+
+```{r}
+#| label: rp-ggplot
+#| fig-width: 7
+#| fig-height: 4
+library(ggplot2)
+
+baseline |>
+  ggplot(aes(x = arm, y = bcva_baseline, fill = arm)) +  # ① aes：欄位對應到位置
+  geom_boxplot() +                                        # ② geom：畫什麼（這裡盒鬚圖）
+  labs(title = "兩臂 baseline 視力分布", y = "BCVA (letters)")  # ③ 標題/標籤
+```
+
+- **`aes()`**：把資料的「哪一欄」對應到圖的「哪個位置」（x 軸、y 軸、顏色…）。
+- **`geom_*()`**：要畫哪種圖層——`geom_point`（點）、`geom_line`（線）、`geom_col`（長條）、`geom_boxplot`（盒鬚）…
+- 圖層之間用 **`+`** 串（注意：ggplot 用 `+`，不是 `|>`）。
+
+---
+
+## 12. 看懂錯誤訊息：紅字不是世界末日
+
+新手最怕紅字。其實九成是這三種，學會讀就不怕：
+
+| 紅字訊息 | 意思 | 解法 |
+|---|---|---|
+| `could not find function "xxx"` | 函數所在的套件沒載入 | 在最上面補 `library(該套件)` |
+| `object 'xxx' not found` | 你用了一個還沒建立的盒子/資料 | 先把前面建立它的那段跑過（本書「續前對話」就是這個道理） |
+| `unexpected ...` / 少一個 `)` | 括號、逗號、引號沒對齊 | 檢查標點：每個 `(` 要有 `)`、每個 `"` 要成對 |
+
+::: {.callout-tip}
+看不懂的紅字，**整段複製去問 AI**：「我跑這段 R 出現這個錯誤：[貼錯誤]，這是什麼意思、怎麼改？」——這正是本書的工作方式。
+:::
+
+---
+
+## 13. 你在這堂課的真正工作
+
+```dot
+你不用「從零寫 code」
+        ↓
+讀懂教材的「參考程式碼」在做什麼（這章給你的能力）
+        ↓
+複製去跑 → 看結果 → 對照 paper
+        ↓
+要換成你院內資料時：只改「檔名 / 欄位名」這種參數
+```
+
+看不懂某段、或想更深入概念（什麼是 MMRM、censoring、propensity score）→ 翻 [附錄 1 的 §E、§F](appendix.qmd) ELI5 白話版。
+卡關、遇到紅字 → 翻 [附錄 1 §C「三個常見坑」](appendix.qmd)。
+
+::: {.callout-note title="本章重點"}
+1. `<-` 把東西裝進盒子；`c()` 串成一串；`函數()` 吃材料吐結果
+2. `library()` 打開套件；忘了它就會 `could not find function`
+3. data frame = R 的 Excel；`$` 取一欄；`|>` 把左邊餵右邊
+4. dplyr 五大動詞（filter/select/mutate/summarise/group_by）+ `group_by` 分組
+5. factor 的第一個 level 是 reference；ggplot 用 `+` 疊圖層
+6. 紅字九成是「沒 library / 沒先跑前面 / 標點沒對齊」
+:::

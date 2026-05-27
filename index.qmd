@@ -168,7 +168,10 @@ Rscript scripts/05_psm_my_hospital.R    # Part 5（PSM + matched MMRM/CMH）
 | **Part 4** | Figure 2：CMH 跑 IRF/SRF/both | 30 min | 三張 absence proportion bar chart |
 | **Part 5** | **換你院內資料** | 30 min | 同一份 code、跑出「假裝是你院內」的 paper draft |
 | **Part 6** | (bonus) Figure 3：KM + Cox | 20 min | 一張 time-to-event 曲線 |
-| **Appendix** | 你回院之後要做的事 | — | 院內 csv schema、AI 對話技巧、常見錯誤 |
+| **附錄 1** | 你回院之後要做的事 | — | 院內 csv schema、AI 對話技巧、常見錯誤 |
+| **附錄 2** | 給非眼科醫師的背景補充（Primer） | 30 min | nAMD / anti-VEGF / OCT 的暖身（眼科醫師可跳過） |
+| **附錄 3** | R 語言入門（基本概念） | 30 min | 看懂本書每段 code、會改參數（沒寫過 code 也 OK） |
+| **附錄 4** | Prompting 心法：讓 AI 幫你寫 code | 20 min | 會寫出好 prompt、懂得驗證、不外洩病人資料 |
 
 ---
 

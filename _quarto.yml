@@ -32,7 +32,6 @@ book:
       Built with [Quarto](https://quarto.org/)
   chapters:
     - index.qmd
-    - chapters/primer.qmd
     - chapters/part1.qmd
     - chapters/part2.qmd
     - chapters/part3.qmd
@@ -40,6 +39,9 @@ book:
     - chapters/part5.qmd
     - chapters/part6.qmd
     - chapters/appendix.qmd
+    - chapters/primer.qmd
+    - chapters/r-primer.qmd
+    - chapters/prompting.qmd
 
 bibliography: assets/references.bib
 csl: assets/american-medical-association.csl

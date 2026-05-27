@@ -1,4 +1,4 @@
-# Primer：給非眼科醫師的背景補充 {.unnumbered}
+# 附錄 2：給非眼科醫師的背景補充（Primer） {.unnumbered}
 
 ```{r}
 #| label: setup-primer
