@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>附錄 3：R 語言入門（給完全沒寫過程式的人） – 羅氏眼科臨床研究賦能工作坊教材</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/prompting.html" rel="next">
+<link href="../chapters/primer.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9b98f18118eee809be1c051eb5cc78e4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/r-primer.html">附錄 3：R 語言入門（給完全沒寫過程式的人）</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">羅氏眼科臨床研究賦能工作坊教材</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Part 1：認識 paper + 認識資料</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Part 2：Table 1 — Baseline characteristics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Part 3：Figure 1 — MMRM 跑 BCVA + CST</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Part 4：Figure 2 — CMH-weighted absence proportions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Part 5：換你院內資料（含 PSM + ASMD）</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/part6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Part 6（Bonus）：Figure 3 — Time to first absence of fluid</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 1：回院之後的事</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 2：給非眼科醫師的背景補充（Primer）</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/r-primer.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">附錄 3：R 語言入門（給完全沒寫過程式的人）</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 4：Prompting 心法 — 讓 AI 幫你寫 code</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#rstudio-長什麼樣四個區塊" id="toc-rstudio-長什麼樣四個區塊" class="nav-link active" data-scroll-target="#rstudio-長什麼樣四個區塊">1. RStudio 長什麼樣：四個區塊</a></li>
+  <li><a href="#第一行-codeconsole-當計算機-用---把結果存起來" id="toc-第一行-codeconsole-當計算機-用---把結果存起來" class="nav-link" data-scroll-target="#第一行-codeconsole-當計算機-用---把結果存起來">2. 第一行 code：Console 當計算機 + 用 <code>&lt;-</code> 把結果存起來</a></li>
+  <li><a href="#資料的四種基本長相" id="toc-資料的四種基本長相" class="nav-link" data-scroll-target="#資料的四種基本長相">3. 資料的四種基本長相</a></li>
+  <li><a href="#一串資料vector-與-c" id="toc-一串資料vector-與-c" class="nav-link" data-scroll-target="#一串資料vector-與-c">4. 一串資料：vector 與 <code>c()</code></a></li>
+  <li><a href="#函數function與引數argument" id="toc-函數function與引數argument" class="nav-link" data-scroll-target="#函數function與引數argument">5. 函數（function）與引數（argument）</a></li>
+  <li><a href="#套件package別人寫好的工具箱" id="toc-套件package別人寫好的工具箱" class="nav-link" data-scroll-target="#套件package別人寫好的工具箱">6. 套件（package）：別人寫好的工具箱</a></li>
+  <li><a href="#data-framer-裡的-excel-表格" id="toc-data-framer-裡的-excel-表格" class="nav-link" data-scroll-target="#data-framer-裡的-excel-表格">7. Data frame：R 裡的 Excel 表格</a></li>
+  <li><a href="#管線-把左邊餵給右邊" id="toc-管線-把左邊餵給右邊" class="nav-link" data-scroll-target="#管線-把左邊餵給右邊">8. 管線 <code>|&gt;</code>：把左邊餵給右邊</a></li>
+  <li><a href="#dplyr-五大動詞操作表格的瑞士刀" id="toc-dplyr-五大動詞操作表格的瑞士刀" class="nav-link" data-scroll-target="#dplyr-五大動詞操作表格的瑞士刀">9. dplyr 五大動詞：操作表格的瑞士刀</a></li>
+  <li><a href="#factor有限選項的類別變項" id="toc-factor有限選項的類別變項" class="nav-link" data-scroll-target="#factor有限選項的類別變項">10. Factor：有限選項的「類別」變項</a></li>
+  <li><a href="#畫第一張圖ggplot-三件套" id="toc-畫第一張圖ggplot-三件套" class="nav-link" data-scroll-target="#畫第一張圖ggplot-三件套">11. 畫第一張圖：ggplot 三件套</a></li>
+  <li><a href="#看懂錯誤訊息紅字不是世界末日" id="toc-看懂錯誤訊息紅字不是世界末日" class="nav-link" data-scroll-target="#看懂錯誤訊息紅字不是世界末日">12. 看懂錯誤訊息：紅字不是世界末日</a></li>
+  <li><a href="#你在這堂課的真正工作" id="toc-你在這堂課的真正工作" class="nav-link" data-scroll-target="#你在這堂課的真正工作">13. 你在這堂課的真正工作</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">附錄 3：R 語言入門（給完全沒寫過程式的人）</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>已經會寫 R 的人可以跳過這章。</strong> 這是給「這輩子沒打過一行 code」的醫師、研究助理的 30 分鐘暖身。 讀完你不會變成工程師，但<strong>看得懂本書每一段 <code>參考程式碼</code> 在做什麼、知道要改哪個參數</strong>——這就夠了。</p>
+<p>想要「一頁速查」而不是教學？看 <a href="../chapters/appendix.html">附錄 1 的 §F「ELI5：R / 程式」</a>。</p>
+</div>
+</div>
+<p>這堂工作坊的核心心法是：<strong>你不需要「會寫」R，只需要「看懂 + 改參數」。</strong> 真正的 code 教材都幫你準備好了（每個任務的「參考程式碼」），你的工作是讀懂它、必要時改個檔名或欄位名。這章就是讓你具備「讀懂」的最低門檻。</p>
+<hr>
+<section id="rstudio-長什麼樣四個區塊" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio-長什麼樣四個區塊">1. RStudio 長什麼樣：四個區塊</h2>
+<p>打開 RStudio（或 Posit.Cloud），畫面通常切成四塊：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>區塊</th>
+<th>位置</th>
+<th>做什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Source（編輯器）</strong></td>
+<td>左上</td>
+<td>寫、存 <code>.R</code> / <code>.qmd</code> 檔的地方（像 Word 的內文）</td>
+</tr>
+<tr class="even">
+<td><strong>Console（主控台）</strong></td>
+<td>左下</td>
+<td>打一行、按 Enter、馬上看到結果（像計算機）</td>
+</tr>
+<tr class="odd">
+<td><strong>Environment</strong></td>
+<td>右上</td>
+<td>列出你現在手上有哪些「變數 / 資料」</td>
+</tr>
+<tr class="even">
+<td><strong>Files / Plots / Help</strong></td>
+<td>右下</td>
+<td>檔案總管、畫出來的圖、說明文件</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>最重要的觀念</strong>：你在 Console 打的東西「按 Enter 就執行」；在 Source 編輯器裡的 code 要<strong>選起來按 <code>Ctrl/Cmd + Enter</code></strong> 才會送到 Console 執行。本書「參考程式碼」就是讓你複製到 Console（或 chunk）跑。</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="第一行-codeconsole-當計算機-用---把結果存起來" class="level2">
+<h2 class="anchored" data-anchor-id="第一行-codeconsole-當計算機-用---把結果存起來">2. 第一行 code：Console 當計算機 + 用 <code>&lt;-</code> 把結果存起來</h2>
+<p>在 Console 打 <code>1 + 1</code> 按 Enter：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">*</span> (<span class="dv">4</span> <span class="sc">+</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 27</code></pre>
+</div>
+</div>
+<p>左邊那個 <code>[1]</code> 不用管它，是「這是第 1 個結果」的意思。</p>
+<p>要把一個結果「存起來等下用」，用 <strong><code>&lt;-</code>（指派符號，唸 gets）</strong>。把它想成「把右邊的東西，裝進左邊的盒子」：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1329</span>          <span class="co"># 把數字 1329 裝進名叫 n 的盒子</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>n                  <span class="co"># 打盒子的名字 → 看裡面裝什麼</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1329</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>drug <span class="ot">&lt;-</span> <span class="st">"faricimab"</span>   <span class="co"># 文字要用引號 " " 包起來</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>drug</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "faricimab"</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>&lt;-</code> 在 RStudio 有快速鍵：<strong><code>Alt/Option + -</code></strong>（自動補空白）。用 <code>=</code> 也行，但 R 社群習慣 <code>&lt;-</code>。</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="資料的四種基本長相" class="level2">
+<h2 class="anchored" data-anchor-id="資料的四種基本長相">3. 資料的四種基本長相</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>型別</th>
+<th>長什麼樣</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>數字 numeric</strong></td>
+<td>就是數字</td>
+<td><code>62</code>、<code>3.14</code>、<code>-5</code></td>
+</tr>
+<tr class="even">
+<td><strong>文字 character</strong></td>
+<td>一定要 <code>" "</code> 包住</td>
+<td><code>"faricimab"</code>、<code>"PT-001"</code></td>
+</tr>
+<tr class="odd">
+<td><strong>邏輯 logical</strong></td>
+<td>只有兩種</td>
+<td><code>TRUE</code> / <code>FALSE</code></td>
+</tr>
+<tr class="even">
+<td><strong>缺失值 <code>NA</code></strong></td>
+<td>「這格沒資料」</td>
+<td><code>NA</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>NA</code> 很重要：真實病人資料一定有缺漏（病人沒回診、沒做 OCT）。R 用 <code>NA</code> 表示，而且<strong>對 <code>NA</code> 很敏感</strong>：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">62</span>, <span class="cn">NA</span>))               <span class="co"># 只要有一個 NA，結果就是 NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">62</span>, <span class="cn">NA</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 加 na.rm = TRUE：先把 NA 拿掉再算</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="一串資料vector-與-c" class="level2">
+<h2 class="anchored" data-anchor-id="一串資料vector-與-c">4. 一串資料：vector 與 <code>c()</code></h2>
+<p><code>c()</code> 是「把好幾個東西<strong>串成一串</strong>」（c = combine）。臨床上你天天遇到「一串數字」（某病人的多次視力）：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bcva <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">64</span>, <span class="dv">68</span>, <span class="dv">70</span>)   <span class="co"># 一位病人第 0/4/8/12 週的視力</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(bcva)                <span class="co"># 幾個數字？</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(bcva)                  <span class="co"># 平均</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 65.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(bcva) <span class="sc">-</span> bcva[<span class="dv">1</span>]         <span class="co"># 最大值 減 第 1 個值（bcva[1] = 取第 1 個）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p><code>bcva[1]</code> 的中括號是「<strong>取第幾個</strong>」。<code>bcva[1]</code> 是第一個（60）。</p>
+<hr>
+</section>
+<section id="函數function與引數argument" class="level2">
+<h2 class="anchored" data-anchor-id="函數function與引數argument">5. 函數（function）與引數（argument）</h2>
+<p><strong>函數 = 一台機器：吃材料、吐結果。</strong> 寫法是 <code>機器名稱(材料)</code>：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>)               <span class="co"># 四捨五入</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>, <span class="at">digits =</span> <span class="dv">2</span>)   <span class="co"># digits = 2 是「具名引數」：要幾位小數</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.14</code></pre>
+</div>
+</div>
+<ul>
+<li>括號裡餵進去的東西叫 <strong>引數（argument）</strong>。</li>
+<li><code>digits = 2</code> 這種「名字 = 值」是 <strong>具名引數</strong>——你不用背順序，寫名字最清楚。</li>
+<li>不確定一個函數有哪些引數？打 <strong><code>?round</code></strong> 按 Enter，右下角 Help 會跳出說明。</li>
+</ul>
+<hr>
+</section>
+<section id="套件package別人寫好的工具箱" class="level2">
+<h2 class="anchored" data-anchor-id="套件package別人寫好的工具箱">6. 套件（package）：別人寫好的工具箱</h2>
+<p>R 本身只有基本功能。強大的功能（畫圖、跑模型）放在<strong>套件</strong>裡。兩個動作別搞混：</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)   <span class="co"># 安裝：一台電腦只要做「一次」（像下載 App）</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)              <span class="co"># 載入：每次新開 R session 都要做（像打開 App）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>本書要用的 20 多個套件，<strong>一行就能全裝好</strong>——在 Console 跑 <code>source("START.R")</code>（見 Part 1）。 裝過之後，每章開頭的 <code>library(...)</code> 負責「打開」它們。</p>
+</div>
+</div>
+<p>「could not find function」這個錯誤，九成是<strong>忘了 <code>library()</code></strong>——機器還沒打開就想用。</p>
+<hr>
+</section>
+<section id="data-framer-裡的-excel-表格" class="level2">
+<h2 class="anchored" data-anchor-id="data-framer-裡的-excel-表格">7. Data frame：R 裡的 Excel 表格</h2>
+<p>臨床資料就是表格：每<strong>列（row）</strong>一筆觀察、每<strong>欄（column）</strong>一個變項。R 把它叫 <strong>data frame</strong>（tidyverse 的加強版叫 <strong>tibble</strong>）。</p>
+<p>我們直接讀本書的真實模擬資料（CSV 檔）來看：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)    <span class="co"># read_csv 在這個套件裡</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)    <span class="co"># glimpse / 等下的動詞在這裡</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(baseline)   <span class="co"># 看有哪些欄位、型別、前幾筆值</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,329
+Columns: 12
+$ patient_id    &lt;chr&gt; "P0001", "P0002", "P0003", "P0004", "P0005", "P0006", "P…
+$ arm           &lt;chr&gt; "faricimab", "aflibercept", "aflibercept", "faricimab", …
+$ study         &lt;chr&gt; "LUCERNE", "LUCERNE", "TENAYA", "LUCERNE", "TENAYA", "LU…
+$ region        &lt;chr&gt; "US-Canada", "US-Canada", "Rest-of-world", "Rest-of-worl…
+$ age           &lt;dbl&gt; 64, 83, 56, 73, 78, 60, 68, 81, 85, 80, 77, 79, 60, 76, …
+$ sex           &lt;chr&gt; "F", "M", "F", "F", "F", "F", "F", "F", "F", "M", "F", "…
+$ bcva_baseline &lt;dbl&gt; 64, 79, 76, 73, 74, 46, 81, 55, 67, 45, 74, 71, 53, 69, …
+$ cst_baseline  &lt;dbl&gt; 300, 381, 290, 382, 381, 496, 240, 539, 328, 310, 378, 4…
+$ irf_baseline  &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1,…
+$ srf_baseline  &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1,…
+$ bcva_strat    &lt;chr&gt; "55-73", "&gt;=74", "&gt;=74", "55-73", "&gt;=74", "&lt;=54", "&gt;=74"…
+$ lld_strat     &lt;chr&gt; "&gt;=33", "&lt;33", "&lt;33", "&gt;=33", "&lt;33", "&lt;33", "&lt;33", "&lt;33"…</code></pre>
+</div>
+</div>
+<p>幾個天天用的「看一眼」函數：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(baseline, <span class="dv">3</span>)        <span class="co"># 前 3 列</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 12
+  patient_id arm         study   region     age sex   bcva_baseline cst_baseline
+  &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+1 P0001      faricimab   LUCERNE US-Cana…    64 F                64          300
+2 P0002      aflibercept LUCERNE US-Cana…    83 M                79          381
+3 P0003      aflibercept TENAYA  Rest-of…    56 F                76          290
+# ℹ 4 more variables: irf_baseline &lt;dbl&gt;, srf_baseline &lt;dbl&gt;, bcva_strat &lt;chr&gt;,
+#   lld_strat &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(baseline)           <span class="co"># 幾列（幾個病人）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1329</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(baseline)          <span class="co"># 有哪些欄位名</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "patient_id"    "arm"           "study"         "region"       
+ [5] "age"           "sex"           "bcva_baseline" "cst_baseline" 
+ [9] "irf_baseline"  "srf_baseline"  "bcva_strat"    "lld_strat"    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>age             <span class="co"># 用 $ 取「某一欄」→ 這裡取出 age 那一整欄</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   [1]  64  83  56  73  78  60  68  81  85  80  77  79  60  76  79  73  62  80
+  [19]  78  72  77  82  88  89  76  79  76  71  72  65  60  76  81  69  97  67
+  [37]  66  79  50  69  79  77  64  69  69  83  77  86  58  73  67  70 101  74
+  [55]  74  71  69  80  68  84  54  72  69  67  81  80  80  57  75  81  66  81
+  [73]  83  69  70  81  72  83  80  62  78  70  84  77  77  73  74  59  87  81
+  [91]  68  60  83  75  81  81  95  76  62  84  86  72  80  72  79  61  76  70
+ [109]  66  78  68  81  71  72  81  60  65  82  64  58  60  86  76  69  78  73
+ [127]  70  78  74  83  75  72  80  84  83  80  89  62  78  59  53  61  82  76
+ [145]  72  68  75  82  65  77  77  66  82  75  64  75  66  80  80  74  84  63
+ [163]  64  86  82  71  67  58  78  76  74  87  80  87  75  77  74  72  64  93
+ [181]  75  79  64  65  62  78  81  83  85  83  70  65  60  83  81  83  83  67
+ [199]  63  84  69  72  74  88  85  73  75  93  70  68  92  68  75  53  80  73
+ [217]  62  68  72  81  80  79  83  69  69  74  81  86  67  67  59  69  77  67
+ [235]  89  72  77  75  67  69  67  74  81  56  87  75  81  74  93  73  89  90
+ [253]  86  63  54  70  81  77  80  83  85  73  65  74  73  52  78  85  84  83
+ [271]  74  76  71  71  76  78  85  66  73  66  63  86  82  80  81  67  84  74
+ [289]  79  76  70  80  74  66  80  90  72  93  78  84  86  67  72  73  83  73
+ [307]  75  86  75  75  82  61  87  71  56  76  67  56  86  83  84  68  81  77
+ [325]  73  77  76  71  69  82  76  68  68  84  82  67  64  73  79  86  64  89
+ [343]  81  78  80  71  67  66  70  70  75 100  68  73  94  70  71  82  75  66
+ [361]  93  71  73  64  73  74  59  75  93  73  86  62  66  72  78  74  76  87
+ [379]  62  84  85  78  80  81  88  71  74  79  77  62  86  69  58  78  58  82
+ [397]  73  78  89  74  68  72  69  78  80  82  82  78  64  66  72  84  78  84
+ [415]  91  64  71  97  81  74  79  68  86  66  70  78  73  63  84  81  78  76
+ [433]  60  78  74  87  79  81  76  67  79  78  90  66  77  53  68  73  86  78
+ [451]  80  87 100  63  65  62  81  76  85  72  73  78  77  77  61  75  87  73
+ [469]  75  83  72  80  72  70  81  81  72  73  79  80  80  75  81  83  70  76
+ [487]  81  72  68  76  89  69  74  90  73  67  92  90  83  74  66  64  77  64
+ [505]  78  74  70  87  77  75  85  79  61  80  66  67  84  61  68  75  62  69
+ [523]  80  84  72  94  77  73  58  72  90  80  63  73  78  94  84  77  85  76
+ [541]  58  88  65  72  79  58  90  93  72  94  69  74  74  93  91  79  69  74
+ [559]  74  78  75  75  62  84  77  73  71  71  73  82  72  74  71  75  76  79
+ [577]  75  78  79  77  58  76  75  77  79  85  69  71  77  68  76  89  82  70
+ [595]  77  95  81  78  82  88  63  70  72  76  73  85  59  81  80  87  62  79
+ [613]  74  84  60  81  68  77  69  97  78  86  86  75  80  84  58  66  92  83
+ [631]  98  69  75  80  89  79  73  56  78  93  89  76  82  82  67  87  98  66
+ [649]  77  62  56  66  67  89  67  67  70  62  79  70  73  90  72  74  83  69
+ [667]  84  68  79  83  93  99  67  57  71  64  74  75  79  84  85  70  69  82
+ [685]  87  84  61  75  77  67  68  79  92  89  78  68  64  74  60  86  86  77
+ [703]  60  76  65  70  89  85  85  84  90  90  66  69  69  67  65  77  76  89
+ [721]  82  94  81  58  78  69  74  82  76  65  68  80  64  76  82  69  63  80
+ [739]  85  85  73  71  71  76  67  70  81  78  72  71  73  67  75  52  71  73
+ [757]  76  78  81  59  88  58  76  85  69  68  68  76  85  60  81  66  81  78
+ [775]  71  81  63  85  80  76  68  88  73  81  81  78  79  66  70  69  72  66
+ [793]  78  75  67  71  86  71  84  69  80  91  77  70  76  72  74  74  74  63
+ [811]  82  51  65  69  72  82  82  83  63  80  78  87  75 100  60  78  88  78
+ [829]  66  70  77  76  73  68  59  73  67  84  75  90  58  75  81  77  72  72
+ [847]  74  77  83  59  73  68  78  70  73  82  70  59  79  66  79  89  87  83
+ [865]  57  63  87  74  70  66  85  69  70  82  63  72  82  71  77  77  57  85
+ [883]  62  83  71  70  73  78  78  76  80  75  63  60  82  69  90  72  78  82
+ [901]  84  65  76  83  67  84  52  66  76  58  62  76  75  61  76  77  72  75
+ [919]  86  87  79  71  73  74  72  77  87  83  71  54  63  73  84  92  85  92
+ [937]  85  79  86  77  68  69  74  83  90  84  79  60  90  72  78  70  80  78
+ [955]  66  85  87  78  76  81  71  80  63  85  60  69  65  59  64  71  88  71
+ [973] 101  52  71  67  87  71  78  81  93  70  87  80  83  88  92  82  80  70
+ [991]  74  73  91  89  72  75  87  84  62  66  86  80  83  77  64  62  80  71
+[1009]  59  79  89  65  64  76  56  77  80  74  82  60  80  60  65  82  74  69
+[1027]  70  70  73  75  61  73  69  82  58  74  83  79  86  76  81  69  79  83
+[1045]  77  74  77  74  87  86  62  65  84  88  60  87 101  78  55  64  60  75
+[1063]  93  81  59  75  74  75  91  67  85  72  70  63  80  73  69  56  85  62
+[1081]  84  72  66  77  70  69  68  73  69  90  75  79  83  72  72  75  69  62
+[1099]  84  88  97  76  52  69  70  81  86  57  85  69  77  87  69  85  73  65
+[1117]  59  85  86  61  74  78  87  78  66  93  78  67  75  58 101  95  75  74
+[1135]  78  77  79  70  91  71  64  64  69  59  77  82  89  86  75  87  70  78
+[1153]  69  74  66  76  88  79  77  59  64  76  82  83  58  71  67  86  79  67
+[1171]  71  67  89  82  67  73  78  72  85  68  64  75  66  68  75  72  63  67
+[1189]  79  65  76  70  56  78  77  70  68  88  84  77  95  84  74  80  85  82
+[1207]  69  76  79  69  67  88  64  84  58  76  64  78  77  82  71  69  68  68
+[1225]  73  78  83  88  77  86  73  72  80  62  77  72  70  80  77  59  72  91
+[1243]  59  78  76  83  58  84  68  72  80  81  87  66  65  91  86  80  60  88
+[1261]  67  76  69  78  69  79  69  86  76  62  68  79  87  68  87  99  74  65
+[1279]  80  74  75  79  82  88  61  68  74  63  74  79  75  74  65  75  86  87
+[1297]  76  85  66  86  91  64  80  69  84  77  76  59  73  88  74  84  76  79
+[1315]  69  83  77  73  87  76  75  65  82  73  54  69  66  97  87</code></pre>
+</div>
+</div>
+<p><strong><code>$</code> 是「取某一欄」</strong>：<code>baseline$age</code> 就是 age 那一整串數字。</p>
+<hr>
+</section>
+<section id="管線-把左邊餵給右邊" class="level2">
+<h2 class="anchored" data-anchor-id="管線-把左邊餵給右邊">8. 管線 <code>|&gt;</code>：把左邊餵給右邊</h2>
+<p><code>|&gt;</code>（pipe，管線）是 tidyverse 的靈魂。它把「左邊的東西，餵進右邊的函數」。 好處：code 從<strong>左讀到右、由上往下</strong>，就是動作發生的順序。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>age <span class="sc">|&gt;</span> <span class="fu">mean</span>() <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 75.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 讀法：拿 age 這一欄，然後算平均，然後四捨五入到 1 位</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>沒有 pipe 你得從裡往外讀 <code>round(mean(baseline$age), 1)</code>——一旦動作多就頭暈。pipe 讓它變一句話。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>RStudio 快速鍵：<strong><code>Ctrl/Cmd + Shift + M</code></strong> 自動打出 <code>|&gt;</code>。</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="dplyr-五大動詞操作表格的瑞士刀" class="level2">
+<h2 class="anchored" data-anchor-id="dplyr-五大動詞操作表格的瑞士刀">9. dplyr 五大動詞：操作表格的瑞士刀</h2>
+<p>幾乎所有「整理資料」都是這五個動詞的組合，全部都用 <code>|&gt;</code> 串起來：</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>動詞</th>
+<th>做什麼</th>
+<th>白話</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>filter()</code></td>
+<td>留下<strong>某些列</strong></td>
+<td>篩病人</td>
+</tr>
+<tr class="even">
+<td><code>select()</code></td>
+<td>留下<strong>某些欄</strong></td>
+<td>選欄位</td>
+</tr>
+<tr class="odd">
+<td><code>mutate()</code></td>
+<td><strong>新增/修改一欄</strong></td>
+<td>算新變項</td>
+</tr>
+<tr class="even">
+<td><code>summarise()</code></td>
+<td>把多列<strong>收成一個摘要</strong></td>
+<td>算總結</td>
+</tr>
+<tr class="odd">
+<td><code>group_by()</code></td>
+<td><strong>分組</strong>（搭配上面用）</td>
+<td>分兩臂各算各的</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>baseline <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arm <span class="sc">==</span> <span class="st">"faricimab"</span>) <span class="sc">|&gt;</span>          <span class="co"># 只留 faricimab 組（== 是「等於」的比較）</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),                      <span class="co"># 算這組幾人</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_bcva =</span> <span class="fu">mean</span>(bcva_baseline))   <span class="co"># 算平均 baseline 視力</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+      n mean_bcva
+  &lt;int&gt;     &lt;dbl&gt;
+1   665      58.9</code></pre>
+</div>
+</div>
+<p>分兩組各算一次，只要多一行 <code>group_by()</code>：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>baseline <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(arm) <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_age =</span> <span class="fu">mean</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  arm             n mean_age
+  &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt;
+1 aflibercept   664     75.1
+2 faricimab     665     75.3</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>注意 <code>==</code>（兩個等號）是「<strong>比較</strong>是否相等」，<code>=</code>（一個等號）是「設定引數」。 <code>filter(arm == "faricimab")</code> 用兩個等號，別寫成一個。</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="factor有限選項的類別變項" class="level2">
+<h2 class="anchored" data-anchor-id="factor有限選項的類別變項">10. Factor：有限選項的「類別」變項</h2>
+<p><code>arm</code> 只可能是 <code>faricimab</code> 或 <code>aflibercept</code>——這種「選項固定」的變項，R 有專門型別叫 <strong>factor</strong>。 跑統計模型時很關鍵：R 會把 factor 的<strong>第一個 level 當「比較基準（reference）」</strong>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>arm_f <span class="ot">&lt;-</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(arm_f)   <span class="co"># 第一個（aflibercept）= reference</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "aflibercept" "faricimab"  </code></pre>
+</div>
+</div>
+<p>把 <code>aflibercept</code> 排第一，模型跑出來的數字就會是「<strong>faricimab 比 aflibercept</strong> 多/少多少」，方向最直覺。本書 Part 3 起會一直看到這個寫法。</p>
+<hr>
+</section>
+<section id="畫第一張圖ggplot-三件套" class="level2">
+<h2 class="anchored" data-anchor-id="畫第一張圖ggplot-三件套">11. 畫第一張圖：ggplot 三件套</h2>
+<p><code>ggplot2</code> 畫圖像「疊圖層」，記住三件套就好：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>baseline <span class="sc">|&gt;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> arm, <span class="at">y =</span> bcva_baseline, <span class="at">fill =</span> arm)) <span class="sc">+</span>  <span class="co"># ① aes：欄位對應到位置</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span>                                        <span class="co"># ② geom：畫什麼（這裡盒鬚圖）</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"兩臂 baseline 視力分布"</span>, <span class="at">y =</span> <span class="st">"BCVA (letters)"</span>)  <span class="co"># ③ 標題/標籤</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="r-primer_files/figure-html/rp-ggplot-1.png" class="img-fluid figure-img" width="1050"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><strong><code>aes()</code></strong>：把資料的「哪一欄」對應到圖的「哪個位置」（x 軸、y 軸、顏色…）。</li>
+<li><strong><code>geom_*()</code></strong>：要畫哪種圖層——<code>geom_point</code>（點）、<code>geom_line</code>（線）、<code>geom_col</code>（長條）、<code>geom_boxplot</code>（盒鬚）…</li>
+<li>圖層之間用 <strong><code>+</code></strong> 串（注意：ggplot 用 <code>+</code>，不是 <code>|&gt;</code>）。</li>
+</ul>
+<hr>
+</section>
+<section id="看懂錯誤訊息紅字不是世界末日" class="level2">
+<h2 class="anchored" data-anchor-id="看懂錯誤訊息紅字不是世界末日">12. 看懂錯誤訊息：紅字不是世界末日</h2>
+<p>新手最怕紅字。其實九成是這三種，學會讀就不怕：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>紅字訊息</th>
+<th>意思</th>
+<th>解法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>could not find function "xxx"</code></td>
+<td>函數所在的套件沒載入</td>
+<td>在最上面補 <code>library(該套件)</code></td>
+</tr>
+<tr class="even">
+<td><code>object 'xxx' not found</code></td>
+<td>你用了一個還沒建立的盒子/資料</td>
+<td>先把前面建立它的那段跑過（本書「續前對話」就是這個道理）</td>
+</tr>
+<tr class="odd">
+<td><code>unexpected ...</code> / 少一個 <code>)</code></td>
+<td>括號、逗號、引號沒對齊</td>
+<td>檢查標點：每個 <code>(</code> 要有 <code>)</code>、每個 <code>"</code> 要成對</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>看不懂的紅字，<strong>整段複製去問 AI</strong>：「我跑這段 R 出現這個錯誤：[貼錯誤]，這是什麼意思、怎麼改？」——這正是本書的工作方式。</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="你在這堂課的真正工作" class="level2">
+<h2 class="anchored" data-anchor-id="你在這堂課的真正工作">13. 你在這堂課的真正工作</h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode dot code-with-copy"><code class="sourceCode dot"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>你不用「從零寫 <span class="va">code</span>」</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        ↓</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>讀懂教材的「參考程式碼」在做什麼（這章給你的能力）</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>        ↓</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>複製去跑 → 看結果 → 對照 <span class="va">paper</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>        ↓</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>要換成你院內資料時：只改「檔名 / 欄位名」這種參數</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>看不懂某段、或想更深入概念（什麼是 MMRM、censoring、propensity score）→ 翻 <a href="../chapters/appendix.html">附錄 1 的 §E、§F</a> ELI5 白話版。 卡關、遇到紅字 → 翻 <a href="../chapters/appendix.html">附錄 1 §C「三個常見坑」</a>。</p>
+<div class="callout callout-style-default callout-note callout-titled" title="本章重點">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+本章重點
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><code>&lt;-</code> 把東西裝進盒子；<code>c()</code> 串成一串；<code>函數()</code> 吃材料吐結果</li>
+<li><code>library()</code> 打開套件；忘了它就會 <code>could not find function</code></li>
+<li>data frame = R 的 Excel；<code>$</code> 取一欄；<code>|&gt;</code> 把左邊餵右邊</li>
+<li>dplyr 五大動詞（filter/select/mutate/summarise/group_by）+ <code>group_by</code> 分組</li>
+<li>factor 的第一個 level 是 reference；ggplot 用 <code>+</code> 疊圖層</li>
+<li>紅字九成是「沒 library / 沒先跑前面 / 標點沒對齊」</li>
+</ol>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/primer.html" class="pagination-link" aria-label="附錄 2：給非眼科醫師的背景補充（Primer）">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">附錄 2：給非眼科醫師的背景補充（Primer）</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/prompting.html" class="pagination-link" aria-label="附錄 4：Prompting 心法 — 讓 AI 幫你寫 code">
+        <span class="nav-page-text">附錄 4：Prompting 心法 — 讓 AI 幫你寫 code</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb45" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 附錄 3：R 語言入門（給完全沒寫過程式的人） {.unnumbered}</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup-rprimer</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"_common.R"</span>)</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>**已經會寫 R 的人可以跳過這章。** 這是給「這輩子沒打過一行 code」的醫師、研究助理的 30 分鐘暖身。</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>讀完你不會變成工程師，但**看得懂本書每一段 `參考程式碼` 在做什麼、知道要改哪個參數**——這就夠了。</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>想要「一頁速查」而不是教學？看 <span class="co">[</span><span class="ot">附錄 1 的 §F「ELI5：R / 程式」</span><span class="co">](appendix.qmd)</span>。</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>這堂工作坊的核心心法是：**你不需要「會寫」R，只需要「看懂 + 改參數」。**</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>真正的 code 教材都幫你準備好了（每個任務的「參考程式碼」），你的工作是讀懂它、必要時改個檔名或欄位名。這章就是讓你具備「讀懂」的最低門檻。</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. RStudio 長什麼樣：四個區塊</span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>打開 RStudio（或 Posit.Cloud），畫面通常切成四塊：</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 區塊 <span class="pp">|</span> 位置 <span class="pp">|</span> 做什麼 <span class="pp">|</span></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Source（編輯器）** <span class="pp">|</span> 左上 <span class="pp">|</span> 寫、存 <span class="in">`.R`</span> / <span class="in">`.qmd`</span> 檔的地方（像 Word 的內文） <span class="pp">|</span></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Console（主控台）** <span class="pp">|</span> 左下 <span class="pp">|</span> 打一行、按 Enter、馬上看到結果（像計算機） <span class="pp">|</span></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Environment** <span class="pp">|</span> 右上 <span class="pp">|</span> 列出你現在手上有哪些「變數 / 資料」 <span class="pp">|</span></span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Files / Plots / Help** <span class="pp">|</span> 右下 <span class="pp">|</span> 檔案總管、畫出來的圖、說明文件 <span class="pp">|</span></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>**最重要的觀念**：你在 Console 打的東西「按 Enter 就執行」；在 Source 編輯器裡的 code 要**選起來按 `Ctrl/Cmd + Enter`** 才會送到 Console 執行。本書「參考程式碼」就是讓你複製到 Console（或 chunk）跑。</span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. 第一行 code：Console 當計算機 + 用 `&lt;-` 把結果存起來</span></span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a>在 Console 打 <span class="in">`1 + 1`</span> 按 Enter：</span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-46"><a href="#cb45-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-47"><a href="#cb45-47" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-calc</span></span>
+<span id="cb45-48"><a href="#cb45-48" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb45-49"><a href="#cb45-49" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">*</span> (<span class="dv">4</span> <span class="sc">+</span> <span class="dv">5</span>)</span>
+<span id="cb45-50"><a href="#cb45-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-51"><a href="#cb45-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-52"><a href="#cb45-52" aria-hidden="true" tabindex="-1"></a>左邊那個 <span class="in">`[1]`</span> 不用管它，是「這是第 1 個結果」的意思。</span>
+<span id="cb45-53"><a href="#cb45-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-54"><a href="#cb45-54" aria-hidden="true" tabindex="-1"></a>要把一個結果「存起來等下用」，用 **`&lt;-`（指派符號，唸 gets）**。把它想成「把右邊的東西，裝進左邊的盒子」：</span>
+<span id="cb45-55"><a href="#cb45-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-58"><a href="#cb45-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-59"><a href="#cb45-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-assign</span></span>
+<span id="cb45-60"><a href="#cb45-60" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1329</span>          <span class="co"># 把數字 1329 裝進名叫 n 的盒子</span></span>
+<span id="cb45-61"><a href="#cb45-61" aria-hidden="true" tabindex="-1"></a>n                  <span class="co"># 打盒子的名字 → 看裡面裝什麼</span></span>
+<span id="cb45-62"><a href="#cb45-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-63"><a href="#cb45-63" aria-hidden="true" tabindex="-1"></a>drug <span class="ot">&lt;-</span> <span class="st">"faricimab"</span>   <span class="co"># 文字要用引號 " " 包起來</span></span>
+<span id="cb45-64"><a href="#cb45-64" aria-hidden="true" tabindex="-1"></a>drug</span>
+<span id="cb45-65"><a href="#cb45-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-66"><a href="#cb45-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-67"><a href="#cb45-67" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb45-68"><a href="#cb45-68" aria-hidden="true" tabindex="-1"></a><span class="in">`&lt;-`</span> 在 RStudio 有快速鍵：**`Alt/Option + -`**（自動補空白）。用 <span class="in">`=`</span> 也行，但 R 社群習慣 <span class="in">`&lt;-`</span>。</span>
+<span id="cb45-69"><a href="#cb45-69" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-70"><a href="#cb45-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-71"><a href="#cb45-71" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-72"><a href="#cb45-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-73"><a href="#cb45-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. 資料的四種基本長相</span></span>
+<span id="cb45-74"><a href="#cb45-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-75"><a href="#cb45-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 型別 <span class="pp">|</span> 長什麼樣 <span class="pp">|</span> 例子 <span class="pp">|</span></span>
+<span id="cb45-76"><a href="#cb45-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb45-77"><a href="#cb45-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **數字 numeric** <span class="pp">|</span> 就是數字 <span class="pp">|</span> <span class="in">`62`</span>、<span class="in">`3.14`</span>、<span class="in">`-5`</span> <span class="pp">|</span></span>
+<span id="cb45-78"><a href="#cb45-78" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **文字 character** <span class="pp">|</span> 一定要 <span class="in">`" "`</span> 包住 <span class="pp">|</span> <span class="in">`"faricimab"`</span>、<span class="in">`"PT-001"`</span> <span class="pp">|</span></span>
+<span id="cb45-79"><a href="#cb45-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **邏輯 logical** <span class="pp">|</span> 只有兩種 <span class="pp">|</span> <span class="in">`TRUE`</span> / <span class="in">`FALSE`</span> <span class="pp">|</span></span>
+<span id="cb45-80"><a href="#cb45-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **缺失值 `NA`** <span class="pp">|</span> 「這格沒資料」 <span class="pp">|</span> <span class="in">`NA`</span> <span class="pp">|</span></span>
+<span id="cb45-81"><a href="#cb45-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-82"><a href="#cb45-82" aria-hidden="true" tabindex="-1"></a><span class="in">`NA`</span> 很重要：真實病人資料一定有缺漏（病人沒回診、沒做 OCT）。R 用 <span class="in">`NA`</span> 表示，而且**對 `NA` 很敏感**：</span>
+<span id="cb45-83"><a href="#cb45-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-86"><a href="#cb45-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-87"><a href="#cb45-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-na</span></span>
+<span id="cb45-88"><a href="#cb45-88" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">62</span>, <span class="cn">NA</span>))               <span class="co"># 只要有一個 NA，結果就是 NA</span></span>
+<span id="cb45-89"><a href="#cb45-89" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">62</span>, <span class="cn">NA</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 加 na.rm = TRUE：先把 NA 拿掉再算</span></span>
+<span id="cb45-90"><a href="#cb45-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-91"><a href="#cb45-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-92"><a href="#cb45-92" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-93"><a href="#cb45-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-94"><a href="#cb45-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. 一串資料：vector 與 `c()`</span></span>
+<span id="cb45-95"><a href="#cb45-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-96"><a href="#cb45-96" aria-hidden="true" tabindex="-1"></a><span class="in">`c()`</span> 是「把好幾個東西**串成一串**」（c = combine）。臨床上你天天遇到「一串數字」（某病人的多次視力）：</span>
+<span id="cb45-97"><a href="#cb45-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-100"><a href="#cb45-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-101"><a href="#cb45-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-vector</span></span>
+<span id="cb45-102"><a href="#cb45-102" aria-hidden="true" tabindex="-1"></a>bcva <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">64</span>, <span class="dv">68</span>, <span class="dv">70</span>)   <span class="co"># 一位病人第 0/4/8/12 週的視力</span></span>
+<span id="cb45-103"><a href="#cb45-103" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(bcva)                <span class="co"># 幾個數字？</span></span>
+<span id="cb45-104"><a href="#cb45-104" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(bcva)                  <span class="co"># 平均</span></span>
+<span id="cb45-105"><a href="#cb45-105" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(bcva) <span class="sc">-</span> bcva[<span class="dv">1</span>]         <span class="co"># 最大值 減 第 1 個值（bcva[1] = 取第 1 個）</span></span>
+<span id="cb45-106"><a href="#cb45-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-107"><a href="#cb45-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-108"><a href="#cb45-108" aria-hidden="true" tabindex="-1"></a><span class="in">`bcva[1]`</span> 的中括號是「**取第幾個**」。<span class="in">`bcva[1]`</span> 是第一個（60）。</span>
+<span id="cb45-109"><a href="#cb45-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-110"><a href="#cb45-110" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-111"><a href="#cb45-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-112"><a href="#cb45-112" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. 函數（function）與引數（argument）</span></span>
+<span id="cb45-113"><a href="#cb45-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-114"><a href="#cb45-114" aria-hidden="true" tabindex="-1"></a>**函數 = 一台機器：吃材料、吐結果。** 寫法是 <span class="in">`機器名稱(材料)`</span>：</span>
+<span id="cb45-115"><a href="#cb45-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-118"><a href="#cb45-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-119"><a href="#cb45-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-function</span></span>
+<span id="cb45-120"><a href="#cb45-120" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>)               <span class="co"># 四捨五入</span></span>
+<span id="cb45-121"><a href="#cb45-121" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">3.14159</span>, <span class="at">digits =</span> <span class="dv">2</span>)   <span class="co"># digits = 2 是「具名引數」：要幾位小數</span></span>
+<span id="cb45-122"><a href="#cb45-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-123"><a href="#cb45-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-124"><a href="#cb45-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>括號裡餵進去的東西叫 **引數（argument）**。</span>
+<span id="cb45-125"><a href="#cb45-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`digits = 2`</span> 這種「名字 = 值」是 **具名引數**——你不用背順序，寫名字最清楚。</span>
+<span id="cb45-126"><a href="#cb45-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>不確定一個函數有哪些引數？打 **`?round`** 按 Enter，右下角 Help 會跳出說明。</span>
+<span id="cb45-127"><a href="#cb45-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-128"><a href="#cb45-128" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-129"><a href="#cb45-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-130"><a href="#cb45-130" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. 套件（package）：別人寫好的工具箱</span></span>
+<span id="cb45-131"><a href="#cb45-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-132"><a href="#cb45-132" aria-hidden="true" tabindex="-1"></a>R 本身只有基本功能。強大的功能（畫圖、跑模型）放在**套件**裡。兩個動作別搞混：</span>
+<span id="cb45-133"><a href="#cb45-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-134"><a href="#cb45-134" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb45-135"><a href="#cb45-135" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)   <span class="co"># 安裝：一台電腦只要做「一次」（像下載 App）</span></span>
+<span id="cb45-136"><a href="#cb45-136" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)              <span class="co"># 載入：每次新開 R session 都要做（像打開 App）</span></span>
+<span id="cb45-137"><a href="#cb45-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-138"><a href="#cb45-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-139"><a href="#cb45-139" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb45-140"><a href="#cb45-140" aria-hidden="true" tabindex="-1"></a>本書要用的 20 多個套件，**一行就能全裝好**——在 Console 跑 <span class="in">`source("START.R")`</span>（見 Part 1）。</span>
+<span id="cb45-141"><a href="#cb45-141" aria-hidden="true" tabindex="-1"></a>裝過之後，每章開頭的 <span class="in">`library(...)`</span> 負責「打開」它們。</span>
+<span id="cb45-142"><a href="#cb45-142" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-143"><a href="#cb45-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-144"><a href="#cb45-144" aria-hidden="true" tabindex="-1"></a>「could not find function」這個錯誤，九成是**忘了 `library()`**——機器還沒打開就想用。</span>
+<span id="cb45-145"><a href="#cb45-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-146"><a href="#cb45-146" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-147"><a href="#cb45-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-148"><a href="#cb45-148" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Data frame：R 裡的 Excel 表格</span></span>
+<span id="cb45-149"><a href="#cb45-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-150"><a href="#cb45-150" aria-hidden="true" tabindex="-1"></a>臨床資料就是表格：每**列（row）**一筆觀察、每**欄（column）**一個變項。R 把它叫 **data frame**（tidyverse 的加強版叫 **tibble**）。</span>
+<span id="cb45-151"><a href="#cb45-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-152"><a href="#cb45-152" aria-hidden="true" tabindex="-1"></a>我們直接讀本書的真實模擬資料（CSV 檔）來看：</span>
+<span id="cb45-153"><a href="#cb45-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-156"><a href="#cb45-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-157"><a href="#cb45-157" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-readcsv</span></span>
+<span id="cb45-158"><a href="#cb45-158" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)    <span class="co"># read_csv 在這個套件裡</span></span>
+<span id="cb45-159"><a href="#cb45-159" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)    <span class="co"># glimpse / 等下的動詞在這裡</span></span>
+<span id="cb45-160"><a href="#cb45-160" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb45-161"><a href="#cb45-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-162"><a href="#cb45-162" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(baseline)   <span class="co"># 看有哪些欄位、型別、前幾筆值</span></span>
+<span id="cb45-163"><a href="#cb45-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-164"><a href="#cb45-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-165"><a href="#cb45-165" aria-hidden="true" tabindex="-1"></a>幾個天天用的「看一眼」函數：</span>
+<span id="cb45-166"><a href="#cb45-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-169"><a href="#cb45-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-170"><a href="#cb45-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-peek</span></span>
+<span id="cb45-171"><a href="#cb45-171" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(baseline, <span class="dv">3</span>)        <span class="co"># 前 3 列</span></span>
+<span id="cb45-172"><a href="#cb45-172" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(baseline)           <span class="co"># 幾列（幾個病人）</span></span>
+<span id="cb45-173"><a href="#cb45-173" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(baseline)          <span class="co"># 有哪些欄位名</span></span>
+<span id="cb45-174"><a href="#cb45-174" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>age             <span class="co"># 用 $ 取「某一欄」→ 這裡取出 age 那一整欄</span></span>
+<span id="cb45-175"><a href="#cb45-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-176"><a href="#cb45-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-177"><a href="#cb45-177" aria-hidden="true" tabindex="-1"></a>**`$` 是「取某一欄」**：<span class="in">`baseline$age`</span> 就是 age 那一整串數字。</span>
+<span id="cb45-178"><a href="#cb45-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-179"><a href="#cb45-179" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-180"><a href="#cb45-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-181"><a href="#cb45-181" aria-hidden="true" tabindex="-1"></a><span class="fu">## 8. 管線 `|&gt;`：把左邊餵給右邊</span></span>
+<span id="cb45-182"><a href="#cb45-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-183"><a href="#cb45-183" aria-hidden="true" tabindex="-1"></a><span class="in">`|&gt;`</span>（pipe，管線）是 tidyverse 的靈魂。它把「左邊的東西，餵進右邊的函數」。</span>
+<span id="cb45-184"><a href="#cb45-184" aria-hidden="true" tabindex="-1"></a>好處：code 從**左讀到右、由上往下**，就是動作發生的順序。</span>
+<span id="cb45-185"><a href="#cb45-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-188"><a href="#cb45-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-189"><a href="#cb45-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-pipe</span></span>
+<span id="cb45-190"><a href="#cb45-190" aria-hidden="true" tabindex="-1"></a>baseline<span class="sc">$</span>age <span class="sc">|&gt;</span> <span class="fu">mean</span>() <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb45-191"><a href="#cb45-191" aria-hidden="true" tabindex="-1"></a><span class="co"># 讀法：拿 age 這一欄，然後算平均，然後四捨五入到 1 位</span></span>
+<span id="cb45-192"><a href="#cb45-192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-193"><a href="#cb45-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-194"><a href="#cb45-194" aria-hidden="true" tabindex="-1"></a>沒有 pipe 你得從裡往外讀 <span class="in">`round(mean(baseline$age), 1)`</span>——一旦動作多就頭暈。pipe 讓它變一句話。</span>
+<span id="cb45-195"><a href="#cb45-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-196"><a href="#cb45-196" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb45-197"><a href="#cb45-197" aria-hidden="true" tabindex="-1"></a>RStudio 快速鍵：**`Ctrl/Cmd + Shift + M`** 自動打出 <span class="in">`|&gt;`</span>。</span>
+<span id="cb45-198"><a href="#cb45-198" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-199"><a href="#cb45-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-200"><a href="#cb45-200" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-201"><a href="#cb45-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-202"><a href="#cb45-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## 9. dplyr 五大動詞：操作表格的瑞士刀</span></span>
+<span id="cb45-203"><a href="#cb45-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-204"><a href="#cb45-204" aria-hidden="true" tabindex="-1"></a>幾乎所有「整理資料」都是這五個動詞的組合，全部都用 <span class="in">`|&gt;`</span> 串起來：</span>
+<span id="cb45-205"><a href="#cb45-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-206"><a href="#cb45-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 動詞 <span class="pp">|</span> 做什麼 <span class="pp">|</span> 白話 <span class="pp">|</span></span>
+<span id="cb45-207"><a href="#cb45-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb45-208"><a href="#cb45-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`filter()`</span> <span class="pp">|</span> 留下**某些列** <span class="pp">|</span> 篩病人 <span class="pp">|</span></span>
+<span id="cb45-209"><a href="#cb45-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`select()`</span> <span class="pp">|</span> 留下**某些欄** <span class="pp">|</span> 選欄位 <span class="pp">|</span></span>
+<span id="cb45-210"><a href="#cb45-210" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`mutate()`</span> <span class="pp">|</span> **新增/修改一欄** <span class="pp">|</span> 算新變項 <span class="pp">|</span></span>
+<span id="cb45-211"><a href="#cb45-211" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summarise()`</span> <span class="pp">|</span> 把多列**收成一個摘要** <span class="pp">|</span> 算總結 <span class="pp">|</span></span>
+<span id="cb45-212"><a href="#cb45-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`group_by()`</span> <span class="pp">|</span> **分組**（搭配上面用） <span class="pp">|</span> 分兩臂各算各的 <span class="pp">|</span></span>
+<span id="cb45-213"><a href="#cb45-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-216"><a href="#cb45-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-217"><a href="#cb45-217" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-dplyr</span></span>
+<span id="cb45-218"><a href="#cb45-218" aria-hidden="true" tabindex="-1"></a>baseline <span class="sc">|&gt;</span></span>
+<span id="cb45-219"><a href="#cb45-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arm <span class="sc">==</span> <span class="st">"faricimab"</span>) <span class="sc">|&gt;</span>          <span class="co"># 只留 faricimab 組（== 是「等於」的比較）</span></span>
+<span id="cb45-220"><a href="#cb45-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),                      <span class="co"># 算這組幾人</span></span>
+<span id="cb45-221"><a href="#cb45-221" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_bcva =</span> <span class="fu">mean</span>(bcva_baseline))   <span class="co"># 算平均 baseline 視力</span></span>
+<span id="cb45-222"><a href="#cb45-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-223"><a href="#cb45-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-224"><a href="#cb45-224" aria-hidden="true" tabindex="-1"></a>分兩組各算一次，只要多一行 <span class="in">`group_by()`</span>：</span>
+<span id="cb45-225"><a href="#cb45-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-228"><a href="#cb45-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-229"><a href="#cb45-229" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-groupby</span></span>
+<span id="cb45-230"><a href="#cb45-230" aria-hidden="true" tabindex="-1"></a>baseline <span class="sc">|&gt;</span></span>
+<span id="cb45-231"><a href="#cb45-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(arm) <span class="sc">|&gt;</span></span>
+<span id="cb45-232"><a href="#cb45-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_age =</span> <span class="fu">mean</span>(age))</span>
+<span id="cb45-233"><a href="#cb45-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-234"><a href="#cb45-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-235"><a href="#cb45-235" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb45-236"><a href="#cb45-236" aria-hidden="true" tabindex="-1"></a>注意 <span class="in">`==`</span>（兩個等號）是「**比較**是否相等」，<span class="in">`=`</span>（一個等號）是「設定引數」。</span>
+<span id="cb45-237"><a href="#cb45-237" aria-hidden="true" tabindex="-1"></a><span class="in">`filter(arm == "faricimab")`</span> 用兩個等號，別寫成一個。</span>
+<span id="cb45-238"><a href="#cb45-238" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-239"><a href="#cb45-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-240"><a href="#cb45-240" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-241"><a href="#cb45-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-242"><a href="#cb45-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## 10. Factor：有限選項的「類別」變項</span></span>
+<span id="cb45-243"><a href="#cb45-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-244"><a href="#cb45-244" aria-hidden="true" tabindex="-1"></a><span class="in">`arm`</span> 只可能是 <span class="in">`faricimab`</span> 或 <span class="in">`aflibercept`</span>——這種「選項固定」的變項，R 有專門型別叫 **factor**。</span>
+<span id="cb45-245"><a href="#cb45-245" aria-hidden="true" tabindex="-1"></a>跑統計模型時很關鍵：R 會把 factor 的**第一個 level 當「比較基準（reference）」**。</span>
+<span id="cb45-246"><a href="#cb45-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-249"><a href="#cb45-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-250"><a href="#cb45-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-factor</span></span>
+<span id="cb45-251"><a href="#cb45-251" aria-hidden="true" tabindex="-1"></a>arm_f <span class="ot">&lt;-</span> <span class="fu">factor</span>(baseline<span class="sc">$</span>arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>))</span>
+<span id="cb45-252"><a href="#cb45-252" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(arm_f)   <span class="co"># 第一個（aflibercept）= reference</span></span>
+<span id="cb45-253"><a href="#cb45-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-254"><a href="#cb45-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-255"><a href="#cb45-255" aria-hidden="true" tabindex="-1"></a>把 <span class="in">`aflibercept`</span> 排第一，模型跑出來的數字就會是「**faricimab 比 aflibercept** 多/少多少」，方向最直覺。本書 Part 3 起會一直看到這個寫法。</span>
+<span id="cb45-256"><a href="#cb45-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-257"><a href="#cb45-257" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-258"><a href="#cb45-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-259"><a href="#cb45-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## 11. 畫第一張圖：ggplot 三件套</span></span>
+<span id="cb45-260"><a href="#cb45-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-261"><a href="#cb45-261" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot2`</span> 畫圖像「疊圖層」，記住三件套就好：</span>
+<span id="cb45-262"><a href="#cb45-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-265"><a href="#cb45-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb45-266"><a href="#cb45-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: rp-ggplot</span></span>
+<span id="cb45-267"><a href="#cb45-267" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb45-268"><a href="#cb45-268" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb45-269"><a href="#cb45-269" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb45-270"><a href="#cb45-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-271"><a href="#cb45-271" aria-hidden="true" tabindex="-1"></a>baseline <span class="sc">|&gt;</span></span>
+<span id="cb45-272"><a href="#cb45-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> arm, <span class="at">y =</span> bcva_baseline, <span class="at">fill =</span> arm)) <span class="sc">+</span>  <span class="co"># ① aes：欄位對應到位置</span></span>
+<span id="cb45-273"><a href="#cb45-273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span>                                        <span class="co"># ② geom：畫什麼（這裡盒鬚圖）</span></span>
+<span id="cb45-274"><a href="#cb45-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"兩臂 baseline 視力分布"</span>, <span class="at">y =</span> <span class="st">"BCVA (letters)"</span>)  <span class="co"># ③ 標題/標籤</span></span>
+<span id="cb45-275"><a href="#cb45-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-276"><a href="#cb45-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-277"><a href="#cb45-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`aes()`**：把資料的「哪一欄」對應到圖的「哪個位置」（x 軸、y 軸、顏色…）。</span>
+<span id="cb45-278"><a href="#cb45-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`geom_*()`**：要畫哪種圖層——<span class="in">`geom_point`</span>（點）、<span class="in">`geom_line`</span>（線）、<span class="in">`geom_col`</span>（長條）、<span class="in">`geom_boxplot`</span>（盒鬚）…</span>
+<span id="cb45-279"><a href="#cb45-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>圖層之間用 **`+`** 串（注意：ggplot 用 <span class="in">`+`</span>，不是 <span class="in">`|&gt;`</span>）。</span>
+<span id="cb45-280"><a href="#cb45-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-281"><a href="#cb45-281" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-282"><a href="#cb45-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-283"><a href="#cb45-283" aria-hidden="true" tabindex="-1"></a><span class="fu">## 12. 看懂錯誤訊息：紅字不是世界末日</span></span>
+<span id="cb45-284"><a href="#cb45-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-285"><a href="#cb45-285" aria-hidden="true" tabindex="-1"></a>新手最怕紅字。其實九成是這三種，學會讀就不怕：</span>
+<span id="cb45-286"><a href="#cb45-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-287"><a href="#cb45-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 紅字訊息 <span class="pp">|</span> 意思 <span class="pp">|</span> 解法 <span class="pp">|</span></span>
+<span id="cb45-288"><a href="#cb45-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb45-289"><a href="#cb45-289" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`could not find function "xxx"`</span> <span class="pp">|</span> 函數所在的套件沒載入 <span class="pp">|</span> 在最上面補 <span class="in">`library(該套件)`</span> <span class="pp">|</span></span>
+<span id="cb45-290"><a href="#cb45-290" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`object 'xxx' not found`</span> <span class="pp">|</span> 你用了一個還沒建立的盒子/資料 <span class="pp">|</span> 先把前面建立它的那段跑過（本書「續前對話」就是這個道理） <span class="pp">|</span></span>
+<span id="cb45-291"><a href="#cb45-291" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`unexpected ...`</span> / 少一個 <span class="in">`)`</span> <span class="pp">|</span> 括號、逗號、引號沒對齊 <span class="pp">|</span> 檢查標點：每個 <span class="in">`(`</span> 要有 <span class="in">`)`</span>、每個 <span class="in">`"`</span> 要成對 <span class="pp">|</span></span>
+<span id="cb45-292"><a href="#cb45-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-293"><a href="#cb45-293" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb45-294"><a href="#cb45-294" aria-hidden="true" tabindex="-1"></a>看不懂的紅字，**整段複製去問 AI**：「我跑這段 R 出現這個錯誤：<span class="co">[</span><span class="ot">貼錯誤</span><span class="co">]</span>，這是什麼意思、怎麼改？」——這正是本書的工作方式。</span>
+<span id="cb45-295"><a href="#cb45-295" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-296"><a href="#cb45-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-297"><a href="#cb45-297" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb45-298"><a href="#cb45-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-299"><a href="#cb45-299" aria-hidden="true" tabindex="-1"></a><span class="fu">## 13. 你在這堂課的真正工作</span></span>
+<span id="cb45-300"><a href="#cb45-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-301"><a href="#cb45-301" aria-hidden="true" tabindex="-1"></a><span class="in">```dot</span></span>
+<span id="cb45-302"><a href="#cb45-302" aria-hidden="true" tabindex="-1"></a>你不用「從零寫 <span class="va">code</span>」</span>
+<span id="cb45-303"><a href="#cb45-303" aria-hidden="true" tabindex="-1"></a>        ↓</span>
+<span id="cb45-304"><a href="#cb45-304" aria-hidden="true" tabindex="-1"></a>讀懂教材的「參考程式碼」在做什麼（這章給你的能力）</span>
+<span id="cb45-305"><a href="#cb45-305" aria-hidden="true" tabindex="-1"></a>        ↓</span>
+<span id="cb45-306"><a href="#cb45-306" aria-hidden="true" tabindex="-1"></a>複製去跑 → 看結果 → 對照 <span class="va">paper</span></span>
+<span id="cb45-307"><a href="#cb45-307" aria-hidden="true" tabindex="-1"></a>        ↓</span>
+<span id="cb45-308"><a href="#cb45-308" aria-hidden="true" tabindex="-1"></a>要換成你院內資料時：只改「檔名 / 欄位名」這種參數</span>
+<span id="cb45-309"><a href="#cb45-309" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-310"><a href="#cb45-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-311"><a href="#cb45-311" aria-hidden="true" tabindex="-1"></a>看不懂某段、或想更深入概念（什麼是 MMRM、censoring、propensity score）→ 翻 <span class="co">[</span><span class="ot">附錄 1 的 §E、§F</span><span class="co">](appendix.qmd)</span> ELI5 白話版。</span>
+<span id="cb45-312"><a href="#cb45-312" aria-hidden="true" tabindex="-1"></a>卡關、遇到紅字 → 翻 <span class="co">[</span><span class="ot">附錄 1 §C「三個常見坑」</span><span class="co">](appendix.qmd)</span>。</span>
+<span id="cb45-313"><a href="#cb45-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-314"><a href="#cb45-314" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="本章重點"}</span>
+<span id="cb45-315"><a href="#cb45-315" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`&lt;-`</span> 把東西裝進盒子；<span class="in">`c()`</span> 串成一串；<span class="in">`函數()`</span> 吃材料吐結果</span>
+<span id="cb45-316"><a href="#cb45-316" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`library()`</span> 打開套件；忘了它就會 <span class="in">`could not find function`</span></span>
+<span id="cb45-317"><a href="#cb45-317" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>data frame = R 的 Excel；<span class="in">`$`</span> 取一欄；<span class="in">`|&gt;`</span> 把左邊餵右邊</span>
+<span id="cb45-318"><a href="#cb45-318" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>dplyr 五大動詞（filter/select/mutate/summarise/group_by）+ <span class="in">`group_by`</span> 分組</span>
+<span id="cb45-319"><a href="#cb45-319" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>factor 的第一個 level 是 reference；ggplot 用 <span class="in">`+`</span> 疊圖層</span>
+<span id="cb45-320"><a href="#cb45-320" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>紅字九成是「沒 library / 沒先跑前面 / 標點沒對齊」</span>
+<span id="cb45-321"><a href="#cb45-321" aria-hidden="true" tabindex="-1"></a>:::</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 林協霆、邵時傑 · 教材授權 CC BY 4.0 · 主辦單位：羅氏大藥廠</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

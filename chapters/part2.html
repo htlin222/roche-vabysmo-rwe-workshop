@@ -177,12 +177,6 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/primer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Primer：給非眼科醫師的背景補充</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../chapters/part1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Part 1：認識 paper + 認識資料</span></span></a>
   </div>
@@ -220,7 +214,25 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">附錄：回院之後的事</span></span></a>
+ <span class="menu-text">附錄 1：回院之後的事</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 2：給非眼科醫師的背景補充（Primer）</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/r-primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 3：R 語言入門（給完全沒寫過程式的人）</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 4：Prompting 心法 — 讓 AI 幫你寫 code</span></a>
   </div>
 </li>
     </ul>
@@ -335,66 +347,69 @@ div.csl-indent {
 </div>
 <section id="任務-6第一張-table-1" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="任務-6第一張-table-1"><span class="header-section-number">2.1</span> 任務 6：第一張 Table 1</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（🆕 開新對話）：</p>
 <blockquote class="blockquote">
 <p>請用 R 套件 <code>gtsummary</code> 的 <code>tbl_summary()</code> 做一張 Table 1，by <code>arm</code> 分組，包含這些變項：age, sex, region, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, study, bcva_strat, lld_strat。連續變項顯示 mean (SD)，二元 irf_baseline 和 srf_baseline 顯示 n (%)。</p>
 </blockquote>
 <section id="參考程式碼" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="參考程式碼"><span class="header-section-number">2.1.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>t1_basic <span class="ot">&lt;-</span> baseline <span class="sc">|&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(arm, age, sex, region, bcva_baseline, cst_baseline,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>         irf_baseline, srf_baseline, study, bcva_strat, lld_strat) <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> arm,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">list</span>(</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> <span class="fu">list</span>(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n} ({p}%)"</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">list</span>(</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"Age, years"</span>,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      sex <span class="sc">~</span> <span class="st">"Sex"</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      region <span class="sc">~</span> <span class="st">"Region"</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"BCVA at baseline, ETDRS letters"</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"CST at baseline, μm"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"IRF present at baseline"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"SRF present at baseline"</span>,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      study <span class="sc">~</span> <span class="st">"Study"</span>,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      bcva_strat <span class="sc">~</span> <span class="st">"BCVA stratum"</span>,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      lld_strat <span class="sc">~</span> <span class="st">"LLD stratum"</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>t1_basic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(gtsummary); <span class="fu">library</span>(gt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>t1_basic <span class="ot">&lt;-</span> baseline <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(arm, age, sex, region, bcva_baseline, cst_baseline,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>         irf_baseline, srf_baseline, study, bcva_strat, lld_strat) <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> arm,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">list</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> <span class="fu">list</span>(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n} ({p}%)"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">list</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"Age, years"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      sex <span class="sc">~</span> <span class="st">"Sex"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      region <span class="sc">~</span> <span class="st">"Region"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"BCVA at baseline, ETDRS letters"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"CST at baseline, μm"</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"IRF present at baseline"</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"SRF present at baseline"</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      study <span class="sc">~</span> <span class="st">"Study"</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      bcva_strat <span class="sc">~</span> <span class="st">"BCVA stratum"</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      lld_strat <span class="sc">~</span> <span class="st">"LLD stratum"</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>t1_basic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="jzygrtyldh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jzygrtyldh table {
+<div id="kvgcgnczxs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kvgcgnczxs table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jzygrtyldh thead, #jzygrtyldh tbody, #jzygrtyldh tfoot, #jzygrtyldh tr, #jzygrtyldh td, #jzygrtyldh th {
+#kvgcgnczxs thead, #kvgcgnczxs tbody, #kvgcgnczxs tfoot, #kvgcgnczxs tr, #kvgcgnczxs td, #kvgcgnczxs th {
   border-style: none;
 }
 
-#jzygrtyldh p {
+#kvgcgnczxs p {
   margin: 0;
   padding: 0;
 }
 
-#jzygrtyldh .gt_table {
+#kvgcgnczxs .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -420,12 +435,12 @@ div.csl-indent {
   border-left-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_caption {
+#kvgcgnczxs .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jzygrtyldh .gt_title {
+#kvgcgnczxs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -437,7 +452,7 @@ div.csl-indent {
   border-bottom-width: 0;
 }
 
-#jzygrtyldh .gt_subtitle {
+#kvgcgnczxs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -449,7 +464,7 @@ div.csl-indent {
   border-top-width: 0;
 }
 
-#jzygrtyldh .gt_heading {
+#kvgcgnczxs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -461,13 +476,13 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_bottom_border {
+#kvgcgnczxs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_col_headings {
+#kvgcgnczxs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -482,7 +497,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_col_heading {
+#kvgcgnczxs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -502,7 +517,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#jzygrtyldh .gt_column_spanner_outer {
+#kvgcgnczxs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -514,15 +529,15 @@ div.csl-indent {
   padding-right: 4px;
 }
 
-#jzygrtyldh .gt_column_spanner_outer:first-child {
+#kvgcgnczxs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jzygrtyldh .gt_column_spanner_outer:last-child {
+#kvgcgnczxs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jzygrtyldh .gt_column_spanner {
+#kvgcgnczxs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -534,11 +549,11 @@ div.csl-indent {
   width: 100%;
 }
 
-#jzygrtyldh .gt_spanner_row {
+#kvgcgnczxs .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jzygrtyldh .gt_group_heading {
+#kvgcgnczxs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -564,7 +579,7 @@ div.csl-indent {
   text-align: left;
 }
 
-#jzygrtyldh .gt_empty_group_heading {
+#kvgcgnczxs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -579,15 +594,15 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#jzygrtyldh .gt_from_md > :first-child {
+#kvgcgnczxs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jzygrtyldh .gt_from_md > :last-child {
+#kvgcgnczxs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jzygrtyldh .gt_row {
+#kvgcgnczxs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -606,7 +621,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#jzygrtyldh .gt_stub {
+#kvgcgnczxs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -619,7 +634,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jzygrtyldh .gt_stub_row_group {
+#kvgcgnczxs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -633,15 +648,15 @@ div.csl-indent {
   vertical-align: top;
 }
 
-#jzygrtyldh .gt_row_group_first td {
+#kvgcgnczxs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jzygrtyldh .gt_row_group_first th {
+#kvgcgnczxs .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jzygrtyldh .gt_summary_row {
+#kvgcgnczxs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -651,16 +666,16 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jzygrtyldh .gt_first_summary_row {
+#kvgcgnczxs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_first_summary_row.thick {
+#kvgcgnczxs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jzygrtyldh .gt_last_summary_row {
+#kvgcgnczxs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -670,7 +685,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_grand_summary_row {
+#kvgcgnczxs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -680,7 +695,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jzygrtyldh .gt_first_grand_summary_row {
+#kvgcgnczxs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -690,7 +705,7 @@ div.csl-indent {
   border-top-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_last_grand_summary_row_top {
+#kvgcgnczxs .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -700,11 +715,11 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_striped {
+#kvgcgnczxs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jzygrtyldh .gt_table_body {
+#kvgcgnczxs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -713,7 +728,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_footnotes {
+#kvgcgnczxs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -727,7 +742,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_footnote {
+#kvgcgnczxs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -736,7 +751,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jzygrtyldh .gt_sourcenotes {
+#kvgcgnczxs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -750,7 +765,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#jzygrtyldh .gt_sourcenote {
+#kvgcgnczxs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -758,72 +773,72 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jzygrtyldh .gt_left {
+#kvgcgnczxs .gt_left {
   text-align: left;
 }
 
-#jzygrtyldh .gt_center {
+#kvgcgnczxs .gt_center {
   text-align: center;
 }
 
-#jzygrtyldh .gt_right {
+#kvgcgnczxs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jzygrtyldh .gt_font_normal {
+#kvgcgnczxs .gt_font_normal {
   font-weight: normal;
 }
 
-#jzygrtyldh .gt_font_bold {
+#kvgcgnczxs .gt_font_bold {
   font-weight: bold;
 }
 
-#jzygrtyldh .gt_font_italic {
+#kvgcgnczxs .gt_font_italic {
   font-style: italic;
 }
 
-#jzygrtyldh .gt_super {
+#kvgcgnczxs .gt_super {
   font-size: 65%;
 }
 
-#jzygrtyldh .gt_footnote_marks {
+#kvgcgnczxs .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jzygrtyldh .gt_asterisk {
+#kvgcgnczxs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jzygrtyldh .gt_indent_1 {
+#kvgcgnczxs .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jzygrtyldh .gt_indent_2 {
+#kvgcgnczxs .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jzygrtyldh .gt_indent_3 {
+#kvgcgnczxs .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jzygrtyldh .gt_indent_4 {
+#kvgcgnczxs .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jzygrtyldh .gt_indent_5 {
+#kvgcgnczxs .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jzygrtyldh .katex-display {
+#kvgcgnczxs .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jzygrtyldh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kvgcgnczxs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -988,40 +1003,44 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
 </section>
 <section id="任務-7加-overall-與-p-value" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="任務-7加-overall-與-p-value"><span class="header-section-number">2.2</span> 任務 7：加 overall 與 p value</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（↩︎️ 續前對話）：</p>
 <blockquote class="blockquote">
 <p>在剛剛那張 Table 1 上加： 1. <code>add_overall()</code> 多一欄「Total」 2. <code>add_p()</code> 顯示兩臂之間的差異檢定 p value 3. 把 footer 改成繁體中文「連續變項：mean (SD)；類別變項：n (%)；組間檢定為 t-test 或 χ²」</p>
 </blockquote>
 <section id="參考程式碼-1" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="參考程式碼-1"><span class="header-section-number">2.2.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> t1_basic <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overall</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_footnote</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">update =</span> <span class="fu">all_stat_cols</span>() <span class="sc">~</span> <span class="st">"連續變項：mean (SD)；類別變項：n (%)"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_caption</span>(<span class="st">"**Table 1.** Baseline characteristics by treatment arm"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>t1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(gtsummary); <span class="fu">library</span>(gt)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：t1_basic（請先跑完任務6，本段不重算）</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> t1_basic <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overall</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_footnote</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">update =</span> <span class="fu">all_stat_cols</span>() <span class="sc">~</span> <span class="st">"連續變項：mean (SD)；類別變項：n (%)"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_caption</span>(<span class="st">"**Table 1.** Baseline characteristics by treatment arm"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>t1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="vbvgpdxyqs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vbvgpdxyqs table {
+<div id="bqcryrddnz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bqcryrddnz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vbvgpdxyqs thead, #vbvgpdxyqs tbody, #vbvgpdxyqs tfoot, #vbvgpdxyqs tr, #vbvgpdxyqs td, #vbvgpdxyqs th {
+#bqcryrddnz thead, #bqcryrddnz tbody, #bqcryrddnz tfoot, #bqcryrddnz tr, #bqcryrddnz td, #bqcryrddnz th {
   border-style: none;
 }
 
-#vbvgpdxyqs p {
+#bqcryrddnz p {
   margin: 0;
   padding: 0;
 }
 
-#vbvgpdxyqs .gt_table {
+#bqcryrddnz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1047,12 +1066,12 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-left-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_caption {
+#bqcryrddnz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vbvgpdxyqs .gt_title {
+#bqcryrddnz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1064,7 +1083,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-bottom-width: 0;
 }
 
-#vbvgpdxyqs .gt_subtitle {
+#bqcryrddnz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1076,7 +1095,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-top-width: 0;
 }
 
-#vbvgpdxyqs .gt_heading {
+#bqcryrddnz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1088,13 +1107,13 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-right-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_bottom_border {
+#bqcryrddnz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_col_headings {
+#bqcryrddnz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1109,7 +1128,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-right-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_col_heading {
+#bqcryrddnz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1129,7 +1148,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   overflow-x: hidden;
 }
 
-#vbvgpdxyqs .gt_column_spanner_outer {
+#bqcryrddnz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1141,15 +1160,15 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   padding-right: 4px;
 }
 
-#vbvgpdxyqs .gt_column_spanner_outer:first-child {
+#bqcryrddnz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vbvgpdxyqs .gt_column_spanner_outer:last-child {
+#bqcryrddnz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vbvgpdxyqs .gt_column_spanner {
+#bqcryrddnz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1161,11 +1180,11 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   width: 100%;
 }
 
-#vbvgpdxyqs .gt_spanner_row {
+#bqcryrddnz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vbvgpdxyqs .gt_group_heading {
+#bqcryrddnz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1191,7 +1210,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   text-align: left;
 }
 
-#vbvgpdxyqs .gt_empty_group_heading {
+#bqcryrddnz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1206,15 +1225,15 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   vertical-align: middle;
 }
 
-#vbvgpdxyqs .gt_from_md > :first-child {
+#bqcryrddnz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vbvgpdxyqs .gt_from_md > :last-child {
+#bqcryrddnz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vbvgpdxyqs .gt_row {
+#bqcryrddnz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1233,7 +1252,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   overflow-x: hidden;
 }
 
-#vbvgpdxyqs .gt_stub {
+#bqcryrddnz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1246,7 +1265,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   padding-right: 5px;
 }
 
-#vbvgpdxyqs .gt_stub_row_group {
+#bqcryrddnz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1260,15 +1279,15 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   vertical-align: top;
 }
 
-#vbvgpdxyqs .gt_row_group_first td {
+#bqcryrddnz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vbvgpdxyqs .gt_row_group_first th {
+#bqcryrddnz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vbvgpdxyqs .gt_summary_row {
+#bqcryrddnz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1278,16 +1297,16 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   padding-right: 5px;
 }
 
-#vbvgpdxyqs .gt_first_summary_row {
+#bqcryrddnz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_first_summary_row.thick {
+#bqcryrddnz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vbvgpdxyqs .gt_last_summary_row {
+#bqcryrddnz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1297,7 +1316,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-bottom-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_grand_summary_row {
+#bqcryrddnz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1307,7 +1326,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   padding-right: 5px;
 }
 
-#vbvgpdxyqs .gt_first_grand_summary_row {
+#bqcryrddnz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1317,7 +1336,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-top-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_last_grand_summary_row_top {
+#bqcryrddnz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1327,11 +1346,11 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-bottom-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_striped {
+#bqcryrddnz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vbvgpdxyqs .gt_table_body {
+#bqcryrddnz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1340,7 +1359,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-bottom-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_footnotes {
+#bqcryrddnz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1354,7 +1373,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-right-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_footnote {
+#bqcryrddnz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1363,7 +1382,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   padding-right: 5px;
 }
 
-#vbvgpdxyqs .gt_sourcenotes {
+#bqcryrddnz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1377,7 +1396,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   border-right-color: #D3D3D3;
 }
 
-#vbvgpdxyqs .gt_sourcenote {
+#bqcryrddnz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1385,72 +1404,72 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
   padding-right: 5px;
 }
 
-#vbvgpdxyqs .gt_left {
+#bqcryrddnz .gt_left {
   text-align: left;
 }
 
-#vbvgpdxyqs .gt_center {
+#bqcryrddnz .gt_center {
   text-align: center;
 }
 
-#vbvgpdxyqs .gt_right {
+#bqcryrddnz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vbvgpdxyqs .gt_font_normal {
+#bqcryrddnz .gt_font_normal {
   font-weight: normal;
 }
 
-#vbvgpdxyqs .gt_font_bold {
+#bqcryrddnz .gt_font_bold {
   font-weight: bold;
 }
 
-#vbvgpdxyqs .gt_font_italic {
+#bqcryrddnz .gt_font_italic {
   font-style: italic;
 }
 
-#vbvgpdxyqs .gt_super {
+#bqcryrddnz .gt_super {
   font-size: 65%;
 }
 
-#vbvgpdxyqs .gt_footnote_marks {
+#bqcryrddnz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vbvgpdxyqs .gt_asterisk {
+#bqcryrddnz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vbvgpdxyqs .gt_indent_1 {
+#bqcryrddnz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vbvgpdxyqs .gt_indent_2 {
+#bqcryrddnz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vbvgpdxyqs .gt_indent_3 {
+#bqcryrddnz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vbvgpdxyqs .gt_indent_4 {
+#bqcryrddnz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vbvgpdxyqs .gt_indent_5 {
+#bqcryrddnz .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vbvgpdxyqs .katex-display {
+#bqcryrddnz .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vbvgpdxyqs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bqcryrddnz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1682,29 +1701,33 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
 </section>
 <section id="任務-8存成檔案" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="任務-8存成檔案"><span class="header-section-number">2.3</span> 任務 8：存成檔案</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（↩︎️ 續前對話）：</p>
 <blockquote class="blockquote">
 <p>請告訴我怎麼把這張 <code>gtsummary</code> table 存成 (a) html (b) docx，給共同作者看。</p>
 </blockquote>
 <section id="參考程式碼-2" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="參考程式碼-2"><span class="header-section-number">2.3.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 HTML（瀏覽器打開）</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gtsave</span>(<span class="at">filename =</span> <span class="st">"table1.html"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 Word docx（要先裝 gt 的最新版）</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flex_table</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  flextable<span class="sc">::</span><span class="fu">save_as_docx</span>(<span class="at">path =</span> <span class="st">"table1.docx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(gtsummary); <span class="fu">library</span>(gt)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：t1（請先跑完任務6、7，本段不重算）</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 HTML（瀏覽器打開）</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gtsave</span>(<span class="at">filename =</span> <span class="st">"table1.html"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 Word docx（要先裝 gt 的最新版）</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flex_table</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  flextable<span class="sc">::</span><span class="fu">save_as_docx</span>(<span class="at">path =</span> <span class="st">"table1.docx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 </section>
 </section>
 <section id="任務-9怎麼讀-table-1-判斷兩組是否平衡" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="任務-9怎麼讀-table-1-判斷兩組是否平衡"><span class="header-section-number">2.4</span> 任務 9：怎麼讀 Table 1 判斷「兩組是否平衡」</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（🆕 開新對話）：</p>
 <blockquote class="blockquote">
 <p>在 RCT paper 裡，Table 1 通常用來說明兩組基線特性平衡。請用繁體中文告訴我： 1. 看哪些 row？ 2. 為什麼大部分 RCT 的 Table 1 不會放 p value（or 放但不強調）？ 3. 如果是 RWE，Table 1 該放什麼？標準化差異（SMD）是什麼？</p>
 </blockquote>
@@ -2288,7 +2311,7 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 6：第一張 Table 1</span></span>
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（🆕 開新對話）：</span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 R 套件 </span><span class="in">`gtsummary`</span><span class="at"> 的 </span><span class="in">`tbl_summary()`</span><span class="at"> 做一張 Table 1，by </span><span class="in">`arm`</span><span class="at"> 分組，包含這些變項：age, sex, region, bcva_baseline, cst_baseline, irf_baseline, srf_baseline, study, bcva_strat, lld_strat。連續變項顯示 mean (SD)，二元 irf_baseline 和 srf_baseline 顯示 n (%)。</span></span>
 <span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
@@ -2296,135 +2319,146 @@ N = 665<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
 <span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl1-basic</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>t1_basic <span class="ot">&lt;-</span> baseline <span class="sc">|&gt;</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(arm, age, sex, region, bcva_baseline, cst_baseline,</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>         irf_baseline, srf_baseline, study, bcva_strat, lld_strat) <span class="sc">|&gt;</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> arm,</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">list</span>(</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span>,</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> <span class="fu">list</span>(</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>,</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n} ({p}%)"</span></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">list</span>(</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"Age, years"</span>,</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>      sex <span class="sc">~</span> <span class="st">"Sex"</span>,</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>      region <span class="sc">~</span> <span class="st">"Region"</span>,</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"BCVA at baseline, ETDRS letters"</span>,</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"CST at baseline, μm"</span>,</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"IRF present at baseline"</span>,</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"SRF present at baseline"</span>,</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>      study <span class="sc">~</span> <span class="st">"Study"</span>,</span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>      bcva_strat <span class="sc">~</span> <span class="st">"BCVA stratum"</span>,</span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>      lld_strat <span class="sc">~</span> <span class="st">"LLD stratum"</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>t1_basic</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(gtsummary); <span class="fu">library</span>(gt)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>t1_basic <span class="ot">&lt;-</span> baseline <span class="sc">|&gt;</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(arm, age, sex, region, bcva_baseline, cst_baseline,</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>         irf_baseline, srf_baseline, study, bcva_strat, lld_strat) <span class="sc">|&gt;</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> arm,</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">list</span>(</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"continuous"</span>,</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span>,</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"dichotomous"</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> <span class="fu">list</span>(</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>,</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n} ({p}%)"</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="fu">list</span>(</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>      age <span class="sc">~</span> <span class="st">"Age, years"</span>,</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>      sex <span class="sc">~</span> <span class="st">"Sex"</span>,</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>      region <span class="sc">~</span> <span class="st">"Region"</span>,</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>      bcva_baseline <span class="sc">~</span> <span class="st">"BCVA at baseline, ETDRS letters"</span>,</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>      cst_baseline <span class="sc">~</span> <span class="st">"CST at baseline, μm"</span>,</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>      irf_baseline <span class="sc">~</span> <span class="st">"IRF present at baseline"</span>,</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>      srf_baseline <span class="sc">~</span> <span class="st">"SRF present at baseline"</span>,</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>      study <span class="sc">~</span> <span class="st">"Study"</span>,</span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>      bcva_strat <span class="sc">~</span> <span class="st">"BCVA stratum"</span>,</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>      lld_strat <span class="sc">~</span> <span class="st">"LLD stratum"</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="🎯 對得起 paper 嗎？"}</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>看 BCVA 那一列：兩臂應該都接近 60.0 (SD ~13)；</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>CST 兩臂都接近 357 (SD ~120)。</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>如果差很多，回去檢查模擬資料 — 但你應該不會差。</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 7：加 overall 與 p value</span></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 在剛剛那張 Table 1 上加：</span></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 1. </span><span class="in">`add_overall()`</span><span class="at"> 多一欄「Total」</span></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 2. </span><span class="in">`add_p()`</span><span class="at"> 顯示兩臂之間的差異檢定 p value</span></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3. 把 footer 改成繁體中文「連續變項：mean (SD)；類別變項：n (%)；組間檢定為 t-test 或 χ²」</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl1-with-p</span></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> t1_basic <span class="sc">|&gt;</span></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overall</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_footnote</span>(</span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>    <span class="at">update =</span> <span class="fu">all_stat_cols</span>() <span class="sc">~</span> <span class="st">"連續變項：mean (SD)；類別變項：n (%)"</span></span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_caption</span>(<span class="st">"**Table 1.** Baseline characteristics by treatment arm"</span>)</span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>t1</span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="如何讀 p value"}</span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>這是 RCT，**所有 baseline 變項的 p 都應該不顯著**（p &gt; 0.05）—— 因為隨機分派應該讓兩組平衡。</span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>如果你以後做 RWE 看到某些 baseline 變項 p &lt; 0.05，那是「兩組基線不平衡」，要在 model 裡 adjust。</span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>t1_basic</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="🎯 對得起 paper 嗎？"}</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>看 BCVA 那一列：兩臂應該都接近 60.0 (SD ~13)；</span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>CST 兩臂都接近 357 (SD ~120)。</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>如果差很多，回去檢查模擬資料 — 但你應該不會差。</span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 7：加 overall 與 p value</span></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（↩️ 續前對話）：</span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 在剛剛那張 Table 1 上加：</span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 1. </span><span class="in">`add_overall()`</span><span class="at"> 多一欄「Total」</span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 2. </span><span class="in">`add_p()`</span><span class="at"> 顯示兩臂之間的差異檢定 p value</span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3. 把 footer 改成繁體中文「連續變項：mean (SD)；類別變項：n (%)；組間檢定為 t-test 或 χ²」</span></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl1-with-p</span></span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(gtsummary); <span class="fu">library</span>(gt)</span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：t1_basic（請先跑完任務6，本段不重算）</span></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> t1_basic <span class="sc">|&gt;</span></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overall</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_p</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_footnote</span>(</span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>    <span class="at">update =</span> <span class="fu">all_stat_cols</span>() <span class="sc">~</span> <span class="st">"連續變項：mean (SD)；類別變項：n (%)"</span></span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modify_caption</span>(<span class="st">"**Table 1.** Baseline characteristics by treatment arm"</span>)</span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a>t1</span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 8：存成檔案</span></span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請告訴我怎麼把這張 </span><span class="in">`gtsummary`</span><span class="at"> table 存成 (a) html (b) docx，給共同作者看。</span></span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl1-save</span></span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 HTML（瀏覽器打開）</span></span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gtsave</span>(<span class="at">filename =</span> <span class="st">"table1.html"</span>)</span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 Word docx（要先裝 gt 的最新版）</span></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flex_table</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>  flextable<span class="sc">::</span><span class="fu">save_as_docx</span>(<span class="at">path =</span> <span class="st">"table1.docx"</span>)</span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 9：怎麼讀 Table 1 判斷「兩組是否平衡」</span></span>
-<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 在 RCT paper 裡，Table 1 通常用來說明兩組基線特性平衡。請用繁體中文告訴我：</span></span>
-<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 1. 看哪些 row？</span></span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 2. 為什麼大部分 RCT 的 Table 1 不會放 p value（or 放但不強調）？</span></span>
-<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3. 如果是 RWE，Table 1 該放什麼？標準化差異（SMD）是什麼？</span></span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="如何讀 p value"}</span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a>這是 RCT，**所有 baseline 變項的 p 都應該不顯著**（p &gt; 0.05）—— 因為隨機分派應該讓兩組平衡。</span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a>如果你以後做 RWE 看到某些 baseline 變項 p &lt; 0.05，那是「兩組基線不平衡」，要在 model 裡 adjust。</span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 8：存成檔案</span></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（↩️ 續前對話）：</span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請告訴我怎麼把這張 </span><span class="in">`gtsummary`</span><span class="at"> table 存成 (a) html (b) docx，給共同作者看。</span></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl1-save</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(gtsummary); <span class="fu">library</span>(gt)</span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：t1（請先跑完任務6、7，本段不重算）</span></span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 HTML（瀏覽器打開）</span></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gtsave</span>(<span class="at">filename =</span> <span class="st">"table1.html"</span>)</span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a><span class="co"># 存 Word docx（要先裝 gt 的最新版）</span></span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>t1 <span class="sc">|&gt;</span></span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flex_table</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>  flextable<span class="sc">::</span><span class="fu">save_as_docx</span>(<span class="at">path =</span> <span class="st">"table1.docx"</span>)</span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="速記"}</span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RCT**：Table 1 是 descriptive，p value 是 ritual（隨機分派理論上組間差異是 chance）</span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RWE / observational**：Table 1 用來找需要 adjust 的 confounder，看 **SMD &gt; 0.1** 的變項</span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>用 <span class="in">`gtsummary::add_difference()`</span> 或 <span class="in">`tableone::CreateTableOne()`</span> 可以加 SMD</span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 9：怎麼讀 Table 1 判斷「兩組是否平衡」</span></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（🆕 開新對話）：</span>
 <span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜SMD（standardized mean difference）"}</span>
-<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>標準化均差。RCT 用 p value 看 baseline 平衡夠不夠，但 RWE 沒有隨機分派，**SMD 是 paper reviewer 比較買單的指標**<span class="co">[</span><span class="ot">@austin2009smd</span><span class="co">]</span>：</span>
-<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>SMD 把「兩組差距」除以「合併標準差」，這樣不同單位（年齡 vs 視力 letters）也能比較。</span>
-<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>**SMD &gt; 0.1 通常被認為「值得 adjust」**<span class="co">[</span><span class="ot">@austin2009smd; @austin2011propensity</span><span class="co">]</span>。</span>
-<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="本章重點"}</span>
-<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`gtsummary::tbl_summary()`</span> 一行寫完論文等級的 Table 1</span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>by = arm 自動分欄</span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>RCT 的 Table 1 看「兩組差不多」就好；RWE 看 SMD</span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="in">`as_gt()`</span> 之後可存 html/docx，丟給共同作者</span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 在 RCT paper 裡，Table 1 通常用來說明兩組基線特性平衡。請用繁體中文告訴我：</span></span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 1. 看哪些 row？</span></span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 2. 為什麼大部分 RCT 的 Table 1 不會放 p value（or 放但不強調）？</span></span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3. 如果是 RWE，Table 1 該放什麼？標準化差異（SMD）是什麼？</span></span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="速記"}</span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RCT**：Table 1 是 descriptive，p value 是 ritual（隨機分派理論上組間差異是 chance）</span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RWE / observational**：Table 1 用來找需要 adjust 的 confounder，看 **SMD &gt; 0.1** 的變項</span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>用 <span class="in">`gtsummary::add_difference()`</span> 或 <span class="in">`tableone::CreateTableOne()`</span> 可以加 SMD</span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜SMD（standardized mean difference）"}</span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>標準化均差。RCT 用 p value 看 baseline 平衡夠不夠，但 RWE 沒有隨機分派，**SMD 是 paper reviewer 比較買單的指標**<span class="co">[</span><span class="ot">@austin2009smd</span><span class="co">]</span>：</span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>SMD 把「兩組差距」除以「合併標準差」，這樣不同單位（年齡 vs 視力 letters）也能比較。</span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>**SMD &gt; 0.1 通常被認為「值得 adjust」**<span class="co">[</span><span class="ot">@austin2009smd; @austin2011propensity</span><span class="co">]</span>。</span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="本章重點"}</span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`gtsummary::tbl_summary()`</span> 一行寫完論文等級的 Table 1</span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>by = arm 自動分欄</span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>RCT 的 Table 1 看「兩組差不多」就好；RWE 看 SMD</span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="in">`as_gt()`</span> 之後可存 html/docx，丟給共同作者</span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

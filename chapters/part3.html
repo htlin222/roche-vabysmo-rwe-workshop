@@ -177,12 +177,6 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/primer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Primer：給非眼科醫師的背景補充</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../chapters/part1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Part 1：認識 paper + 認識資料</span></span></a>
   </div>
@@ -220,7 +214,25 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">附錄：回院之後的事</span></span></a>
+ <span class="menu-text">附錄 1：回院之後的事</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 2：給非眼科醫師的背景補充（Primer）</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/r-primer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 3：R 語言入門（給完全沒寫過程式的人）</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附錄 4：Prompting 心法 — 讓 AI 幫你寫 code</span></a>
   </div>
 </li>
     </ul>
@@ -332,7 +344,7 @@ div.csl-indent {
 <hr>
 <section id="任務-10什麼是-mmrm" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="任務-10什麼是-mmrm"><span class="header-section-number">3.1</span> 任務 10：什麼是 MMRM？</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（🆕 開新對話）：</p>
 <blockquote class="blockquote">
 <p>請用 100 字以下、不用數學公式，跟一個沒學過統計的眼科醫師解釋：什麼是 mixed model for repeated measures (MMRM)？為什麼眼科 longitudinal trial 都用 MMRM 而不是 paired t-test 或 ANOVA？「unstructured covariance」是什麼意思？</p>
 </blockquote>
@@ -358,34 +370,41 @@ div.csl-indent {
 </section>
 <section id="任務-11把-baseline-與-followup-接起來" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="任務-11把-baseline-與-followup-接起來"><span class="header-section-number">3.2</span> 任務 11：把 baseline 與 followup 接起來</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（🆕 開新對話）：</p>
 <blockquote class="blockquote">
 <p>我有兩個 R data frame：<code>baseline</code>（一筆病人一列，欄位 patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat 等）和 <code>followup</code>（long format，欄位 patient_id, week, bcva, cst, irf, srf）。請給我 R code：用 <code>dplyr::left_join()</code> 把 baseline 的 arm、bcva_baseline、cst_baseline、study、bcva_strat、lld_strat、region 加到 followup 上，並算 bcva_change = bcva - bcva_baseline、cst_change = cst - cst_baseline。</p>
 </blockquote>
 <section id="參考程式碼" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="參考程式碼"><span class="header-section-number">3.2.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fu_long <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    baseline <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(patient_id, arm, study, region,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>             bcva_baseline, cst_baseline,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>             bcva_strat, lld_strat),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"patient_id"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_change =</span> bcva <span class="sc">-</span> bcva_baseline,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cst_change  =</span> cst <span class="sc">-</span> cst_baseline,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">visit       =</span> <span class="fu">factor</span>(week, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">arm         =</span> <span class="fu">factor</span>(arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>)),</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">study       =</span> <span class="fu">factor</span>(study),</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_strat  =</span> <span class="fu">factor</span>(bcva_strat),</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">lld_strat   =</span> <span class="fu">factor</span>(lld_strat),</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">region      =</span> <span class="fu">factor</span>(region)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fu_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fu_long <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    baseline <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(patient_id, arm, study, region,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>             bcva_baseline, cst_baseline,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>             bcva_strat, lld_strat),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"patient_id"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_change =</span> bcva <span class="sc">-</span> bcva_baseline,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">cst_change  =</span> cst <span class="sc">-</span> cst_baseline,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">visit       =</span> <span class="fu">factor</span>(week, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">arm         =</span> <span class="fu">factor</span>(arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>)),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">study       =</span> <span class="fu">factor</span>(study),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_strat  =</span> <span class="fu">factor</span>(bcva_strat),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">lld_strat   =</span> <span class="fu">factor</span>(lld_strat),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">region      =</span> <span class="fu">factor</span>(region)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fu_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 3,853
 Columns: 16
@@ -443,7 +462,7 @@ Tip
 </section>
 <section id="任務-12跑-mmrm-bcva" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="任務-12跑-mmrm-bcva"><span class="header-section-number">3.3</span> 任務 12：跑 MMRM — BCVA</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（↩︎️ 續前對話）：</p>
 <blockquote class="blockquote">
 <p>請用 R 套件 <code>mmrm</code> 跑這個模型：</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mmrm</span>(</span>
@@ -455,14 +474,22 @@ Tip
 <section id="參考程式碼-1" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="參考程式碼-1"><span class="header-section-number">3.3.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m_bcva <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> bcva_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_bcva)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：fu_long（請先跑完任務11，本段不重算）</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>m_bcva <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> bcva_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change))</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_bcva)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>mmrm fit
 
@@ -480,18 +507,18 @@ Model selection criteria:
  24310.1  24341.3 -12149.1  24298.1 
 
 Coefficients: 
-                        Estimate  Std. Error          df t value   Pr(&gt;|t|)    
-(Intercept)             4.631072    0.487097 1436.500000   9.508    &lt; 2e-16 ***
-armfaricimab            0.685026    0.397473 1318.600000   1.723      0.085 .  
-visit8                  1.020469    0.226288 1286.300000   4.510 0.00000709 ***
-visit12                 2.158918    0.223983 1275.700000   9.639    &lt; 2e-16 ***
-studyTENAYA            -0.261624    0.358869 1320.300000  -0.729      0.466    
-bcva_strat&gt;=74         -0.539657    0.577128 1319.500000  -0.935      0.350    
-bcva_strat55-73        -0.107905    0.390995 1319.900000  -0.276      0.783    
-lld_strat&gt;=33          -0.010517    0.381036 1320.700000  -0.028      0.978    
-regionUS-Canada        -0.257734    0.360747 1319.500000  -0.714      0.475    
-armfaricimab:visit8    -0.001483    0.320132 1288.000000  -0.005      0.996    
-armfaricimab:visit12    0.092417    0.316173 1272.400000   0.292      0.770    
+                       Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)           4.631e+00  4.871e-01  1.436e+03   9.508  &lt; 2e-16 ***
+armfaricimab          6.850e-01  3.975e-01  1.319e+03   1.723    0.085 .  
+visit8                1.020e+00  2.263e-01  1.286e+03   4.510 7.09e-06 ***
+visit12               2.159e+00  2.240e-01  1.276e+03   9.639  &lt; 2e-16 ***
+studyTENAYA          -2.616e-01  3.589e-01  1.320e+03  -0.729    0.466    
+bcva_strat&gt;=74       -5.397e-01  5.771e-01  1.320e+03  -0.935    0.350    
+bcva_strat55-73      -1.079e-01  3.910e-01  1.320e+03  -0.276    0.783    
+lld_strat&gt;=33        -1.052e-02  3.810e-01  1.321e+03  -0.028    0.978    
+regionUS-Canada      -2.577e-01  3.607e-01  1.320e+03  -0.714    0.475    
+armfaricimab:visit8  -1.483e-03  3.201e-01  1.288e+03  -0.005    0.996    
+armfaricimab:visit12  9.242e-02  3.162e-01  1.272e+03   0.292    0.770    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -542,15 +569,23 @@ Covariance estimate:
 </section>
 <section id="任務-13取-adjusted-means" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="任務-13取-adjusted-means"><span class="header-section-number">3.4</span> 任務 13：取 adjusted means</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（↩︎️ 續前對話）：</p>
 <blockquote class="blockquote">
 <p>用 <code>emmeans::emmeans()</code> 從上面的 mmrm model 取出每個 arm 在每個 visit 的 adjusted mean change from baseline，加上 95% CI。然後算每個 visit 兩 arm 的差異（faricimab − aflibercept）。</p>
 </blockquote>
 <section id="參考程式碼-2" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="參考程式碼-2"><span class="header-section-number">3.4.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>emm_bcva <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_bcva, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>emm_bcva</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：m_bcva（請先跑完任務11、12，本段不重算）</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>emm_bcva <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_bcva, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>emm_bcva</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>visit = 4:
  arm         emmean    SE   df lower.CL upper.CL
@@ -597,41 +632,50 @@ Confidence level used: 0.95 </code></pre>
 </section>
 <section id="任務-14畫-figure-1a-bcva" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="任務-14畫-figure-1a-bcva"><span class="header-section-number">3.5</span> 任務 14：畫 Figure 1A — BCVA</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（↩︎️ 續前對話）：</p>
 <blockquote class="blockquote">
 <p>請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 深藍 #1F5C8B、aflibercept 赭橙 #C75D38）、加 error bar (95% CI)、加 point。標題 “(A) BCVA change from baseline”，y 軸 label “Adjusted Mean BCVA Change (Letters)”。</p>
 </blockquote>
 <section id="參考程式碼-3" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="參考程式碼-3"><span class="header-section-number">3.5.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_bcva) <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit)))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 加一筆 week=0 的 baseline reference (change = 0)</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  emm_bcva_df</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：emm_bcva（請先跑完任務11~13，本段不重算）</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_bcva) <span class="sc">|&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit)))</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_bcva_df,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(A) BCVA change from baseline"</span>,</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean BCVA Change</span><span class="sc">\n</span><span class="st">(ETDRS Letters)"</span>) <span class="sc">+</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>p_bcva</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 加一筆 week=0 的 baseline reference (change = 0)</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  emm_bcva_df</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_bcva_df,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(A) BCVA change from baseline"</span>,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean BCVA Change</span><span class="sc">\n</span><span class="st">(ETDRS Letters)"</span>) <span class="sc">+</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>p_bcva</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -646,22 +690,30 @@ Confidence level used: 0.95 </code></pre>
 </section>
 <section id="任務-15複製整段跑-cst-figure-1b" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="任務-15複製整段跑-cst-figure-1b"><span class="header-section-number">3.6</span> 任務 15：複製整段，跑 CST → Figure 1B</h2>
-<p>📋 <strong>複製這段話，貼給 AI</strong>：</p>
+<p>📋 <strong>複製這段話，貼給 AI</strong>（↩︎️ 續前對話）：</p>
 <blockquote class="blockquote">
 <p>把上面 BCVA 那段 mmrm + emmeans + ggplot 完整 code 複製一份，但 outcome 換成 <code>cst_change</code>。最後用 <code>patchwork</code> 套件把 Figure 1A (BCVA) 與 Figure 1B (CST) 並排成 2 panel，模仿 paper Fig 1。</p>
 </blockquote>
 <section id="參考程式碼-4" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="參考程式碼-4"><span class="header-section-number">3.6.1</span> 參考程式碼</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m_cst <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> cst_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>emm_cst <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_cst, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>emm_cst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：fu_long（請先跑完任務11，本段不重算）</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>m_cst <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> cst_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>emm_cst <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_cst, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>emm_cst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>visit = 4:
  arm         emmean   SE   df lower.CL upper.CL
@@ -1313,7 +1365,7 @@ Confidence level used: 0.95 </code></pre>
 <span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 10：什麼是 MMRM？</span></span>
 <span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（🆕 開新對話）：</span>
 <span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 100 字以下、不用數學公式，跟一個沒學過統計的眼科醫師解釋：什麼是 mixed model for repeated measures (MMRM)？為什麼眼科 longitudinal trial 都用 MMRM 而不是 paired t-test 或 ANOVA？「unstructured covariance」是什麼意思？</span></span>
 <span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a></span>
@@ -1328,7 +1380,7 @@ Confidence level used: 0.95 </code></pre>
 <span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 11：把 baseline 與 followup 接起來</span></span>
 <span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（🆕 開新對話）：</span>
 <span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 我有兩個 R data frame：</span><span class="in">`baseline`</span><span class="at">（一筆病人一列，欄位 patient_id, arm, study, region, bcva_baseline, cst_baseline, bcva_strat, lld_strat 等）和 </span><span class="in">`followup`</span><span class="at">（long format，欄位 patient_id, week, bcva, cst, irf, srf）。請給我 R code：用 </span><span class="in">`dplyr::left_join()`</span><span class="at"> 把 baseline 的 arm、bcva_baseline、cst_baseline、study、bcva_strat、lld_strat、region 加到 followup 上，並算 bcva_change = bcva - bcva_baseline、cst_change = cst - cst_baseline。</span></span>
 <span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a></span>
@@ -1336,235 +1388,274 @@ Confidence level used: 0.95 </code></pre>
 <span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: merge-data</span></span>
-<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>fu_long <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
-<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>    baseline <span class="sc">|&gt;</span></span>
-<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(patient_id, arm, study, region,</span>
-<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>             bcva_baseline, cst_baseline,</span>
-<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>             bcva_strat, lld_strat),</span>
-<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"patient_id"</span></span>
-<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_change =</span> bcva <span class="sc">-</span> bcva_baseline,</span>
-<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">cst_change  =</span> cst <span class="sc">-</span> cst_baseline,</span>
-<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">visit       =</span> <span class="fu">factor</span>(week, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)),</span>
-<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">arm         =</span> <span class="fu">factor</span>(arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>)),</span>
-<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">study       =</span> <span class="fu">factor</span>(study),</span>
-<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_strat  =</span> <span class="fu">factor</span>(bcva_strat),</span>
-<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">lld_strat   =</span> <span class="fu">factor</span>(lld_strat),</span>
-<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">region      =</span> <span class="fu">factor</span>(region)</span>
-<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
-<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fu_long)</span>
-<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>**為什麼把 `aflibercept` 設為 reference level？**</span>
-<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>這樣 model 跑出來的 coefficient 是「faricimab 比 aflibercept 多 X letters」，方向直觀。</span>
-<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜factor / level / reference"}</span>
-<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**factor** = R 對「類別變項」的型別（例如 arm 只能是 faricimab 或 aflibercept）</span>
-<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**level** = 類別變項的「可能選項」</span>
-<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**reference level** = 第一個 level，model 把它當基準。其他 level 的 coefficient 是「跟 reference 比」</span>
-<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>想換基準：<span class="in">`factor(arm, levels = c("aflibercept", "faricimab"))`</span> 把 aflibercept 排第一</span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>fu_long <span class="ot">&lt;-</span> followup <span class="sc">|&gt;</span></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>    baseline <span class="sc">|&gt;</span></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(patient_id, arm, study, region,</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>             bcva_baseline, cst_baseline,</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>             bcva_strat, lld_strat),</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"patient_id"</span></span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_change =</span> bcva <span class="sc">-</span> bcva_baseline,</span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">cst_change  =</span> cst <span class="sc">-</span> cst_baseline,</span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">visit       =</span> <span class="fu">factor</span>(week, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)),</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">arm         =</span> <span class="fu">factor</span>(arm, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>, <span class="st">"faricimab"</span>)),</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">study       =</span> <span class="fu">factor</span>(study),</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>    <span class="at">bcva_strat  =</span> <span class="fu">factor</span>(bcva_strat),</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>    <span class="at">lld_strat   =</span> <span class="fu">factor</span>(lld_strat),</span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">region      =</span> <span class="fu">factor</span>(region)</span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fu_long)</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>**為什麼把 `aflibercept` 設為 reference level？**</span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>這樣 model 跑出來的 coefficient 是「faricimab 比 aflibercept 多 X letters」，方向直觀。</span>
 <span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 12：跑 MMRM — BCVA</span></span>
-<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
-<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 R 套件 </span><span class="in">`mmrm`</span><span class="at"> 跑這個模型：</span></span>
-<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ```r</span></span>
-<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; mmrm(</span></span>
-<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;   formula = bcva_change ~ arm + visit + arm:visit + study + bcva_strat + lld_strat + region + us(visit </span><span class="pp">|</span><span class="at"> patient_id),</span></span>
-<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;   data = fu_long</span></span>
-<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; )</span></span>
-<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ```</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜factor / level / reference"}</span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**factor** = R 對「類別變項」的型別（例如 arm 只能是 faricimab 或 aflibercept）</span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**level** = 類別變項的「可能選項」</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**reference level** = 第一個 level，model 把它當基準。其他 level 的 coefficient 是「跟 reference 比」</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>想換基準：<span class="in">`factor(arm, levels = c("aflibercept", "faricimab"))`</span> 把 aflibercept 排第一</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 12：跑 MMRM — BCVA</span></span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（↩️ 續前對話）：</span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 R 套件 </span><span class="in">`mmrm`</span><span class="at"> 跑這個模型：</span></span>
 <span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 跑完印 summary。然後告訴我：（1）</span><span class="in">`arm:visit`</span><span class="at"> interaction term 在說什麼？（2）</span><span class="in">`us(visit | patient_id)`</span><span class="at"> 是什麼意思？</span></span>
-<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
-<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: mmrm-bcva</span></span>
-<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>m_bcva <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
-<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> bcva_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
-<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
-<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
-<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change))</span>
-<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_bcva)</span>
-<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="模型 syntax 拆解"}</span>
-<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`arm + visit + arm:visit`</span> — main effects 與 interaction（讓兩 arm 的時間趨勢可以不一樣）</span>
-<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`study + bcva_strat + lld_strat + region`</span> — 分層因子（paper 也是這樣）；多重 prognostic factor 的 adjustment 原則見 Kahan &amp; Morris 2013<span class="co">[</span><span class="ot">@kahan2013adjusting</span><span class="co">]</span></span>
-<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`us(visit | patient_id)`</span> — 「同一個 patient 跨 visit 的 covariance 是 unstructured」；UN 在 RCT longitudinal data 是 FDA 接受的預設選擇<span class="co">[</span><span class="ot">@mallinckrodt2004correlation; @lavange2016fda</span><span class="co">]</span></span>
-<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Estimand 對應**：本書 demo 採「treatment policy」估計量（如 ICH E9 R1）<span class="co">[</span><span class="ot">@mehrotra2016estimands</span><span class="co">]</span></span>
-<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜interaction / unstructured covariance / emmeans"}</span>
-<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**interaction (`arm:visit`)** — 「兩 arm 的時間趨勢可以不一樣」。沒有 interaction 的話 model 強制兩條線平行，那就抓不到「藥效隨時間變化」</span>
-<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`us(visit | patient_id)`** — 念作「visit given patient_id is unstructured」。意思是「**同一個病人**的 4 個 visit 之間互相相關，但相關有多強讓 model 自己估，不假設規則」</span>
-<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`emmeans()`** — estimated marginal means，「校正過其他變項後的邊際平均」。比直接 <span class="in">`mean()`</span> 更接近 paper 寫的「adjusted mean」</span>
-<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ```r</span></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; mmrm(</span></span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;   formula = bcva_change ~ arm + visit + arm:visit + study + bcva_strat + lld_strat + region + us(visit </span><span class="pp">|</span><span class="at"> patient_id),</span></span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;   data = fu_long</span></span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; )</span></span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ```</span></span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 跑完印 summary。然後告訴我：（1）</span><span class="in">`arm:visit`</span><span class="at"> interaction term 在說什麼？（2）</span><span class="in">`us(visit | patient_id)`</span><span class="at"> 是什麼意思？</span></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: mmrm-bcva</span></span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：fu_long（請先跑完任務11，本段不重算）</span></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>m_bcva <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> bcva_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bcva_change))</span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_bcva)</span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 13：取 adjusted means</span></span>
-<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
-<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 用 </span><span class="in">`emmeans::emmeans()`</span><span class="at"> 從上面的 mmrm model 取出每個 arm 在每個 visit 的 adjusted mean change from baseline，加上 95% CI。然後算每個 visit 兩 arm 的差異（faricimab − aflibercept）。</span></span>
-<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
-<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: emmeans-bcva</span></span>
-<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a>emm_bcva <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_bcva, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
-<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>emm_bcva</span>
-<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: contrast-bcva</span></span>
-<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(emm_bcva, <span class="at">method =</span> <span class="st">"revpairwise"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">infer =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a>對照 paper Fig 1A：week 12 faricimab 應該 ~+6.7 letters、aflibercept ~+5.9，差 ~+0.8。</span>
-<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 14：畫 Figure 1A — BCVA</span></span>
-<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
-<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 深藍 #1F5C8B、aflibercept 赭橙 #C75D38）、加 error bar (95% CI)、加 point。標題 "(A) BCVA change from baseline"，y 軸 label "Adjusted Mean BCVA Change (Letters)"。</span></span>
-<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
-<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1a-bcva</span></span>
-<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1A. Adjusted mean change from baseline in BCVA over 12-week head-to-head dosing phase."</span></span>
-<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_bcva) <span class="sc">|&gt;</span></span>
-<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit)))</span>
-<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a><span class="co"># 加一筆 week=0 的 baseline reference (change = 0)</span></span>
-<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
-<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>             <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
-<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>             <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
-<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>             <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
-<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a>  emm_bcva_df</span>
-<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_bcva_df,</span>
-<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
-<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
-<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
-<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
-<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
-<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(A) BCVA change from baseline"</span>,</span>
-<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
-<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean BCVA Change</span><span class="sc">\n</span><span class="st">(ETDRS Letters)"</span>) <span class="sc">+</span></span>
-<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a>p_bcva</span>
-<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 15：複製整段，跑 CST → Figure 1B</span></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="模型 syntax 拆解"}</span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`arm + visit + arm:visit`</span> — main effects 與 interaction（讓兩 arm 的時間趨勢可以不一樣）</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`study + bcva_strat + lld_strat + region`</span> — 分層因子（paper 也是這樣）；多重 prognostic factor 的 adjustment 原則見 Kahan &amp; Morris 2013<span class="co">[</span><span class="ot">@kahan2013adjusting</span><span class="co">]</span></span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`us(visit | patient_id)`</span> — 「同一個 patient 跨 visit 的 covariance 是 unstructured」；UN 在 RCT longitudinal data 是 FDA 接受的預設選擇<span class="co">[</span><span class="ot">@mallinckrodt2004correlation; @lavange2016fda</span><span class="co">]</span></span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Estimand 對應**：本書 demo 採「treatment policy」估計量（如 ICH E9 R1）<span class="co">[</span><span class="ot">@mehrotra2016estimands</span><span class="co">]</span></span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="📖 名詞｜interaction / unstructured covariance / emmeans"}</span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**interaction (`arm:visit`)** — 「兩 arm 的時間趨勢可以不一樣」。沒有 interaction 的話 model 強制兩條線平行，那就抓不到「藥效隨時間變化」</span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`us(visit | patient_id)`** — 念作「visit given patient_id is unstructured」。意思是「**同一個病人**的 4 個 visit 之間互相相關，但相關有多強讓 model 自己估，不假設規則」</span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`emmeans()`** — estimated marginal means，「校正過其他變項後的邊際平均」。比直接 <span class="in">`mean()`</span> 更接近 paper 寫的「adjusted mean」</span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 13：取 adjusted means</span></span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（↩️ 續前對話）：</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 用 </span><span class="in">`emmeans::emmeans()`</span><span class="at"> 從上面的 mmrm model 取出每個 arm 在每個 visit 的 adjusted mean change from baseline，加上 95% CI。然後算每個 visit 兩 arm 的差異（faricimab − aflibercept）。</span></span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: emmeans-bcva</span></span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：m_bcva（請先跑完任務11、12，本段不重算）</span></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>emm_bcva <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_bcva, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>emm_bcva</span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: contrast-bcva</span></span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a><span class="fu">contrast</span>(emm_bcva, <span class="at">method =</span> <span class="st">"revpairwise"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">infer =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>對照 paper Fig 1A：week 12 faricimab 應該 ~+6.7 letters、aflibercept ~+5.9，差 ~+0.8。</span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 14：畫 Figure 1A — BCVA</span></span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（↩️ 續前對話）：</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 請用 ggplot2 畫一張 line plot：x 軸是 visit (4, 8, 12 週)、y 軸是 adjusted mean change from baseline、不同 arm 用不同顏色（faricimab 深藍 #1F5C8B、aflibercept 赭橙 #C75D38）、加 error bar (95% CI)、加 point。標題 "(A) BCVA change from baseline"，y 軸 label "Adjusted Mean BCVA Change (Letters)"。</span></span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1a-bcva</span></span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1A. Adjusted mean change from baseline in BCVA over 12-week head-to-head dosing phase."</span></span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：emm_bcva（請先跑完任務11~13，本段不重算）</span></span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_bcva) <span class="sc">|&gt;</span></span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit)))</span>
 <span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**：</span>
-<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 把上面 BCVA 那段 mmrm + emmeans + ggplot 完整 code 複製一份，但 outcome 換成 </span><span class="in">`cst_change`</span><span class="at">。最後用 </span><span class="in">`patchwork`</span><span class="at"> 套件把 Figure 1A (BCVA) 與 Figure 1B (CST) 並排成 2 panel，模仿 paper Fig 1。</span></span>
-<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
-<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: mmrm-cst</span></span>
-<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a>m_cst <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
-<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> cst_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
-<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
-<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
-<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
-<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a>emm_cst <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_cst, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
-<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a>emm_cst</span>
-<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1b-cst</span></span>
-<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1B. Adjusted mean change from baseline in CST over 12-week head-to-head dosing phase."</span></span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a><span class="co"># 加一筆 week=0 的 baseline reference (change = 0)</span></span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a>emm_bcva_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
+<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a>             <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a>             <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a>             <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a>  emm_bcva_df</span>
+<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_bcva_df,</span>
+<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
+<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
+<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(A) BCVA change from baseline"</span>,</span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
+<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean BCVA Change</span><span class="sc">\n</span><span class="st">(ETDRS Letters)"</span>) <span class="sc">+</span></span>
+<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a>p_bcva</span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a>emm_cst_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_cst) <span class="sc">|&gt;</span></span>
-<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit))) <span class="sc">|&gt;</span></span>
-<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
-<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a>               <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
-<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a>               <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
-<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a>               <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
-<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> _</span>
-<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(arm, week)</span>
-<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-276"><a href="#cb15-276" aria-hidden="true" tabindex="-1"></a>p_cst <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_cst_df,</span>
-<span id="cb15-277"><a href="#cb15-277" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
-<span id="cb15-278"><a href="#cb15-278" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
-<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
-<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
-<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
-<span id="cb15-286"><a href="#cb15-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(B) CST change from baseline"</span>,</span>
-<span id="cb15-287"><a href="#cb15-287" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
-<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean CST Change</span><span class="sc">\n</span><span class="st">(μm)"</span>) <span class="sc">+</span></span>
-<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a>p_cst</span>
-<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a><span class="fu">## 任務 15：複製整段，跑 CST → Figure 1B</span></span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a>📋 **複製這段話，貼給 AI**（↩️ 續前對話）：</span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 把上面 BCVA 那段 mmrm + emmeans + ggplot 完整 code 複製一份，但 outcome 換成 </span><span class="in">`cst_change`</span><span class="at">。最後用 </span><span class="in">`patchwork`</span><span class="at"> 套件把 Figure 1A (BCVA) 與 Figure 1B (CST) 並排成 2 panel，模仿 paper Fig 1。</span></span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a><span class="fu">### 參考程式碼</span></span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-277"><a href="#cb15-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-278"><a href="#cb15-278" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: mmrm-cst</span></span>
+<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a><span class="co"># ── 前置（可單獨執行）：套件 + 資料 ──</span></span>
+<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(dplyr); <span class="fu">library</span>(tidyr)</span>
+<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mmrm); <span class="fu">library</span>(emmeans)</span>
+<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2); <span class="fu">library</span>(patchwork)</span>
+<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a>arm_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"faricimab"</span> <span class="ot">=</span> <span class="st">"#1F5C8B"</span>, <span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"#C75D38"</span>)</span>
+<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_baseline.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/faricimab_followup.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-286"><a href="#cb15-286" aria-hidden="true" tabindex="-1"></a><span class="co"># ⚠️ 沿用前面任務的物件：fu_long（請先跑完任務11，本段不重算）</span></span>
+<span id="cb15-287"><a href="#cb15-287" aria-hidden="true" tabindex="-1"></a>m_cst <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
+<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> cst_change <span class="sc">~</span> arm <span class="sc">+</span> visit <span class="sc">+</span> arm<span class="sc">:</span>visit <span class="sc">+</span></span>
+<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a>    study <span class="sc">+</span> bcva_strat <span class="sc">+</span> lld_strat <span class="sc">+</span> region <span class="sc">+</span></span>
+<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(visit <span class="sc">|</span> patient_id),</span>
+<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> fu_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cst_change))</span>
+<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-293"><a href="#cb15-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a><span class="fu">### 兩張合成 paper Fig 1</span></span>
-<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-298"><a href="#cb15-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-299"><a href="#cb15-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1-combined</span></span>
-<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1. Reproduced from Cheung et al. 2025 — Adjusted mean change from baseline in (A) BCVA and (B) CST."</span></span>
-<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 11</span></span>
-<span id="cb15-302"><a href="#cb15-302" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a>emm_cst <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m_cst, <span class="sc">~</span> arm <span class="sc">|</span> visit)</span>
+<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a>emm_cst</span>
+<span id="cb15-296"><a href="#cb15-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-297"><a href="#cb15-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1b-cst</span></span>
+<span id="cb15-302"><a href="#cb15-302" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1B. Adjusted mean change from baseline in CST over 12-week head-to-head dosing phase."</span></span>
 <span id="cb15-303"><a href="#cb15-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="sc">+</span> p_cst <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span></span>
-<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="🎯 你做出 paper 圖了"}</span>
-<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a>回去看一下 paper Figure 1（refs/tenaya-lucerne-paper.pdf 第 4 頁），你的圖跟 paper 走勢應該一致：</span>
-<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BCVA：兩 arm 一路上升，幾乎重疊，week 12 達 ~+6 letters</span>
-<span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CST：兩 arm 都急速下降，**faricimab 比 aflibercept 多降 ~12–14 μm**</span>
-<span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb15-313"><a href="#cb15-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-314"><a href="#cb15-314" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb15-315"><a href="#cb15-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-316"><a href="#cb15-316" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="本章重點"}</span>
-<span id="cb15-317"><a href="#cb15-317" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>MMRM = 「同一隻眼被測多次」的標配模型</span>
-<span id="cb15-318"><a href="#cb15-318" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`unstructured covariance + MAR implicit imputation`</span> = paper 標準寫法</span>
-<span id="cb15-319"><a href="#cb15-319" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="in">`mmrm::mmrm()`</span> 一行就能跑、<span class="in">`emmeans`</span> 取 adjusted mean、ggplot 出圖</span>
-<span id="cb15-320"><a href="#cb15-320" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**這個 pipeline 跟你後面換院內資料時是一模一樣的 code**</span>
-<span id="cb15-321"><a href="#cb15-321" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a>emm_cst_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_cst) <span class="sc">|&gt;</span></span>
+<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week =</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(visit))) <span class="sc">|&gt;</span></span>
+<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">arm =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span>,<span class="st">"faricimab"</span>),</span>
+<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a>               <span class="at">week =</span> <span class="dv">0</span>, <span class="at">emmean =</span> <span class="dv">0</span>, <span class="at">SE =</span> <span class="dv">0</span>,</span>
+<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a>               <span class="at">df =</span> <span class="cn">NA</span>, <span class="at">lower.CL =</span> <span class="dv">0</span>, <span class="at">upper.CL =</span> <span class="dv">0</span>,</span>
+<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a>               <span class="at">visit =</span> <span class="fu">factor</span>(<span class="st">"0"</span>, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"4"</span>,<span class="st">"8"</span>,<span class="st">"12"</span>))),</span>
+<span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> _</span>
+<span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-313"><a href="#cb15-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(arm, week)</span>
+<span id="cb15-314"><a href="#cb15-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-315"><a href="#cb15-315" aria-hidden="true" tabindex="-1"></a>p_cst <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emm_cst_df,</span>
+<span id="cb15-316"><a href="#cb15-316" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> emmean, <span class="at">colour =</span> arm, <span class="at">group =</span> arm)) <span class="sc">+</span></span>
+<span id="cb15-317"><a href="#cb15-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-318"><a href="#cb15-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb15-319"><a href="#cb15-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb15-320"><a href="#cb15-320" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb15-321"><a href="#cb15-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> arm_colours, <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-322"><a href="#cb15-322" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"aflibercept"</span> <span class="ot">=</span> <span class="st">"Aflibercept Q8W"</span>,</span>
+<span id="cb15-323"><a href="#cb15-323" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"faricimab"</span>   <span class="ot">=</span> <span class="st">"Faricimab up to Q16W"</span>)) <span class="sc">+</span></span>
+<span id="cb15-324"><a href="#cb15-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
+<span id="cb15-325"><a href="#cb15-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"(B) CST change from baseline"</span>,</span>
+<span id="cb15-326"><a href="#cb15-326" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time (Weeks)"</span>,</span>
+<span id="cb15-327"><a href="#cb15-327" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Adjusted Mean CST Change</span><span class="sc">\n</span><span class="st">(μm)"</span>) <span class="sc">+</span></span>
+<span id="cb15-328"><a href="#cb15-328" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb15-329"><a href="#cb15-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-330"><a href="#cb15-330" aria-hidden="true" tabindex="-1"></a>p_cst</span>
+<span id="cb15-331"><a href="#cb15-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-332"><a href="#cb15-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### 兩張合成 paper Fig 1</span></span>
+<span id="cb15-334"><a href="#cb15-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-337"><a href="#cb15-337" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-338"><a href="#cb15-338" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig1-combined</span></span>
+<span id="cb15-339"><a href="#cb15-339" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 1. Reproduced from Cheung et al. 2025 — Adjusted mean change from baseline in (A) BCVA and (B) CST."</span></span>
+<span id="cb15-340"><a href="#cb15-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 11</span></span>
+<span id="cb15-341"><a href="#cb15-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb15-342"><a href="#cb15-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-343"><a href="#cb15-343" aria-hidden="true" tabindex="-1"></a>p_bcva <span class="sc">+</span> p_cst <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span></span>
+<span id="cb15-344"><a href="#cb15-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb15-345"><a href="#cb15-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-346"><a href="#cb15-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-347"><a href="#cb15-347" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="🎯 你做出 paper 圖了"}</span>
+<span id="cb15-348"><a href="#cb15-348" aria-hidden="true" tabindex="-1"></a>回去看一下 paper Figure 1（refs/tenaya-lucerne-paper.pdf 第 4 頁），你的圖跟 paper 走勢應該一致：</span>
+<span id="cb15-349"><a href="#cb15-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BCVA：兩 arm 一路上升，幾乎重疊，week 12 達 ~+6 letters</span>
+<span id="cb15-350"><a href="#cb15-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CST：兩 arm 都急速下降，**faricimab 比 aflibercept 多降 ~12–14 μm**</span>
+<span id="cb15-351"><a href="#cb15-351" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-352"><a href="#cb15-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-353"><a href="#cb15-353" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-354"><a href="#cb15-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-355"><a href="#cb15-355" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="本章重點"}</span>
+<span id="cb15-356"><a href="#cb15-356" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>MMRM = 「同一隻眼被測多次」的標配模型</span>
+<span id="cb15-357"><a href="#cb15-357" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`unstructured covariance + MAR implicit imputation`</span> = paper 標準寫法</span>
+<span id="cb15-358"><a href="#cb15-358" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="in">`mmrm::mmrm()`</span> 一行就能跑、<span class="in">`emmeans`</span> 取 adjusted mean、ggplot 出圖</span>
+<span id="cb15-359"><a href="#cb15-359" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**這個 pipeline 跟你後面換院內資料時是一模一樣的 code**</span>
+<span id="cb15-360"><a href="#cb15-360" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
