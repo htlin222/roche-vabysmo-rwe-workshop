@@ -146,7 +146,7 @@ t1
 #| label: tbl1-save
 #| eval: false
 # ── 前置（可單獨執行）：套件 + 資料 ──
-library(readr); library(dplyr); library(gtsummary); library(gt)
+library(readr); library(dplyr); library(gtsummary); library(gt); library(flextable)
 baseline <- read_csv("data/faricimab_baseline.csv", show_col_types = FALSE)
 # ⚠️ 沿用前面任務的物件：t1（請先跑完任務6、7，本段不重算）
 # 存 HTML（瀏覽器打開）

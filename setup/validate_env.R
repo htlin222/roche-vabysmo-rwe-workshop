@@ -68,7 +68,7 @@ required <- c(
   # data
   "tidyverse", "readr", "dplyr", "tidyr",
   # tables
-  "gtsummary", "gt", "knitr",
+  "gtsummary", "gt", "knitr", "flextable",
   # MMRM
   "mmrm", "emmeans", "broom", "broom.mixed",
   # PSM / ASMD（v0.2 新增）

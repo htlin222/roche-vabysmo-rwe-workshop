@@ -41,7 +41,7 @@ required_pkgs <- c(
   # data
   "tidyverse", "readr",
   # tables
-  "gtsummary", "gt", "knitr",
+  "gtsummary", "gt", "knitr", "flextable",
   # MMRM
   "mmrm", "emmeans", "broom", "broom.mixed",
   # CMH / proportions
