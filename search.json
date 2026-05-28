@@ -164,7 +164,7 @@
     "href": "chapters/part2.html#任務-8存成檔案",
     "title": "2  Part 2：Table 1 — Baseline characteristics",
     "section": "2.3 任務 8：存成檔案",
-    "text": "2.3 任務 8：存成檔案\n📋 複製這段話，貼給 AI（↩︎️ 續前對話）：\n\n請告訴我怎麼把這張 gtsummary table 存成 (a) html (b) docx，給共同作者看。\n\n\n2.3.1 參考程式碼\n\n# ── 前置（可單獨執行）：套件 + 資料 ──\nlibrary(readr); library(dplyr); library(gtsummary); library(gt)\nbaseline &lt;- read_csv(\"data/faricimab_baseline.csv\", show_col_types = FALSE)\n# ⚠️ 沿用前面任務的物件：t1（請先跑完任務6、7，本段不重算）\n# 存 HTML（瀏覽器打開）\nt1 |&gt;\n  as_gt() |&gt;\n  gt::gtsave(filename = \"table1.html\")\n\n# 存 Word docx（要先裝 gt 的最新版）\nt1 |&gt;\n  as_flex_table() |&gt;\n  flextable::save_as_docx(path = \"table1.docx\")",
+    "text": "2.3 任務 8：存成檔案\n📋 複製這段話，貼給 AI（↩︎️ 續前對話）：\n\n請告訴我怎麼把這張 gtsummary table 存成 (a) html (b) docx，給共同作者看。\n\n\n2.3.1 參考程式碼\n\n# ── 前置（可單獨執行）：套件 + 資料 ──\nlibrary(readr); library(dplyr); library(gtsummary); library(gt); library(flextable)\nbaseline &lt;- read_csv(\"data/faricimab_baseline.csv\", show_col_types = FALSE)\n# ⚠️ 沿用前面任務的物件：t1（請先跑完任務6、7，本段不重算）\n# 存 HTML（瀏覽器打開）\nt1 |&gt;\n  as_gt() |&gt;\n  gt::gtsave(filename = \"table1.html\")\n\n# 存 Word docx（要先裝 gt 的最新版）\nt1 |&gt;\n  as_flex_table() |&gt;\n  flextable::save_as_docx(path = \"table1.docx\")",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Part 2：Table 1 — Baseline characteristics</span>"
     ]
